@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, Search, X } from "lucide-react";
+import { SearchTrigger } from "./search-trigger";
 
 type MenuItem = {
     label: string;
@@ -134,13 +135,7 @@ export function MobileMenu() {
                             }`}
                     >
                         <div className="flex flex-col gap-6">
-                            <button
-                                type="button"
-                                className="flex items-center gap-3 text-sm"
-                            >
-                                <Search size={18} strokeWidth={1.5} />
-                                Search
-                            </button>
+                            <SearchTrigger />
 
                             <Link href="/account" onClick={closeMenu} className="text-sm">
                                 Account

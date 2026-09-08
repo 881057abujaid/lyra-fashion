@@ -6,6 +6,7 @@ import {
     UserRound,
 } from "lucide-react";
 import { MobileMenu } from "./mobile-menu";
+import { SearchTrigger } from "./search-trigger";
 
 type NavItem = {
     label: string;
@@ -56,13 +57,7 @@ export function Navbar() {
 
                 {/* Right Actions */}
                 <div className="ml-auto flex items-center gap-5">
-                    <button
-                        type="button"
-                        aria-label="Search"
-                        className="transition-opacity hover:opacity-60"
-                    >
-                        <Search size={19} strokeWidth={1.5} />
-                    </button>
+                    <SearchTrigger />
 
                     <Link
                         href="/account"
