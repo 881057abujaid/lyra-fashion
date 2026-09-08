@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"]
+});
+
+const plafair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "LYRA Fashion",
@@ -13,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${inter.variable} ${plafair.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }

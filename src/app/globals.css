@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@theme inline {
+  /* Colors */
+  --color-lyra-cream: #faf9f6;
+  --color-lyra-black: #111111;
+  --color-lyra-white: #ffffff;
+
+  --color-lyra-beige: #e8e2d8;
+  --color-lyra-muted: #6f6b64;
+  --color-lyra-subtle: #99948c;
+  --color-lyra-border: #dedad2;
+
+  /* Typography */
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-inter);
+}
+
 :root {
   --background: #faf9f6;
   --foreground: #111111;
@@ -17,4 +33,5 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
 }
