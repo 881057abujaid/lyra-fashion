@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Navbar } from "@/components/layout/navbar";
+import { Providers } from "@/components/providers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,9 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${plafair.variable}`}>
-        <AnnouncementBar />
-        <Navbar />
-        {children}
+        <Providers>
+          <AnnouncementBar />
+          <Navbar />
+          {children}
+        </Providers>
       </body>
     </html>
   );

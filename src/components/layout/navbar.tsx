@@ -1,12 +1,8 @@
 import Link from "next/link";
-import {
-    Heart,
-    Search,
-    ShoppingBag,
-    UserRound,
-} from "lucide-react";
+import { Heart, UserRound } from "lucide-react";
 import { MobileMenu } from "./mobile-menu";
 import { SearchTrigger } from "./search-trigger";
+import { CartTrigger } from "../cart/cart-trigger";
 
 type NavItem = {
     label: string;
@@ -75,17 +71,7 @@ export function Navbar() {
                         <Heart size={19} strokeWidth={1.5} />
                     </Link>
 
-                    <Link
-                        href="/cart"
-                        aria-label="Shopping bag"
-                        className="relative transition-opacity hover:opacity-60"
-                    >
-                        <ShoppingBag size={20} strokeWidth={1.5} />
-
-                        <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-lyra-black px-1 text-[9px] text-lyra-white">
-                            0
-                        </span>
-                    </Link>
+                    <CartTrigger />
                 </div>
             </div>
 
@@ -101,17 +87,7 @@ export function Navbar() {
                     LYRA
                 </Link>
 
-                <Link
-                    href="/cart"
-                    aria-label="Shopping bag"
-                    className="relative transition-opacity hover:opacity-60"
-                >
-                    <ShoppingBag size={20} strokeWidth={1.5} />
-
-                    <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-lyra-black px-1 text-[9px] text-lyra-white">
-                        0
-                    </span>
-                </Link>
+                <CartTrigger />
             </div>
         </nav>
     );
