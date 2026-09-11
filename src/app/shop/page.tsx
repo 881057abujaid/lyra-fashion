@@ -1,8 +1,23 @@
 import { getProducts } from "@/lib/data/products";
 import { ProductCard } from "@/components/product/product-card";
+import { ShopFilters } from "@/components/shop/shop-filters";
 
-export default async function ShopPage() {
-    const products = await getProducts();
+type ShopPageProps = {
+    searchParams: Promise<{
+        category?: string;
+        sort?: string;
+    }>;
+}
+
+export default async function ShopPage({ searchParams }: ShopPageProps) {
+    const params = await searchParams;
+    const category = params.category;
+    const sort = params.sort === "price-low" ||
+        params.sort === "price-high" ||
+        params.sort === "featured" ?
+        params.sort : "newest";
+
+    const products = await getProducts({ category, sort, });
 
     return (
         <main className="mx-auto max-w-7xl px-6 py-16">
@@ -21,6 +36,8 @@ export default async function ShopPage() {
                     {products.length} {products.length === 1 ? 'Product' : 'Products'}
                 </p>
             </div>
+
+            <ShopFilters />
 
             {/* Product Grid */}
             <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-16">

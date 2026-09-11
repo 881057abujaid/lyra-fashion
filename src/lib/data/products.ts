@@ -1,11 +1,28 @@
 import { prisma } from "../prisma";
 
-export async function getProducts() {
+type GetproductsOption = {
+    category?: string;
+    sort?: "featured" | "newest" | "price-low" | "price-high";
+};
+
+export async function getProducts(options: GetproductsOption = {}) {
+    const { category, sort = "newest" } = options;
+
     return prisma.product.findMany({
+        where: category ? {
+            category,
+        } : undefined,
+
         include: {
             variants: true,
         },
-        orderBy: {
+        orderBy: sort === "price-low" ? {
+            price: "asc",
+        } : sort === "price-high" ? {
+            price: "desc",
+        } : sort === "featured" ? {
+            isFeatured: "desc",
+        } : {
             createdAt: "desc",
         },
     });
