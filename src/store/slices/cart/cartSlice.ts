@@ -7,6 +7,7 @@ export type CartItem = {
     image: string;
     quantity: number;
     size: string;
+    stock: number;
 };
 
 type CartState = {
@@ -26,9 +27,20 @@ const cartSlice = createSlice({
                 && item.size === action.payload.size);
 
             if (existingItem) {
-                existingItem.quantity += action.payload.quantity;
+                existingItem.quantity = Math.min(
+                    existingItem.quantity + action.payload.quantity,
+                    action.payload.stock
+                );
+
+                existingItem.stock = action.payload.stock;
             } else {
-                state.items.push(action.payload)
+                state.items.push({
+                    ...action.payload,
+                    quantity: Math.min(
+                        action.payload.quantity,
+                        action.payload.stock
+                    )
+                });
             }
         },
 
@@ -39,7 +51,7 @@ const cartSlice = createSlice({
             const item = state.items.find((item) => item.productId === action.payload.productId
                 && item.size === action.payload.size);
 
-            if (item) {
+            if (item && item.quantity < item.stock) {
                 item.quantity += 1;
             }
         },
