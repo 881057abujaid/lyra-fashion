@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { Search, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type SearchOverlayProps = {
     isOpen: boolean;
@@ -9,10 +10,12 @@ type SearchOverlayProps = {
 };
 
 const trendingSearches = [
-    "Trousers",
-    "Wide Leg",
-    "New Arrivals",
-    "Workwear",
+    "Shirt",
+    "Tops",
+    "Blazer",
+    "Skirt",
+    "Dress",
+    "Bag"
 ];
 
 export function SearchOverlay({
@@ -20,6 +23,7 @@ export function SearchOverlay({
     onClose,
 }: SearchOverlayProps) {
     const [query, setQuery] = useState("");
+    const router = useRouter();
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -42,6 +46,18 @@ export function SearchOverlay({
         setQuery(search);
         inputRef.current?.focus();
     };
+
+    const handleSearch = () => {
+        const trimmedQuery = query.trim().toLowerCase();
+
+        if (!trimmedQuery) return;
+
+        const params = new URLSearchParams();
+
+        params.set("search", trimmedQuery);
+
+        router.push(`/shop?${params.toString()}`);
+    }
 
     return (
         <div
@@ -88,6 +104,11 @@ export function SearchOverlay({
                             type="search"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleSearch();
+                                }
+                            }}
                             placeholder="what are you looking for?"
                             className="w-full bg-transparent font-display text-3xl outline-none placeholder:text-lyra-subtle md:text-5xl"
                             aria-label="Search products"
@@ -116,7 +137,13 @@ export function SearchOverlay({
                                 <button
                                     key={search}
                                     type="button"
-                                    onClick={() => handleTrendingSearch(search)}
+                                    onClick={() => {
+                                        const params = new URLSearchParams();
+
+                                        params.set("search", search.toLowerCase());
+
+                                        router.push(`/shop?${params.toString()}`);
+                                    }}
                                     className="border border-lyra-border px-5 py-3 text-sm transition-colors hover:border-lyra-black"
                                 >
                                     {search}
