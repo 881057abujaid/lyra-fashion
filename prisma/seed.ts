@@ -18,7 +18,10 @@ const products = [
         sku: "LYR-TRS-001",
         category: "Trousers",
         images: [
-            "/products/wide-leg-trouser.png",
+            "/products/wide-leg-trouser-1.png",
+            "/products/wide-leg-trouser-2.png",
+            "/products/wide-leg-trouser-3.png",
+            "/products/wide-leg-trouser-4.png",
         ],
         isFeatured: true,
         isNewArrival: true,
@@ -32,16 +35,19 @@ const products = [
     },
 
     {
-        name: "Silk Relaxed Skirt",
-        slug: "silk-relaxed-skirt",
+        name: "Silk Relaxed Shirt",
+        slug: "silk-relaxed-shirt",
         description:
-            "A softly structured relaxed skirt designed with a fluid drape and understated elegance.",
+            "A softly structured relaxed shirt designed with a fluid drape and understated elegance.",
         price: 1999,
         compareAtPrice: 2499,
-        sku: "LYR-SKT-001",
-        category: "Skirts",
+        sku: "LYR-SHR-001",
+        category: "Shirts",
         images: [
-            "/products/silk-skirt.png",
+            "/products/silk-shirt-1.png",
+            "/products/silk-shirt-2.png",
+            "/products/silk-shirt-3.png",
+            "/products/silk-shirt-4.png",
         ],
         isFeatured: true,
         isNewArrival: true,
@@ -64,7 +70,10 @@ const products = [
         sku: "LYR-TOP-001",
         category: "Tops",
         images: [
-            "/products/ribbed-top.png",
+            "/products/ribbed-top-1.png",
+            "/products/ribbed-top-2.png",
+            "/products/ribbed-top-3.png",
+            "/products/ribbed-top-4.png",
         ],
         isFeatured: false,
         isNewArrival: true,
@@ -87,7 +96,10 @@ const products = [
         sku: "LYR-BLZ-001",
         category: "Blazers",
         images: [
-            "/products/blazer.png",
+            "/products/blazer-1.png",
+            "/products/blazer-2.png",
+            "/products/blazer-3.png",
+            "/products/blazer-4.png",
         ],
         isFeatured: true,
         isNewArrival: false,
@@ -110,7 +122,10 @@ const products = [
         sku: "LYR-SKT-001",
         category: "Skirts",
         images: [
-            "/products/satin-skirt.png",
+            "/products/satin-skirt-1.png",
+            "/products/satin-skirt-2.png",
+            "/products/satin-skirt-3.png",
+            "/products/satin-skirt-4.png",
         ],
         isFeatured: true,
         isNewArrival: false,
@@ -127,6 +142,12 @@ const products = [
 async function main() {
     for (const product of products) {
         const { variants, ...productData } = product;
+
+        const existingProduct = await prisma.product.findUnique({
+            where: {
+                slug: product.slug,
+            },
+        });
 
         await prisma.product.upsert({
             where: {
