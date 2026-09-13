@@ -1,12 +1,25 @@
 "use client";
 
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
+import { useRef } from "react";
+import { makeStore, type AppStore } from "@/store/store";
+import { StorePersistence } from "@/store/store-persistence";
 
 type ProvidersProps = {
     children: React.ReactNode;
 };
 
 export function Providers({ children }: ProvidersProps) {
-    return <Provider store={store}>{children}</Provider>;
+    const storeRef = useRef<AppStore | null>(null);
+
+    if (!storeRef.current) {
+        storeRef.current = makeStore();
+    }
+
+    return (
+        <Provider store={storeRef.current}>
+            <StorePersistence />
+            {children}
+        </Provider>
+    );
 }

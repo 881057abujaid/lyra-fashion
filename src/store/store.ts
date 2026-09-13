@@ -2,12 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./slices/cart/cartSlice";
 import wishlistReducer from "./slices/wishlist/wishlistSlice";
 
-export const store = configureStore({
-    reducer: {
-        cart: cartReducer,
-        wishlist: wishlistReducer,
-    },
-});
+export const makeStore = () => {
+    return configureStore({
+        reducer: {
+            cart: cartReducer,
+            wishlist: wishlistReducer,
+        },
+    });
+};
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
