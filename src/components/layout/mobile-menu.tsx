@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, Search, X } from "lucide-react";
 import { SearchTrigger } from "./search-trigger";
+import { WishlistTrigger } from "../wishlist/wishlist-trigger";
 
 type MenuItem = {
     label: string;
@@ -141,9 +142,7 @@ export function MobileMenu() {
                                 Account
                             </Link>
 
-                            <Link href="/wishlist" onClick={closeMenu} className="text-sm">
-                                Wishlist
-                            </Link>
+                            <WishlistTrigger />
                         </div>
                     </div>
                 </aside>
