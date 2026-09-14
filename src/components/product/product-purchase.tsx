@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { addToCart } from "@/store/slices/cart/cartSlice";
+import { mapCartToViewItem } from "@/lib/utils/cart";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addToCartAction } from "@/lib/actions/cart.actions";
+import { hydrateCart } from "@/store/slices/cart/cartSlice";
 
 type ProductVariant = {
     id: string;
@@ -44,22 +46,26 @@ export function ProductPurchase({ productId, name, price, image, variants }: Pro
         setQuantity((current) => Math.min(remainingStock, current + 1));
     }
 
-    function handleAddToCart() {
+    async function handleAddToCart() {
         if (!selectedVariant) return;
 
         if (remainingStock <= 0) return;
 
-        dispatch(addToCart({
-            productId,
-            name,
-            price,
-            image,
-            quantity: Math.min(quantity, remainingStock),
-            size: selectedVariant.size,
-            stock: remainingStock,
-        }));
+        try {
+            const cart = await addToCartAction(selectedVariant.id, quantity);
 
-        setIsAdded(true);
+            if (!cart) {
+                throw new Error("Cart was not found after adding item");
+            }
+
+            const cartItems = mapCartToViewItem(cart);
+
+            dispatch(hydrateCart(cartItems));
+
+            setIsAdded(true);
+        } catch (error) {
+            console.log("Failed to add item to cart:", error);
+        }
     }
 
     return (

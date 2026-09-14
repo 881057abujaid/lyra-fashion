@@ -3,14 +3,12 @@
 import { useEffect } from "react";
 import { Minus, Plus, X } from "lucide-react";
 import {
-    decreaseQuantity,
-    increaseQuantity,
-    removeFromCart,
-} from "@/store/slices/cart/cartSlice";
-import {
     useAppDispatch,
     useAppSelector,
 } from "@/store/hooks";
+import { removeCartItemAction, updateCartItemAction } from "@/lib/actions/cart.actions";
+import { hydrateCart } from "@/store/slices/cart/cartSlice";
+import { mapCartToViewItem } from "@/lib/utils/cart";
 
 type CartDrawerProps = {
     isOpen: boolean;
@@ -21,6 +19,7 @@ export function CartDrawer({
     isOpen,
     onClose,
 }: CartDrawerProps) {
+
     const dispatch = useAppDispatch();
 
     const cartItems = useAppSelector(
@@ -31,6 +30,52 @@ export function CartDrawer({
         (total, item) => total + item.price * item.quantity,
         0
     );
+
+    async function handleIncrease(variantId: string, quantity: number, stock: number) {
+        if (quantity >= stock) return;
+
+        try {
+            const cart = await updateCartItemAction(variantId, quantity + 1);
+
+            if (!cart) {
+                throw new Error("Cart not found after update");
+            }
+
+            dispatch(hydrateCart(mapCartToViewItem(cart)));
+        } catch (error) {
+            console.log("Failed to increase cart quantity:", error);
+        }
+    }
+
+    async function handleDecrease(variantId: string, quantity: number) {
+        if (quantity <= 1) return;
+
+        try {
+            const cart = await updateCartItemAction(variantId, quantity - 1);
+
+            if (!cart) {
+                throw new Error("Cart not found after update");
+            }
+
+            dispatch(hydrateCart(mapCartToViewItem(cart)));
+        } catch (error) {
+            console.log("Failed to decrease cart quantity:", error);
+        }
+    }
+
+    async function handleRemove(variantId: string) {
+        try {
+            const cart = await removeCartItemAction(variantId);
+
+            if (!cart) {
+                throw new Error("Cart not found after removal");
+            }
+
+            dispatch(hydrateCart(mapCartToViewItem(cart)));
+        } catch (error) {
+            console.log("Failed to remove cart item:", error);
+        }
+    }
 
     useEffect(() => {
         if (!isOpen) return;
@@ -61,8 +106,8 @@ export function CartDrawer({
         <div
             aria-hidden={!isOpen}
             className={`fixed inset-0 z-50 ${isOpen
-                    ? "pointer-events-auto"
-                    : "pointer-events-none"
+                ? "pointer-events-auto"
+                : "pointer-events-none"
                 }`}
         >
             {/* Backdrop */}
@@ -71,8 +116,8 @@ export function CartDrawer({
                 aria-label="Close cart"
                 onClick={onClose}
                 className={`absolute inset-0 bg-black/20 transition-opacity duration-500 ${isOpen
-                        ? "opacity-100"
-                        : "opacity-0"
+                    ? "opacity-100"
+                    : "opacity-0"
                     }`}
             />
 
@@ -80,8 +125,8 @@ export function CartDrawer({
             <aside
                 aria-label="Shopping cart"
                 className={`absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-lyra-cream shadow-xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isOpen
-                        ? "translate-x-0"
-                        : "translate-x-full"
+                    ? "translate-x-0"
+                    : "translate-x-full"
                     }`}
             >
                 {/* Header */}
@@ -177,18 +222,8 @@ export function CartDrawer({
                                                 <div className="flex items-center border border-lyra-border">
                                                     <button
                                                         type="button"
-                                                        onClick={() =>
-                                                            dispatch(
-                                                                decreaseQuantity(
-                                                                    {
-                                                                        productId:
-                                                                            item.productId,
-                                                                        size: item.size,
-                                                                    }
-                                                                )
-                                                            )
-                                                        }
                                                         aria-label={`Decrease quantity of ${item.name}`}
+                                                        onClick={() => handleDecrease(item.variantId, item.quantity)}
                                                         className="flex h-8 w-8 items-center justify-center transition-colors hover:bg-lyra-beige"
                                                     >
                                                         <Minus
@@ -207,18 +242,8 @@ export function CartDrawer({
 
                                                     <button
                                                         type="button"
-                                                        onClick={() =>
-                                                            dispatch(
-                                                                increaseQuantity(
-                                                                    {
-                                                                        productId:
-                                                                            item.productId,
-                                                                        size: item.size,
-                                                                    }
-                                                                )
-                                                            )
-                                                        }
                                                         aria-label={`Increase quantity of ${item.name}`}
+                                                        onClick={() => handleIncrease(item.variantId, item.quantity, item.stock)}
                                                         className="flex h-8 w-8 items-center justify-center transition-colors hover:bg-lyra-beige"
                                                     >
                                                         <Plus
@@ -233,17 +258,7 @@ export function CartDrawer({
                                                 {/* Remove */}
                                                 <button
                                                     type="button"
-                                                    onClick={() =>
-                                                        dispatch(
-                                                            removeFromCart(
-                                                                {
-                                                                    productId:
-                                                                        item.productId,
-                                                                    size: item.size,
-                                                                }
-                                                            )
-                                                        )
-                                                    }
+                                                    onClick={() => handleRemove(item.variantId)}
                                                     className="text-[10px] uppercase tracking-[0.14em] text-lyra-muted transition-colors hover:text-lyra-black"
                                                 >
                                                     Remove

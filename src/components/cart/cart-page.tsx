@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
 
-import { useAppSelector } from "@/store/hooks";
-
 import { CartItem } from "./cart-item";
 import { CartSummary } from "./cart-summary";
+import { CartView } from "@/lib/data/cart-view";
 
-export function CartPage() {
-    const items = useAppSelector((state) => state.cart.items);
+type CartPageProps = {
+    cart: CartView | null;
+}
+
+export function CartPage({ cart }: CartPageProps) {
+    const items = cart?.items ?? [];
 
     if (items.length === 0) {
         return (
@@ -65,7 +68,13 @@ export function CartPage() {
                         {items.map((item) => (
                             <CartItem
                                 key={`${item.productId}-${item.size}`}
-                                item={item}
+                                variantId={item.variantId}
+                                name={item.name}
+                                price={item.price}
+                                image={item.image}
+                                quantity={item.quantity}
+                                size={item.size}
+                                stock={item.stock}
                             />
                         ))}
                     </div>
@@ -83,7 +92,7 @@ export function CartPage() {
                     </Link>
                 </div>
 
-                <CartSummary />
+                <CartSummary items={items} />
             </div>
         </main>
     );

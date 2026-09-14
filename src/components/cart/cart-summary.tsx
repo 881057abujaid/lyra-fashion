@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 
-import { useAppSelector } from "@/store/hooks";
+import type { CartViewItem } from "@/lib/data/cart-view";
+
+type CartSummaryProps = {
+    items: CartViewItem[];
+};
 
 const FREE_SHIPPING_THRESHOLD = 1499;
 
-export function CartSummary() {
-    const items = useAppSelector((state) => state.cart.items);
-
+export function CartSummary({ items }: CartSummaryProps) {
     const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 99;
