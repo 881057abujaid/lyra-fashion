@@ -61,7 +61,8 @@ export function ShopFilters() {
         }
 
         router.push(
-            `${pathname}?${params.toString()}`
+            `${pathname}?${params.toString()}`,
+            { scroll: false }
         );
     }
 
@@ -197,8 +198,8 @@ export function ShopFilters() {
                                         )
                                     }
                                     className={`flex w-full items-center justify-between px-4 py-3 text-left text-xs transition-colors ${isSelected
-                                            ? "bg-lyra-black text-lyra-white"
-                                            : "text-lyra-black hover:bg-lyra-beige"
+                                        ? "bg-lyra-black text-lyra-white"
+                                        : "text-lyra-black hover:bg-lyra-beige"
                                         }`}                                >
                                     <span>
                                         {option.label}
