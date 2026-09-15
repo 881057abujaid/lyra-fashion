@@ -48,7 +48,10 @@ export function CartDrawer({
     }
 
     async function handleDecrease(variantId: string, quantity: number) {
-        if (quantity <= 1) return;
+        if (quantity <= 1) {
+            await handleRemove(variantId);
+            return;
+        }
 
         try {
             const cart = await updateCartItemAction(variantId, quantity - 1);

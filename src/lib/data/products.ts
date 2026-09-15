@@ -75,3 +75,48 @@ export async function getProductBySlug(slug: string) {
         },
     });
 }
+
+export async function getRelatedProducts(productId: string, category: string) {
+    const sameCategoryProducts = await prisma.product.findMany({
+        where: {
+            category,
+            id: {
+                not: productId,
+            },
+        },
+        include: {
+            variants: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+        take: 4,
+    });
+
+    if (sameCategoryProducts.length >= 4) {
+        return sameCategoryProducts;
+    }
+
+    const remainingProducts = await prisma.product.findMany({
+        where: {
+            id: {
+                not: productId,
+            },
+            category: {
+                not: category,
+            },
+        },
+        include: {
+            variants: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+        take: 4 - sameCategoryProducts.length,
+    });
+
+    return [
+        ...sameCategoryProducts,
+        ...remainingProducts,
+    ];
+}

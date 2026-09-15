@@ -27,6 +27,7 @@ export function ProductPurchase({ productId, name, price, image, variants }: Pro
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
     const [quantity, setQuantity] = useState(1);
     const [isAdded, setIsAdded] = useState(false);
+    const [isPending, setIsPending] = useState(false);
 
     const selectedVariant = variants.find((variant) => variant.size === selectedSize);
 
@@ -48,8 +49,10 @@ export function ProductPurchase({ productId, name, price, image, variants }: Pro
 
     async function handleAddToCart() {
         if (!selectedVariant) return;
-
         if (remainingStock <= 0) return;
+        if (isPending) return;
+
+        setIsPending(true);
 
         try {
             const cart = await addToCartAction(selectedVariant.id, quantity);
@@ -63,8 +66,14 @@ export function ProductPurchase({ productId, name, price, image, variants }: Pro
             dispatch(hydrateCart(cartItems));
 
             setIsAdded(true);
+
+            setTimeout(() => {
+                setIsAdded(false);
+            }, 2000);
         } catch (error) {
             console.log("Failed to add item to cart:", error);
+        } finally {
+            setIsPending(false);
         }
     }
 
@@ -79,7 +88,7 @@ export function ProductPurchase({ productId, name, price, image, variants }: Pro
 
                     {selectedVariant && (
                         <p className="text-xs text-lyra-muted">
-                            {selectedVariant.stock} available
+                            {remainingStock} available
                         </p>
                     )}
                 </div>
@@ -143,7 +152,7 @@ export function ProductPurchase({ productId, name, price, image, variants }: Pro
                         onClick={handleQuantityIncrease}
                         disabled={
                             !selectedVariant ||
-                            quantity >= maxQuantity
+                            quantity >= remainingStock
                         }
                         className="px-4 py-3 text-sm transition-opacity hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-40"
                         aria-label="Increase quantity"
@@ -158,16 +167,18 @@ export function ProductPurchase({ productId, name, price, image, variants }: Pro
                 <button
                     type="button"
                     onClick={handleAddToCart}
-                    disabled={!selectedVariant || remainingStock <= 0}
+                    disabled={!selectedVariant || remainingStock <= 0 || isPending}
                     className="w-full bg-lyra-black px-6 py-4 text-xs uppercase tracking-[0.18em] text-lyra-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                     {!selectedVariant
                         ? "Select a Size"
                         : remainingStock <= 0
                             ? "Maximum in Bag"
-                            : isAdded
-                                ? "Added to Bag"
-                                : "Add to Bag"}
+                            : isPending
+                                ? "Adding..."
+                                : isAdded
+                                    ? "Added to Bag"
+                                    : "Add to Bag"}
                 </button>
             </div>
         </div>
