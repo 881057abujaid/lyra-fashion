@@ -4,6 +4,7 @@ import { MobileMenu } from "./mobile-menu";
 import { SearchTrigger } from "./search-trigger";
 import { CartTrigger } from "../cart/cart-trigger";
 import { WishlistTrigger } from "../wishlist/wishlist-trigger";
+import { AccountTrigger } from "../auth/auth-trigger";
 
 type NavItem = {
     label: string;
@@ -56,13 +57,7 @@ export function Navbar() {
                 <div className="ml-auto flex items-center gap-5">
                     <SearchTrigger />
 
-                    <Link
-                        href="/account"
-                        aria-label="Account"
-                        className="transition-opacity hover:opacity-60"
-                    >
-                        <UserRound size={19} strokeWidth={1.5} />
-                    </Link>
+                    <AccountTrigger />
 
                     <WishlistTrigger />
 

@@ -4,7 +4,7 @@ import "./globals.css";
 
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Navbar } from "@/components/layout/navbar";
-import { Providers } from "@/components/providers";
+import { Providers } from "@/components/providers/providers";
 
 const inter = Inter({
   variable: "--font-inter",

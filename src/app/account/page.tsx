@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { SignOutButton } from "@/components/auth/sign-out-button";
 
 export default async function AccountPage() {
     const session = await auth();
@@ -63,6 +64,23 @@ export default async function AccountPage() {
                     <p className="mt-3 text-sm leading-6 text-lyra-muted">
                         Manage your account information and preferences.
                     </p>
+                </div>
+            </div>
+
+            <div className="mt-16 border-t border-lyra-border pt-8">
+                <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-muted">
+                            Account Actions
+                        </p>
+
+                        <p className="mt-2 text-sm text-lyra-muted">
+                            Sign out of your LYRA account on this device.
+                        </p>
+                    </div>
+                    <div className="w-full sm:w-56">
+                        <SignOutButton />
+                    </div>
                 </div>
             </div>
         </main>

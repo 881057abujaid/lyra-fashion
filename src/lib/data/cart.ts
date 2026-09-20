@@ -191,3 +191,133 @@ export async function clearCart(sessionId: string) {
 
     return cart;
 }
+
+export async function mergeGuestCart(
+    guestSessionId: string,
+    userId: string
+) {
+    return prisma.$transaction(async (tx) => {
+        const guestCart = await tx.cart.findUnique({
+            where: {
+                sessionId: guestSessionId,
+            },
+            include: cartInclude,
+        });
+
+        if (!guestCart) {
+            return null;
+        }
+
+        const userCart = await tx.cart.findFirst({
+            where: {
+                userId,
+            },
+            include: cartInclude,
+        });
+
+        // User doesn't have an existing cart.
+        // Simply attach the guest cart to the user.
+        if (!userCart) {
+            return tx.cart.update({
+                where: {
+                    id: guestCart.id,
+                },
+                data: {
+                    userId,
+                },
+                include: cartInclude,
+            });
+        }
+
+        // Merge guest items into the existing user cart.
+        for (const guestItem of guestCart.items) {
+            const existingItem = userCart.items.find(
+                (item) =>
+                    item.variantId === guestItem.variantId
+            );
+
+            if (existingItem) {
+                const variant =
+                    await tx.productVariant.findUnique({
+                        where: {
+                            id: guestItem.variantId,
+                        },
+                        select: {
+                            stock: true,
+                        },
+                    });
+
+                if (!variant) {
+                    continue;
+                }
+
+                const mergedQuantity =
+                    existingItem.quantity +
+                    guestItem.quantity;
+
+                const quantity = Math.min(
+                    mergedQuantity,
+                    variant.stock
+                );
+
+                if (quantity <= 0) {
+                    await tx.cartItem.delete({
+                        where: {
+                            id: existingItem.id,
+                        },
+                    });
+
+                    continue;
+                }
+
+                await tx.cartItem.update({
+                    where: {
+                        id: existingItem.id,
+                    },
+                    data: {
+                        quantity,
+                    },
+                });
+            } else {
+                const variant =
+                    await tx.productVariant.findUnique({
+                        where: {
+                            id: guestItem.variantId,
+                        },
+                        select: {
+                            stock: true,
+                        },
+                    });
+
+                if (!variant || variant.stock <= 0) {
+                    continue;
+                }
+
+                await tx.cartItem.create({
+                    data: {
+                        cartId: userCart.id,
+                        variantId: guestItem.variantId,
+                        quantity: Math.min(
+                            guestItem.quantity,
+                            variant.stock
+                        ),
+                    },
+                });
+            }
+        }
+
+        // Guest cart is no longer needed.
+        await tx.cart.delete({
+            where: {
+                id: guestCart.id,
+            },
+        });
+
+        return tx.cart.findUnique({
+            where: {
+                id: userCart.id,
+            },
+            include: cartInclude,
+        });
+    });
+}

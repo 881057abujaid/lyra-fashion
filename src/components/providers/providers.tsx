@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { useRef } from "react";
 import { makeStore, type AppStore } from "@/store/store";
 import { StorePersistence } from "@/store/store-persistence";
+import { AuthSessionProvider } from "@/components/providers/session-provider";
 
 type ProvidersProps = {
     children: React.ReactNode;
@@ -18,8 +19,10 @@ export function Providers({ children }: ProvidersProps) {
 
     return (
         <Provider store={storeRef.current}>
-            <StorePersistence />
-            {children}
+            <AuthSessionProvider>
+                <StorePersistence />
+                {children}
+            </AuthSessionProvider>
         </Provider>
     );
 }

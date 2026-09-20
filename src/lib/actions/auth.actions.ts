@@ -4,6 +4,7 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 
 import { prisma } from "../prisma";
+import { getCurrentCart } from "../data/cart-view";
 
 const RegisterSchema = z.object({
     name: z.string().trim().min(2, "Name must be at least 2 characters."),
@@ -43,4 +44,8 @@ export async function registerUser(name: string, email: string, password: string
     });
 
     return user;
+}
+
+export async function getCurrentCartAction() {
+    return getCurrentCart();
 }

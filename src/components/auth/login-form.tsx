@@ -6,6 +6,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
+import { mergeCurrentGuestCart } from "@/lib/actions/cart.actions";
+import { mapCartToViewItem } from "@/lib/utils/cart";
+import { hydrateCart } from "@/store/slices/cart/cartSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 const LoginSchema = z.object({
     email: z.string().trim().email("Please enter a valid email"),
@@ -15,6 +19,7 @@ const LoginSchema = z.object({
 type LoginFormData = z.infer<typeof LoginSchema>;
 
 export function LoginForm() {
+    const dispatch = useAppDispatch();
     const [serverError, setServerError] = useState<string | null>(null);
 
     const { register, handleSubmit, formState: { errors, isSubmitting, } } = useForm({
@@ -38,6 +43,14 @@ export function LoginForm() {
             setServerError("Invalid email or password");
             return;
         }
+
+        const mergedCart = await mergeCurrentGuestCart();
+
+        if (mergedCart) {
+            const cartItem = mapCartToViewItem(mergedCart);
+            dispatch(hydrateCart(cartItem));
+        }
+
         window.location.href = "/account";
     }
 

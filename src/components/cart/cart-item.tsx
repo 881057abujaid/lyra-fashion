@@ -2,7 +2,9 @@
 
 import { Minus, Plus, X } from "lucide-react";
 import Image from "next/image";
-
+import { useAppDispatch } from "@/store/hooks";
+import { hydrateCart } from "@/store/slices/cart/cartSlice";
+import { mapCartToViewItem } from "@/lib/utils/cart";
 import { updateCartItemAction, removeCartItemAction } from "@/lib/actions/cart.actions";
 
 type CartItemProps = {
@@ -16,13 +18,20 @@ type CartItemProps = {
 };
 
 export function CartItem({ variantId, name, price, image, quantity, size, stock }: CartItemProps) {
+    const dispatch = useAppDispatch();
     const isAtMaxStock = quantity >= stock;
 
     async function handleIncrease() {
         if (isAtMaxStock) return;
 
         try {
-            await updateCartItemAction(variantId, quantity + 1);
+            const cart = await updateCartItemAction(variantId, quantity + 1);
+
+            if (!cart) {
+                throw new Error("Cart not found after update");
+            }
+
+            dispatch(hydrateCart(mapCartToViewItem(cart)));
         } catch (error) {
             console.log("Error updating cart item", error);
         }
@@ -33,7 +42,13 @@ export function CartItem({ variantId, name, price, image, quantity, size, stock 
             if (quantity <= 1) {
                 await handleRemove();
             } else {
-                await updateCartItemAction(variantId, quantity - 1);
+                const cart = await updateCartItemAction(variantId, quantity - 1);
+
+                if (!cart) {
+                    throw new Error("Cart not found after update");
+                }
+
+                dispatch(hydrateCart(mapCartToViewItem(cart)));
             }
         } catch (error) {
             console.log("Error updating cart item", error);
@@ -42,7 +57,13 @@ export function CartItem({ variantId, name, price, image, quantity, size, stock 
 
     async function handleRemove() {
         try {
-            await removeCartItemAction(variantId);
+            const cart = await removeCartItemAction(variantId);
+
+            if (!cart) {
+                throw new Error("Cart not found after removal");
+            }
+
+            dispatch(hydrateCart(mapCartToViewItem(cart)));
         } catch (error) {
             console.log("Error removing cart item", error);
         }
