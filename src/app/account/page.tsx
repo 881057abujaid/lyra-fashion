@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { auth } from "@/auth";
+import { ArrowRight } from "lucide-react";
 import { SignOutButton } from "@/components/auth/sign-out-button";
 
 export default async function AccountPage() {
@@ -36,6 +38,16 @@ export default async function AccountPage() {
                     <p className="mt-3 text-sm leading-6 text-lyra-muted">
                         View your order history and track your purchases.
                     </p>
+
+                    <div className="mt-8">
+                        <Link
+                            href="/account/orders"
+                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black hover:text-lyra-primary transition-colors"
+                        >
+                            <span>View Orders</span>
+                            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="border border-lyra-border bg-lyra-white p-8">

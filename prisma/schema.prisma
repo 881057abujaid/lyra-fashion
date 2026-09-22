@@ -7,6 +7,22 @@ datasource db {
   provider = "postgresql"
 }
 
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
 model Product {
   id             String @id @default(cuid())
   name           String
@@ -84,6 +100,7 @@ model User {
   accounts Account[]
   sessions Session[]
   carts    Cart[]
+  orders   Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -123,4 +140,51 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Order {
+  id          String @id @default(cuid())
+  orderNumber String @unique
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status        OrderStatus   @default(PENDING)
+  paymentStatus PaymentStatus @default(PENDING)
+
+  subtotal Int
+  shipping Int
+  total    Int
+
+  customerName  String
+  customerEmail String
+  customerPhone String
+
+  shippingAddress String
+  shippingCity    String
+  shippingState   String
+  shippingPincode String
+
+  items OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id String @id @default(cuid())
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String
+  variantId String
+
+  productName  String
+  productPrice Int
+  size         String
+  quantity     Int
+  image        String
+
+  createdAt DateTime @default(now())
 }
