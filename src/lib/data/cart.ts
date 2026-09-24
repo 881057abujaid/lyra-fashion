@@ -192,6 +192,15 @@ export async function clearCart(sessionId: string) {
     return cart;
 }
 
+export async function getUserCart(userId: string) {
+    return prisma.cart.findFirst({
+        where: {
+            userId,
+        },
+        include: cartInclude,
+    });
+}
+
 export async function mergeGuestCart(
     guestSessionId: string,
     userId: string

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { auth } from "@/auth";
-import { getOrderByNumber } from "@/lib/data/order";
+import { getOrderByNumber } from "@/lib/data/orders";
 
 type OrderDetailsPageProps = {
     params: Promise<{

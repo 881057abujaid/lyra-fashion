@@ -1313,6 +1313,7 @@ export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFi
 export const OrderScalarFieldEnum = {
   id: 'id',
   orderNumber: 'orderNumber',
+  razorpayOrderId: 'razorpayOrderId',
   userId: 'userId',
   status: 'status',
   paymentStatus: 'paymentStatus',

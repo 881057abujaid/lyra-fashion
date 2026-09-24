@@ -4,7 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 
 import { addCartItem, mergeGuestCart, removeCartItem, updateCartItem } from "../data/cart";
-import { getCartSession, getOrCreateCartSession } from "../cart-session";
+import { getCartSession, getOrCreateCartSession, setCartSession } from "../cart-session";
 import { auth } from "@/auth";
 
 const addToCartSchema = z.object({
@@ -73,13 +73,24 @@ export async function removeCartItemAction(variantId: string) {
 export async function mergeCurrentGuestCart() {
     const session = await auth();
 
-    if (!session?.user?.id) return null;
+    if (!session?.user?.id) {
+        return null;
+    }
 
     const guestSessionId = await getCartSession();
 
-    if (!guestSessionId) return null;
+    if (!guestSessionId) {
+        return null;
+    }
 
-    const cart = await mergeGuestCart(guestSessionId, session.user.id);
+    const cart = await mergeGuestCart(
+        guestSessionId,
+        session.user.id
+    );
+
+    if (cart) {
+        await setCartSession(cart.sessionId);
+    }
 
     revalidatePath("/cart");
     revalidatePath("/account");

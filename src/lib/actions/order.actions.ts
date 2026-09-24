@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { auth } from "@/auth";
-import { createOrderFromCart } from "@/lib/data/order";
+import { createOrderFromCart } from "@/lib/data/orders";
 
 const CreateOrderSchema = z.object({
     customerName: z.string().trim().min(2, "Please enter your full name."),

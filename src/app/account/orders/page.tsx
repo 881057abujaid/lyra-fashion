@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import { getUserOrders } from "@/lib/data/order";
+import { getUserOrders } from "@/lib/data/orders";
 
 export default async function OrderPage() {
     const session = await auth();

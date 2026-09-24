@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Check } from "lucide-react";
-import { getOrderByNumber } from "@/lib/data/order";
+import { getOrderByNumber } from "@/lib/data/orders";
 import { auth } from "@/auth";
 
 type OrderSuccessPageProps = {

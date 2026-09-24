@@ -1,4 +1,5 @@
 import { prisma } from "../prisma";
+import { razorpay } from "../razorpay";
 import type { CreateOrderInput as CreateOrderInputAction } from "../actions/order.actions";
 
 const FREE_SHIPPING_THRESHOLD = 1499;
@@ -217,4 +218,177 @@ export async function getUserOrders(userId: string) {
             createdAt: "desc",
         },
     });
+}
+
+export async function createRazorpayOrder(
+    orderId: string,
+    userId: string
+) {
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+            userId
+        },
+    });
+
+    if (!order) {
+        throw new Error("Order not found");
+    }
+
+    if (order.paymentStatus === "PAID") {
+        throw new Error("Order is already paid");
+    }
+
+    if (order.razorpayOrderId) {
+        return {
+            razorpayOrderId: order.razorpayOrderId,
+            amount: order.total * 100,
+            currency: "INR"
+        };
+    }
+
+    const razorpayOrder = await razorpay.orders.create({
+        amount: order.total * 100,
+        currency: "INR",
+        receipt: order.orderNumber,
+    });
+
+    await prisma.order.update({
+        where: {
+            id: order.id,
+        },
+        data: {
+            razorpayOrderId: razorpayOrder.id,
+        },
+    });
+
+    return {
+        razorpayOrderId: razorpayOrder.id,
+        amount: razorpayOrder.amount,
+        currency: razorpayOrder.currency,
+    };
+}
+
+export async function verifyRazorpayPayment(
+    orderId: string,
+    userId: string,
+    razorpayOrderId: string,
+    razorpayPaymentId: string,
+) {
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+            userId,
+        },
+    });
+
+    if (!order) {
+        throw new Error("Order not found");
+    }
+
+    if (order.razorpayOrderId !== razorpayOrderId) {
+        throw new Error("Razorpay order does not match");
+    }
+
+    if (order.paymentStatus === "PAID") {
+        return order;
+    }
+
+    return prisma.order.update({
+        where: {
+            id: order.id,
+        },
+        data: {
+            paymentStatus: "PAID",
+            status: "CONFIRMED",
+        },
+    });
+}
+
+export async function makeOrderPaymentFailed(
+    orderId: string,
+    userId: string,
+) {
+    return prisma.$transaction(async (tx) => {
+        const order = await tx.order.findFirst({
+            where: {
+                id: orderId,
+                userId,
+            },
+            include: {
+                items: true,
+            },
+        });
+
+        if (!order) {
+            throw new Error("Order not found");
+        }
+
+        // A paid order must never be marked as failed.
+        if (order.paymentStatus === "PAID") {
+            throw new Error("A paid order cannot be marked as failed");
+        }
+
+        // Already failed/cancelled = nothing to restore again.
+        if (order.paymentStatus === "FAILED" || order.status === "CANCELLED") {
+            return order;
+        }
+
+        for (const item of order.items) {
+            if (!item.variantId) {
+                continue;
+            }
+
+            await tx.productVariant.update({
+                where: {
+                    id: item.variantId,
+                },
+                data: {
+                    stock: {
+                        increment: item.quantity,
+                    },
+                },
+            });
+        }
+
+        return tx.order.update({
+            where: {
+                id: order.id,
+            },
+            data: {
+                paymentStatus: "FAILED",
+                status: "CANCELLED",
+            },
+            include: {
+                items: true,
+            },
+        });
+    });
+}
+
+export async function getRazorpayOrderPaymentStatus(
+    orderId: string,
+    userId: string,
+) {
+    const order = await prisma.order.findFirst({
+        where: {
+            id: orderId,
+            userId,
+        },
+    });
+
+    if (!order) {
+        throw new Error("Order not found");
+    }
+
+    if (!order.razorpayOrderId) {
+        throw new Error("Razorpay order has not been created");
+    }
+
+    const payments = await razorpay.orders.fetchPayments(order.razorpayOrderId);
+
+    return {
+        order,
+        payments: payments.items,
+    };
 }

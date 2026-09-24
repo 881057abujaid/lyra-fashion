@@ -143,8 +143,9 @@ model VerificationToken {
 }
 
 model Order {
-  id          String @id @default(cuid())
-  orderNumber String @unique
+  id              String  @id @default(cuid())
+  orderNumber     String  @unique
+  razorpayOrderId String? @unique
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

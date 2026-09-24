@@ -8,9 +8,7 @@ export async function getCartSession() {
     return cookieStore.get(CART_SESSION_COOKIE)?.value;
 }
 
-export async function createCartSession() {
-    const sessionId = crypto.randomUUID();
-
+export async function setCartSession(sessionId: string) {
     const cookieStore = await cookies();
 
     cookieStore.set(CART_SESSION_COOKIE, sessionId, {
@@ -18,8 +16,14 @@ export async function createCartSession() {
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
         path: "/",
-        maxAge: 60 * 60 * 24 * 30,
+        maxAge: 60 * 60 * 24 * 30
     });
+}
+
+export async function createCartSession() {
+    const sessionId = crypto.randomUUID();
+
+    await setCartSession(sessionId);
 
     return sessionId;
 }
