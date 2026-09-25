@@ -23,6 +23,11 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
 model Product {
   id             String @id @default(cuid())
   name           String
@@ -96,6 +101,8 @@ model User {
   passwordHash  String?
   emailVerified DateTime?
   image         String?
+
+  role UserRole @default(CUSTOMER)
 
   accounts Account[]
   sessions Session[]

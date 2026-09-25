@@ -30,6 +30,7 @@ export const {
         jwt({ token, user }) {
             if (user) {
                 token.id = user.id as string;
+                token.role = user.role;
             }
 
             return token;
@@ -38,6 +39,10 @@ export const {
         session({ session, token }) {
             if (session.user && token.id) {
                 session.user.id = token.id as string;
+            }
+
+            if (session.user && token.role) {
+                session.user.role = token.role;
             }
 
             return session;
@@ -97,6 +102,7 @@ export const {
                     name: user.name,
                     email: user.email,
                     image: user.image,
+                    role: user.role,
                 };
             },
         }),
