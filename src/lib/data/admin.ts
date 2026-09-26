@@ -1,5 +1,30 @@
 import { prisma } from "../prisma";
-import type { OrderStatus } from "@/generated/prisma/enums";
+import type { PaymentStatus, OrderStatus } from "@/generated/prisma/enums";
+
+export type AdminOrder = {
+    id: string;
+    orderNumber: string;
+    customerName: string;
+    customerEmail: string;
+    total: number;
+    status: OrderStatus;
+    paymentStatus: PaymentStatus;
+    createdAt: Date;
+}
+
+export type AdminOrderFilters = {
+    search?: string;
+    paymentStatus?: "PENDING" | "PAID" | "FAILED" | "REFUNDED";
+    orderStatus?: "PENDING" | "CONFIRMED" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED";
+}
+
+export type AdminOrderResult = {
+    orders: AdminOrder[];
+    total: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
+}
 
 export async function getAdminDashboardStats() {
     const [
@@ -52,22 +77,87 @@ export async function getAdminDashboardStats() {
     };
 }
 
-export async function getAdminOrders() {
-    return prisma.order.findMany({
-        orderBy: {
-            createdAt: "desc",
-        },
-        select: {
-            id: true,
-            orderNumber: true,
-            customerName: true,
-            customerEmail: true,
-            total: true,
-            status: true,
-            paymentStatus: true,
-            createdAt: true,
-        },
-    });
+export async function getAdminOrders(
+    filters: AdminOrderFilters = {},
+    page = 1,
+    pageSize = 20
+): Promise<AdminOrderResult> {
+    const search = filters.search?.trim();
+
+    const where = {
+        ...(search
+            ? {
+                OR: [
+                    {
+                        orderNumber: {
+                            contains: search,
+                            mode: "insensitive" as const,
+                        },
+                    },
+                    {
+                        customerName: {
+                            contains: search,
+                            mode: "insensitive" as const,
+                        },
+                    },
+                    {
+                        customerEmail: {
+                            contains: search,
+                            mode: "insensitive" as const,
+                        },
+                    },
+                ],
+            }
+            : {}),
+
+        ...(filters.paymentStatus
+            ? {
+                paymentStatus: filters.paymentStatus,
+            }
+            : {}),
+
+        ...(filters.orderStatus
+            ? {
+                status: filters.orderStatus,
+            }
+            : {}),
+    };
+
+    const safePage = Math.max(1, page);
+    const safePageSize = Math.max(1, pageSize);
+
+    const [orders, total] = await Promise.all([
+        prisma.order.findMany({
+            where,
+            orderBy: {
+                createdAt: "desc",
+            },
+            skip: (safePage - 1) * safePageSize,
+            take: safePageSize,
+            select: {
+                id: true,
+                orderNumber: true,
+                customerName: true,
+                customerEmail: true,
+                total: true,
+                status: true,
+                paymentStatus: true,
+                createdAt: true,
+            }
+        }),
+
+        prisma.order.count({
+            where,
+        }),
+    ]);
+
+    return {
+        orders,
+        total,
+        page: safePage,
+        pageSize: safePageSize,
+        totalPages: Math.ceil(total / safePageSize),
+    };
 }
 
 export async function getAdminOrderById(id: string) {

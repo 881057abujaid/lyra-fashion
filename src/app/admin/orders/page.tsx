@@ -1,10 +1,70 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-
+import { z } from "zod";
 import { getAdminOrders } from "@/lib/data/admin";
+import { OrderFilters } from "@/components/admin/order-filters";
+import { OrderPagination } from "@/components/admin/order-pagination";
 
-export default async function AdminOrdersPage() {
-    const orders = await getAdminOrders();
+type AdminOrdersPageProps = {
+    searchParams: Promise<{
+        search?: string;
+        payment?: string;
+        status?: string;
+        page?: string;
+    }>;
+};
+
+const OrderFiltersSchema = z.object({
+    search: z.string().optional(),
+
+    payment: z.enum([
+        "PENDING",
+        "PAID",
+        "FAILED",
+        "REFUNDED",
+    ]).optional(),
+
+    status: z.enum([
+        "PENDING",
+        "CONFIRMED",
+        "PROCESSING",
+        "SHIPPED",
+        "DELIVERED",
+        "CANCELLED",
+    ]).optional(),
+});
+
+export default async function AdminOrdersPage({
+    searchParams
+}: AdminOrdersPageProps) {
+
+    const params = await searchParams;
+    const filters = OrderFiltersSchema.parse(params);
+    const requestedPage = Number(params.page ?? "1");
+    const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
+    const result = await getAdminOrders(
+        {
+            search: filters.search,
+            paymentStatus: filters.payment,
+            orderStatus: filters.status,
+        },
+        page,
+        20
+    );
+
+    const queryString = new URLSearchParams(
+        Object.entries(params).filter(
+            ([, value]) => value !== undefined
+        ) as [string, string][]
+    ).toString();
+
+    const {
+        orders,
+        total,
+        page: currentPage,
+        pageSize,
+        totalPages,
+    } = result;
 
     return (
         <div className="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-10">
@@ -30,6 +90,10 @@ export default async function AdminOrdersPage() {
                         {orders.length === 1 ? "Order" : "Orders"}
                     </p>
                 </div>
+            </div>
+
+            <div className="mt-8">
+                <OrderFilters />
             </div>
 
             {/* Orders Table */}
@@ -143,6 +207,15 @@ export default async function AdminOrdersPage() {
                     </div>
                 )}
             </section>
+
+            {/* Pagination */}
+            <OrderPagination
+                page={currentPage}
+                totalPages={totalPages}
+                total={total}
+                pageSize={20}
+                queryString={queryString}
+            />
         </div>
     );
 }
