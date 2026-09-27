@@ -168,3 +168,35 @@ export async function getAdminProductCategories() {
 
     return products.map((product) => product.category);
 }
+
+export async function getAdminProductById(id: string) {
+    return prisma.product.findUnique({
+        where: {
+            id,
+        },
+        select: {
+            id: true,
+            name: true,
+            slug: true,
+            description: true,
+            price: true,
+            compareAtPrice: true,
+            sku: true,
+            category: true,
+            images: true,
+            isFeatured: true,
+            isNewArrival: true,
+
+            variants: {
+                orderBy: {
+                    createdAt: "asc",
+                },
+                select: {
+                    id: true,
+                    size: true,
+                    stock: true,
+                },
+            },
+        }
+    });
+}

@@ -9,7 +9,8 @@ import { useRouter } from "next/navigation";
 
 import {
     CreateProductSchema,
-    type CreateProductInput
+    type CreateProductFormInput,
+    type CreateProductInput,
 } from "@/validations/admin-product";
 import { createAdminProduct } from "@/lib/actions/admin-product.actions";
 import { ProductVariantEditor } from "./product-variant-editor";
@@ -45,7 +46,7 @@ export function ProductForm() {
 
     const [serverError, setServerError] = useState<string | null>(null);
 
-    const methods = useForm<CreateProductInput>({
+    const methods = useForm<CreateProductFormInput, unknown, CreateProductInput>({
         resolver: zodResolver(CreateProductSchema),
         defaultValues: {
             name: "",
