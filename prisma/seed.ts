@@ -17,12 +17,6 @@ const products = [
         compareAtPrice: 1999,
         sku: "LYR-TRS-001",
         category: "Trousers",
-        images: [
-            "/products/wide-leg-trouser-1.png",
-            "/products/wide-leg-trouser-2.png",
-            "/products/wide-leg-trouser-3.png",
-            "/products/wide-leg-trouser-4.png",
-        ],
         isFeatured: true,
         isNewArrival: true,
         variants: [
@@ -43,12 +37,6 @@ const products = [
         compareAtPrice: 2499,
         sku: "LYR-SHR-001",
         category: "Shirts",
-        images: [
-            "/products/silk-shirt-1.png",
-            "/products/silk-shirt-2.png",
-            "/products/silk-shirt-3.png",
-            "/products/silk-shirt-4.png",
-        ],
         isFeatured: true,
         isNewArrival: true,
         variants: [
@@ -69,12 +57,6 @@ const products = [
         compareAtPrice: null,
         sku: "LYR-TOP-001",
         category: "Tops",
-        images: [
-            "/products/ribbed-top-1.png",
-            "/products/ribbed-top-2.png",
-            "/products/ribbed-top-3.png",
-            "/products/ribbed-top-4.png",
-        ],
         isFeatured: false,
         isNewArrival: true,
         variants: [
@@ -95,12 +77,6 @@ const products = [
         compareAtPrice: 3999,
         sku: "LYR-BLZ-001",
         category: "Blazers",
-        images: [
-            "/products/blazer-1.png",
-            "/products/blazer-2.png",
-            "/products/blazer-3.png",
-            "/products/blazer-4.png",
-        ],
         isFeatured: true,
         isNewArrival: false,
         variants: [
@@ -121,12 +97,6 @@ const products = [
         compareAtPrice: 2299,
         sku: "LYR-SKT-001",
         category: "Skirts",
-        images: [
-            "/products/satin-skirt-1.png",
-            "/products/satin-skirt-2.png",
-            "/products/satin-skirt-3.png",
-            "/products/satin-skirt-4.png",
-        ],
         isFeatured: true,
         isNewArrival: false,
         variants: [

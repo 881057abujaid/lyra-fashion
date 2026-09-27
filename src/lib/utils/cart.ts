@@ -12,7 +12,9 @@ type CartWithItems = {
                 id: string;
                 name: string;
                 price: number;
-                images: string[];
+                images: {
+                    url: string;
+                }[];
             };
         };
     }[];
@@ -25,7 +27,7 @@ export function mapCartToViewItem(cart: CartWithItems): CartViewItem[] {
         variantId: item.variant.id,
         name: item.variant.product.name,
         price: item.variant.product.price,
-        image: item.variant.product.images[0] ?? "",
+        image: item.variant.product.images[0]?.url ?? "",
         quantity: item.quantity,
         size: item.variant.size,
         stock: item.variant.stock,

@@ -47,6 +47,11 @@ export { Prisma }
  */
 export type Product = Prisma.ProductModel
 /**
+ * Model ProductImages
+ * 
+ */
+export type ProductImages = Prisma.ProductImagesModel
+/**
  * Model ProductVariant
  * 
  */

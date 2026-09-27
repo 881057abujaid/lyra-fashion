@@ -329,10 +329,6 @@ export type CartOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type CartCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.CartCreateWithoutItemsInput, Prisma.CartUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.CartCreateOrConnectWithoutItemsInput

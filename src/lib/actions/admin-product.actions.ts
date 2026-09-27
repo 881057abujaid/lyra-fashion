@@ -91,7 +91,6 @@ export async function createAdminProduct(
                         validatedData.compareAtPrice,
                     sku: normalizedSku,
                     category: validatedData.category,
-                    images: [],
                     isFeatured:
                         validatedData.isFeatured,
                     isNewArrival:

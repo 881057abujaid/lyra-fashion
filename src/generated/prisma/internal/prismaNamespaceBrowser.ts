@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Product: 'Product',
+  ProductImages: 'ProductImages',
   ProductVariant: 'ProductVariant',
   Cart: 'Cart',
   CartItem: 'CartItem',
@@ -88,7 +89,6 @@ export const ProductScalarFieldEnum = {
   compareAtPrice: 'compareAtPrice',
   sku: 'sku',
   category: 'category',
-  images: 'images',
   isFeatured: 'isFeatured',
   isNewArrival: 'isNewArrival',
   createdAt: 'createdAt',
@@ -96,6 +96,20 @@ export const ProductScalarFieldEnum = {
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ProductImagesScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  url: 'url',
+  publicId: 'publicId',
+  alt: 'alt',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductImagesScalarFieldEnum = (typeof ProductImagesScalarFieldEnum)[keyof typeof ProductImagesScalarFieldEnum]
 
 
 export const ProductVariantScalarFieldEnum = {

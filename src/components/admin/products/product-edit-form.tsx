@@ -24,7 +24,13 @@ type ProductEditFormProduct = {
     compareAtPrice: number | null;
     sku: string;
     category: string;
-    images: string[];
+    images: {
+        id: string;
+        url: string;
+        publicId: string;
+        alt: string | null;
+        sortOrder: number;
+    }[];
     isFeatured: boolean;
     isNewArrival: boolean;
     variants: {

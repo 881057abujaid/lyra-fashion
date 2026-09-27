@@ -6,17 +6,38 @@ type GetproductsOption = {
     sort?: "featured" | "newest" | "price-low" | "price-high";
 };
 
+const productImages = {
+    orderBy: {
+        sortOrder: "asc" as const,
+    },
+    select: {
+        url: true,
+    },
+};
+
+function mapProductImages<
+    T extends {
+        images: {
+            url: string;
+        }[];
+    }
+>(product: T) {
+    return {
+        ...product,
+        images: product.images.map((image) => image.url),
+    };
+}
+
 export async function getProducts(options: GetproductsOption = {}) {
     const { search, category, sort = "newest" } = options;
 
-    return prisma.product.findMany({
+    const products = await prisma.product.findMany({
         where: {
             ...(category
                 ? {
                     category,
                 }
-                : {}
-            ),
+                : {}),
             ...(search
                 ? {
                     OR: [
@@ -40,10 +61,10 @@ export async function getProducts(options: GetproductsOption = {}) {
                         },
                     ],
                 }
-                : {}
-            ),
+                : {}),
         },
         include: {
+            images: productImages,
             variants: true,
         },
         orderBy:
@@ -63,20 +84,32 @@ export async function getProducts(options: GetproductsOption = {}) {
                             createdAt: "desc",
                         },
     });
+
+    return products.map(mapProductImages);
 }
 
 export async function getProductBySlug(slug: string) {
-    return prisma.product.findUnique({
+    const product = await prisma.product.findUnique({
         where: {
             slug,
         },
         include: {
+            images: productImages,
             variants: true,
         },
     });
+
+    if (!product) {
+        return null;
+    }
+
+    return mapProductImages(product);
 }
 
-export async function getRelatedProducts(productId: string, category: string) {
+export async function getRelatedProducts(
+    productId: string,
+    category: string
+) {
     const sameCategoryProducts = await prisma.product.findMany({
         where: {
             category,
@@ -85,6 +118,7 @@ export async function getRelatedProducts(productId: string, category: string) {
             },
         },
         include: {
+            images: productImages,
             variants: true,
         },
         orderBy: {
@@ -93,8 +127,11 @@ export async function getRelatedProducts(productId: string, category: string) {
         take: 4,
     });
 
-    if (sameCategoryProducts.length >= 4) {
-        return sameCategoryProducts;
+    const mappedSameCategoryProducts =
+        sameCategoryProducts.map(mapProductImages);
+
+    if (mappedSameCategoryProducts.length >= 4) {
+        return mappedSameCategoryProducts;
     }
 
     const remainingProducts = await prisma.product.findMany({
@@ -107,16 +144,20 @@ export async function getRelatedProducts(productId: string, category: string) {
             },
         },
         include: {
+            images: productImages,
             variants: true,
         },
         orderBy: {
             createdAt: "desc",
         },
-        take: 4 - sameCategoryProducts.length,
+        take: 4 - mappedSameCategoryProducts.length,
     });
 
+    const mappedRemainingProducts =
+        remainingProducts.map(mapProductImages);
+
     return [
-        ...sameCategoryProducts,
-        ...remainingProducts,
+        ...mappedSameCategoryProducts,
+        ...mappedRemainingProducts,
     ];
 }

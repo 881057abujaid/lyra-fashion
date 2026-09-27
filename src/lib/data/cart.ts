@@ -5,7 +5,18 @@ const cartInclude = {
         include: {
             variant: {
                 include: {
-                    product: true,
+                    product: {
+                        include: {
+                            images: {
+                                orderBy: {
+                                    sortOrder: "asc" as const,
+                                },
+                                select: {
+                                    url: true,
+                                }
+                            },
+                        },
+                    },
                 },
             },
         },

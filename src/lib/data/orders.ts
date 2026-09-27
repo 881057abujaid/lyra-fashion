@@ -81,7 +81,18 @@ export async function createOrderFromCart(userId: string, input: CreateOrderInpu
                     include: {
                         variant: {
                             include: {
-                                product: true,
+                                product: {
+                                    include: {
+                                        images: {
+                                            orderBy: {
+                                                sortOrder: "asc",
+                                            },
+                                            select: {
+                                                url: true,
+                                            },
+                                        },
+                                    },
+                                },
                             },
                         },
                     },
@@ -171,7 +182,7 @@ export async function createOrderFromCart(userId: string, input: CreateOrderInpu
                         size: item.variant.size,
                         quantity: item.quantity,
                         image:
-                            item.variant.product.images[0] ?? "",
+                            item.variant.product.images[0]?.url ?? "",
                     })),
                 },
             },

@@ -39,7 +39,7 @@ export async function getCurrentCart(): Promise<CartView | null> {
             variantId: item.variant.id,
             name: item.variant.product.name,
             price: item.variant.product.price,
-            image: item.variant.product.images[0] ?? "",
+            image: item.variant.product.images[0]?.url ?? "",
             quantity: item.quantity,
             size: item.variant.size,
             stock: item.variant.stock,

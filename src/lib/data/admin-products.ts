@@ -125,7 +125,14 @@ export async function getAdminProducts(
                 price: true,
                 compareAtPrice: true,
                 category: true,
-                images: true,
+                images: {
+                    orderBy: {
+                        sortOrder: "asc",
+                    },
+                    select: {
+                        url: true,
+                    },
+                },
                 isFeatured: true,
                 isNewArrival: true,
                 createdAt: true,
@@ -147,7 +154,10 @@ export async function getAdminProducts(
     ]);
 
     return {
-        products,
+        products: products.map((product) => ({
+            ...product,
+            images: product.images.map((image) => image.url),
+        })),
         total,
         page: safePage,
         pageSize: safePageSize,
@@ -183,7 +193,18 @@ export async function getAdminProductById(id: string) {
             compareAtPrice: true,
             sku: true,
             category: true,
-            images: true,
+            images: {
+                orderBy: {
+                    sortOrder: "asc",
+                },
+                select: {
+                    id: true,
+                    url: true,
+                    publicId: true,
+                    alt: true,
+                    sortOrder: true,
+                },
+            },
             isFeatured: true,
             isNewArrival: true,
 
