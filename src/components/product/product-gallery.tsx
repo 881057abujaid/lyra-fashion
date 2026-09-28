@@ -3,12 +3,20 @@
 import Image from "next/image";
 import { useState } from "react";
 
+type ProductGalleryImage = {
+    url: string;
+    alt: string | null;
+};
+
 type ProductGalleryProps = {
-    images: string[];
+    images: ProductGalleryImage[];
     name: string;
 };
 
-export function ProductGallery({ images, name }: ProductGalleryProps) {
+export function ProductGallery({
+    images,
+    name,
+}: ProductGalleryProps) {
     const [selectedImage, setSelectedImage] = useState(0);
 
     if (!images.length) {
@@ -17,14 +25,19 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
         );
     }
 
+    const selectedImageData = images[selectedImage];
+
     return (
         <div className="space-y-3">
             {/* Main Image */}
             <div className="relative aspect-3/4 overflow-hidden bg-lyra-beige">
                 <Image
-                    key={images[selectedImage]}
-                    src={images[selectedImage]}
-                    alt={`${name} ${selectedImage + 1}`}
+                    key={selectedImageData.url}
+                    src={selectedImageData.url}
+                    alt={
+                        selectedImageData.alt ??
+                        `${name} ${selectedImage + 1}`
+                    }
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 60vw"
@@ -32,7 +45,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
                 />
             </div>
 
-            {/* Thumbnail */}
+            {/* Thumbnails */}
             {images.length > 1 && (
                 <div className="flex gap-3 overflow-x-auto pb-1">
                     {images.map((image, index) => {
@@ -40,18 +53,18 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
 
                         return (
                             <button
-                                key={`${image}-${index}`}
+                                key={`${image.url}-${index}`}
                                 type="button"
                                 onClick={() => setSelectedImage(index)}
-                                aria-label={`view image ${index + 1}`}
+                                aria-label={`View image ${index + 1}`}
                                 aria-pressed={isSelected}
                                 className={`relative h-24 w-20 shrink-0 overflow-hidden bg-lyra-beige transition-opacity ${isSelected
-                                    ? "opacity-100"
-                                    : "opacity-55 hover:opacity-85"
+                                        ? "opacity-100"
+                                        : "opacity-55 hover:opacity-85"
                                     }`}
                             >
                                 <Image
-                                    src={image}
+                                    src={image.url}
                                     alt=""
                                     fill
                                     sizes="80px"

@@ -44,14 +44,14 @@ export default async function ProductPage({
                         compareAtPrice={product.compareAtPrice}
                         category={product.category}
                         description={product.description}
-                        image={product.images[0] ?? ""}
+                        image={product.images[0].url ?? ""}
                     />
 
                     <ProductPurchase
                         productId={product.id}
                         name={product.name}
                         price={product.price}
-                        image={product.images[0] ?? ""}
+                        image={product.images[0].url ?? ""}
                         variants={product.variants}
                     />
                 </div>

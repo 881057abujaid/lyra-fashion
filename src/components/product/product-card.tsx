@@ -15,7 +15,10 @@ type ProductCardProps = {
         price: number;
         compareAtPrice: number | null;
         category: string;
-        images: string[];
+        images: {
+            url: string;
+            alt: string | null;
+        }[];
         isNewArrival: boolean;
     };
 };
@@ -37,7 +40,7 @@ export function ProductCard({
                 productId: product.id,
                 name: product.name,
                 price: product.price,
-                image: product.images[0] ?? "",
+                image: product.images[0].url ?? "",
                 slug: product.slug,
             })
         );
@@ -50,7 +53,7 @@ export function ProductCard({
                     <div className="relative aspect-3/4 overflow-hidden bg-lyra-beige">
                         {product.images[0] && (
                             <Image
-                                src={product.images[0]}
+                                src={product.images[0].url}
                                 alt={product.name}
                                 fill
                                 sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 300px"

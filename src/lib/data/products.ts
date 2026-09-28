@@ -12,6 +12,7 @@ const productImages = {
     },
     select: {
         url: true,
+        alt: true,
     },
 };
 
@@ -19,12 +20,16 @@ function mapProductImages<
     T extends {
         images: {
             url: string;
+            alt: string | null;
         }[];
-    }
+    },
 >(product: T) {
     return {
         ...product,
-        images: product.images.map((image) => image.url),
+        images: product.images.map((image) => ({
+            url: image.url,
+            alt: image.alt,
+        })),
     };
 }
 
