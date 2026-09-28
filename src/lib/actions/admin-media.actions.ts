@@ -315,3 +315,52 @@ export async function reorderAdminProductImages(
         success: true,
     };
 }
+
+export async function updateAdminProductImageAlt(
+    productId: string,
+    imageId: string,
+    alt: string,
+) {
+    await requireAdmin();
+
+    if (!productId) {
+        throw new Error("Prodcut ID is required");
+    }
+
+    if (!imageId) {
+        throw new Error("Image ID is required");
+    }
+
+    const normalizedAlt = alt.trim();
+
+    if (normalizedAlt.length > 200) {
+        throw new Error("Alt text must be 200 characters or less");
+    }
+
+    const image = await prisma.productImages.findFirst({
+        where: {
+            id: imageId,
+            productId,
+        },
+        select: {
+            id: true,
+        },
+    });
+
+    if (!image) {
+        throw new Error("Image not found");
+    }
+
+    await prisma.productImages.update({
+        where: {
+            id: image.id,
+        },
+        data: {
+            alt: normalizedAlt || null,
+        },
+    });
+
+    return {
+        success: true,
+    };
+}

@@ -16,10 +16,10 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import Image from "next/image";
-import { Loader2, Star, Trash2, GripVertical } from "lucide-react";
+import { Loader2, Star, Trash2, GripVertical, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 
-import { reorderAdminProductImages } from "@/lib/actions/admin-media.actions";
+import { reorderAdminProductImages, updateAdminProductImageAlt } from "@/lib/actions/admin-media.actions";
 
 type ProductImage = {
     id: string;
@@ -42,13 +42,18 @@ function SortableImage({
     onDelete,
     isDeleting,
     isDeletingImageId,
+    onAltSave,
 }: {
     image: ProductImage;
     isPrimary: boolean;
     onDelete: (imageId: string) => void;
     isDeleting: boolean;
     isDeletingImageId?: string | null;
+    onAltSave: (imageId: string, alt: string) => Promise<void>;
 }) {
+    const [alt, setAlt] = useState(image.alt ?? "");
+    const [isSavingAlt, setIsSavingAlt] = useState(false);
+
     const {
         attributes,
         listeners,
@@ -90,15 +95,6 @@ function SortableImage({
 
             <button
                 type="button"
-                {...listeners}
-                aria-label={`Drag ${image.alt ?? "product image"}`}
-                className="absolute bottom-2 left-2 flex h-9 w-9 cursor-grab items-center justify-center bg-white/90 text-lyra-black shadow-sm active:cursor-grabbing"
-            >
-                <GripVertical className="h-4 w-4" />
-            </button>
-
-            <button
-                type="button"
                 onClick={() => onDelete(image.id)}
                 disabled={isDeleting}
                 aria-label={`Delete ${image.alt ?? "product image"}`}
@@ -109,6 +105,67 @@ function SortableImage({
                 ) : (
                     <Trash2 className="h-4 w-4" />
                 )}
+            </button>
+
+            <div className="border-t border-lyra-border bg-lyra-white p-3">
+                <label
+                    htmlFor={`alt-${image.id}`}
+                    className="mb-1.5 block text-xs font-medium text-lyra-black"
+                >
+                    ALt Text
+                </label>
+
+                <div className="flex gap-2">
+                    <input
+                        id={`alt-${image.id}`}
+                        type="text"
+                        value={alt}
+                        onChange={(event) => setAlt(event.target.value)}
+                        maxLength={200}
+                        placeholder="Describe this image"
+                        className="min-w-0 flex-1 border border-lyra-border bg-lyra-cream px-3 py-2 text-xs text-lyra-black outline-none transition focus:border-lyra-black"
+                    />
+
+                    <button
+                        type="button"
+                        disabled={isSavingAlt}
+                        onClick={async () => {
+                            setIsSavingAlt(true);
+
+                            try {
+                                await onAltSave(image.id, alt);
+                            } finally {
+                                setIsSavingAlt(false);
+                            }
+                        }}
+                        aria-label="Save alt text"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center border border-lyra-black bg-lyra-black text-lyra-white transition hover:text-lyra-black hover:bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                        {isSavingAlt ? (
+                            <Loader2 className="h-2 w-4 animate-spin" />
+                        ) : (
+                            <Check className="h-4 w-4" />
+                        )}
+                    </button>
+                </div>
+
+                <p className="mt-1 text-right text-[10px] text-lyra-subtle">
+                    {alt.length}/200
+                </p>
+            </div>
+
+            <button
+                type="button"
+                {...listeners}
+                aria-label={`Drag ${image.alt ?? "product image"}`}
+                className="flex h-10 w-full cursor-grab items-center justify-center border-t border-lyra-border bg-lyra-cream text-lyra-muted transition hover:bg-lyra-beige hover:text-lyra-black active:cursor-grabbing"
+            >
+                <div className="flex items-center justify-center gap-2">
+                    <GripVertical className="h-4 w-4" />
+                    <span className="text-[10px] font-medium uppercase tracking-[0.15em]">
+                        Drag to reorder
+                    </span>
+                </div>
             </button>
         </div>
     );
@@ -165,6 +222,28 @@ export function ProductMediaSortable({
 
             return arrayMove(currentImages, oldIndex, newIndex);
         });
+    }
+
+    async function handleAltSave(imageId: string, alt: string) {
+        setError(null);
+
+        try {
+            await updateAdminProductImageAlt(productId, imageId, alt);
+
+            setLocalImages((currentImages) =>
+                currentImages.map((image) =>
+                    image.id === imageId
+                        ? {
+                            ...image,
+                            alt: alt.trim() || null,
+                        }
+                        : image,
+                ),
+            );
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "Failed to save alt text.");
+            throw error;
+        }
     }
 
     async function handleSaveOrder() {
@@ -229,6 +308,7 @@ export function ProductMediaSortable({
                                 isDeleting={
                                     isDeletingImageId === image.id
                                 }
+                                onAltSave={handleAltSave}
                             />
                         ))}
                     </div>
