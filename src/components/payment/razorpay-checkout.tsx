@@ -53,6 +53,10 @@ export function RazorpayCheckout({
                             razorpaySignature: response.razorpay_signature,
                         });
 
+                        if (!verifiedOrder) {
+                            throw new Error("Payment was verified, but the order could not be found");
+                        }
+
                         setPaymentStatus("success");
 
                         window.location.href = `/order-success?order=${verifiedOrder.orderNumber}`;

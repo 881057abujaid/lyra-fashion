@@ -306,13 +306,32 @@ export async function verifyRazorpayPayment(
         return order;
     }
 
-    return prisma.order.update({
+    if (order.paymentStatus !== "PENDING" || order.status !== "PENDING") {
+        throw new Error("This order is no longer available for payment");
+    }
+
+    const updatedOrder = await prisma.order.updateMany({
         where: {
             id: order.id,
+            paymentStatus: "PENDING",
+            status: "PENDING",
         },
         data: {
             paymentStatus: "PAID",
             status: "CONFIRMED",
+        },
+    });
+
+    if (updatedOrder.count === 0) {
+        throw new Error("This order is no longer available for payment");
+    }
+
+    return prisma.order.findUnique({
+        where: {
+            id: order.id,
+        },
+        include: {
+            items: true,
         },
     });
 }
@@ -414,5 +433,127 @@ export async function getRazorpayOrderPaymentStatus(
     return {
         order,
         payments: payments.items,
+    };
+}
+
+export async function expirePendingOrders() {
+    const now = new Date();
+
+    const expiredOrders = await prisma.order.findMany({
+        where: {
+            status: "PENDING",
+            paymentStatus: "PENDING",
+            paymentExpiresAt: {
+                lte: now,
+            },
+        },
+        include: {
+            items: true,
+        },
+    });
+
+    let expiredCount = 0;
+
+    for (const order of expiredOrders) {
+        /*
+         * Before releasing stock, check Razorpay.
+         *
+         * A payment may have succeeded even though
+         * our application has not processed the callback yet.
+         */
+        if (order.razorpayOrderId) {
+            try {
+                const payments = await razorpay.orders.fetchPayments(
+                    order.razorpayOrderId
+                );
+
+                const successfulPayment = payments.items.find(
+                    (payment) => payment.status === "captured"
+                );
+
+                if (successfulPayment) {
+                    await prisma.order.updateMany({
+                        where: {
+                            id: order.id,
+                            status: "PENDING",
+                            paymentStatus: "PENDING",
+                        },
+                        data: {
+                            paymentStatus: "PAID",
+                            status: "CONFIRMED",
+                        },
+                    });
+
+                    continue;
+                }
+            } catch (error) {
+                console.error(
+                    `Failed to check Razorpay payment for order ${order.orderNumber}:`,
+                    error
+                );
+
+                /*
+                 * If Razorpay cannot be checked, do not release
+                 * stock blindly. The order can be checked again
+                 * during the next expiration run.
+                 */
+                continue;
+            }
+        }
+
+        /*
+         * Atomically transition the order and restore stock.
+         *
+         * If any stock update fails, the entire transaction
+         * rolls back, including the order state change.
+         */
+        const expired = await prisma.$transaction(async (tx) => {
+            const updatedOrder = await tx.order.updateMany({
+                where: {
+                    id: order.id,
+                    status: "PENDING",
+                    paymentStatus: "PENDING",
+                },
+                data: {
+                    paymentStatus: "FAILED",
+                    status: "CANCELLED",
+                },
+            });
+
+            /*
+             * Another process already handled this order.
+             * Do not restore stock again.
+             */
+            if (updatedOrder.count === 0) {
+                return false;
+            }
+
+            /*
+             * This transaction successfully claimed the order
+             * for expiration, so it owns stock restoration.
+             */
+            for (const item of order.items) {
+                await tx.productVariant.update({
+                    where: {
+                        id: item.variantId,
+                    },
+                    data: {
+                        stock: {
+                            increment: item.quantity,
+                        },
+                    },
+                });
+            }
+
+            return true;
+        });
+
+        if (expired) {
+            expiredCount++;
+        }
+    }
+
+    return {
+        expiredCount,
     };
 }

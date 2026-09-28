@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { Minus, Plus, X } from "lucide-react";
 import {
     useAppDispatch,
@@ -295,13 +296,13 @@ export function CartDrawer({
                         checkout.
                     </p>
 
-                    <button
-                        type="button"
-                        disabled={cartItems.length === 0}
-                        className="mt-6 w-full bg-lyra-black px-6 py-4 text-xs uppercase tracking-[0.18em] text-lyra-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
+                    <Link
+                        href="/checkout"
+                        onClick={(e) => cartItems.length === 0 && e.preventDefault()}
+                        className={`mt-6 block w-full  px-6 py-4 text-xs text-center uppercase tracking-[0.18em] text-lyra-white transition-opacity hover:opacity-80 ${cartItems.length === 0 ? "bg-lyra-border cursor-not-allowed" : "bg-lyra-black cursor-pointer"}`}
                     >
                         Checkout
-                    </button>
+                    </Link>
                 </footer>
             </aside>
         </div>
