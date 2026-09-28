@@ -13,6 +13,7 @@ import {
 } from "@/validations/admin-product";
 import { updateAdminProduct } from "@/lib/actions/admin-product.actions";
 
+import { ProductMediaEditor } from "./product-media-editor";
 import { ProductVariantEditEditor } from "./product-variant-edit-editor";
 
 type ProductEditFormProduct = {
@@ -359,11 +360,32 @@ export function ProductEditForm({
                     </div>
                 </section>
 
-                {/* Variants */}
+                {/* Media */}
                 <section className="border border-lyra-border bg-lyra-white">
                     <div className="border-b border-lyra-border px-5 py-5 sm:px-6">
                         <p className="text-[10px] uppercase tracking-[0.25em] text-lyra-muted">
                             04
+                        </p>
+
+                        <h2 className="mt-1 font-display text-xl">
+                            Media
+                        </h2>
+
+                        <p className="mt-1 text-sm text-lyra-muted">
+                            Add and manage product images.
+                        </p>
+                    </div>
+
+                    <div className="p-5 sm:p-6">
+                        <ProductMediaEditor productId={product.id} images={product.images} />
+                    </div>
+                </section>
+
+                {/* Variants */}
+                <section className="border border-lyra-border bg-lyra-white">
+                    <div className="border-b border-lyra-border px-5 py-5 sm:px-6">
+                        <p className="text-[10px] uppercase tracking-[0.25em] text-lyra-muted">
+                            05
                         </p>
 
                         <h2 className="mt-1 font-display text-xl">
