@@ -159,6 +159,7 @@ export async function createOrderFromCart(userId: string, input: CreateOrderInpu
 
                 status: "PENDING",
                 paymentStatus: "PENDING",
+                paymentExpiresAt: new Date(Date.now() + 15 * 60 * 1000),
 
                 subtotal,
                 shipping,
@@ -340,11 +341,27 @@ export async function makeOrderPaymentFailed(
             throw new Error("A paid order cannot be marked as failed");
         }
 
-        // Already failed/cancelled = nothing to restore again.
-        if (order.paymentStatus === "FAILED" || order.status === "CANCELLED") {
+        // Atomically transition the order to FAILED/CANCELLED.
+        // Only a still-pending order can make this transition.
+        const updatedOrder = await tx.order.updateMany({
+            where: {
+                id: order.id,
+                paymentStatus: "PENDING",
+                status: "PENDING",
+            },
+            data: {
+                paymentStatus: "FAILED",
+                status: "CANCELLED",
+            },
+        });
+
+        // Another request already handled this order.
+        if (updatedOrder.count === 0) {
             return order;
         }
 
+        // This request successfully owned the state transition,
+        // so it is responsible for releasing the reserved stock.
         for (const item of order.items) {
             if (!item.variantId) {
                 continue;
@@ -362,13 +379,9 @@ export async function makeOrderPaymentFailed(
             });
         }
 
-        return tx.order.update({
+        return tx.order.findUnique({
             where: {
                 id: order.id,
-            },
-            data: {
-                paymentStatus: "FAILED",
-                status: "CANCELLED",
             },
             include: {
                 items: true,

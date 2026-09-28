@@ -35,27 +35,47 @@ export async function getCart(sessionId: string) {
     });
 }
 
-export async function createCart(sessionId: string) {
+export async function createCart(
+    sessionId: string,
+    userId?: string,
+) {
     return prisma.cart.create({
         data: {
             sessionId,
+            userId,
         },
         include: cartInclude,
     });
 }
 
-export async function getOrCreateCart(sessionId: string) {
+export async function getOrCreateCart(
+    sessionId: string,
+    userId?: string,
+) {
     const existingCart = await getCart(sessionId);
 
     if (existingCart) {
+        // Attach an existing guest cart to the logged-in user.
+        if (userId && !existingCart.userId) {
+            return prisma.cart.update({
+                where: {
+                    id: existingCart.id,
+                },
+                data: {
+                    userId,
+                },
+                include: cartInclude,
+            });
+        }
+
         return existingCart;
     }
 
-    return createCart(sessionId);
+    return createCart(sessionId, userId);
 }
 
-export async function addCartItem(sessionId: string, variantId: string, quantity: number) {
-    const cart = await getOrCreateCart(sessionId);
+export async function addCartItem(sessionId: string, variantId: string, quantity: number, userId?: string) {
+    const cart = await getOrCreateCart(sessionId, userId);
 
     const variant = await prisma.productVariant.findUnique({
         where: {

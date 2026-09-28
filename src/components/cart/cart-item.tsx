@@ -73,13 +73,21 @@ export function CartItem({ variantId, name, price, image, quantity, size, stock 
         <article className="flex gap-5 border-b border-lyra-border py-6">
             {/* Product Image */}
             <div className="relative h-36 w-28 shrink-0 overflow-hidden bg-lyra-beige sm:h-44 sm:w-36">
-                <Image
-                    src={image}
-                    alt={name}
-                    fill
-                    sizes="144px"
-                    className="object-cover"
-                />
+                {image ? (
+                    <Image
+                        src={image}
+                        alt={name}
+                        fill
+                        sizes="144px"
+                        className="object-cover"
+                    />
+                ) : (
+                    <div className="flex h-full w-full items-center justify-center">
+                        <span className="text-[10px] uppercase tracking-[0.14em] text-lyra-muted">
+                            No Image
+                        </span>
+                    </div>
+                )}
             </div>
 
             {/* Product Details */}

@@ -13,11 +13,22 @@ const addToCartSchema = z.object({
 });
 
 export async function addToCartAction(variantId: string, quantity: number) {
-    const validatedData = addToCartSchema.parse({ variantId, quantity, });
+    const validatedData = addToCartSchema.parse({
+        variantId,
+        quantity,
+    });
+
+    const session = await auth();
+    const userId = session?.user?.id;
 
     const sessionId = await getOrCreateCartSession();
 
-    const cart = await addCartItem(sessionId, validatedData.variantId, validatedData.quantity);
+    const cart = await addCartItem(
+        sessionId,
+        validatedData.variantId,
+        validatedData.quantity,
+        userId,
+    );
 
     revalidatePath("/cart");
 
