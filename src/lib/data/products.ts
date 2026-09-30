@@ -249,3 +249,63 @@ export async function getBestSellingProducts(limit = 4) {
         )
         .map(mapProductImages);
 }
+
+export async function getProductCategories() {
+    const products = await prisma.product.findMany({
+        where: {
+            category: {
+                not: "",
+            },
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+        select: {
+            category: true,
+            images: {
+                orderBy: {
+                    sortOrder: "asc",
+                },
+                take: 1,
+                select: {
+                    url: true,
+                    alt: true,
+                },
+            },
+        },
+    });
+
+    const categoryMap = new Map<
+        string,
+        {
+            category: string;
+            image: {
+                url: string;
+                alt: string | null;
+            } | null;
+        }
+    >();
+
+    for (const product of products) {
+        const existing = categoryMap.get(product.category);
+        const image = product.images[0] ?? null;
+
+        if (!existing) {
+            categoryMap.set(product.category, {
+                category: product.category,
+                image,
+            });
+
+            continue;
+        }
+
+        if (!existing.image && image) {
+            categoryMap.set(product.category, {
+                category: product.category,
+                image,
+            });
+        }
+    }
+
+    return Array.from(categoryMap.values());
+}
