@@ -1,6 +1,7 @@
 import { getActiveHeroBanners } from "@/lib/data/hero-banners";
 import { NewArrivalsSection } from "@/components/storefront/home/new-arrivals-section";
 import { HeroBannerSlider } from "@/components/storefront/home/hero-banner-slider";
+import { BestSellersSection } from "@/components/storefront/home/best-sellers-section";
 
 export default async function Home() {
   const banners = await getActiveHeroBanners();
@@ -18,6 +19,8 @@ export default async function Home() {
       <HeroBannerSlider banners={banners} />
 
       <NewArrivalsSection />
+
+      <BestSellersSection />
     </main>
   );
 }

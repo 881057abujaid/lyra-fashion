@@ -191,3 +191,61 @@ export async function getNewArrivalProducts(limit = 4) {
 
     return products.map(mapProductImages);
 }
+
+export async function getBestSellingProducts(limit = 4) {
+    const bestSellers = await prisma.orderItem.groupBy({
+        by: ["productId"],
+        where: {
+            order: {
+                paymentStatus: "PAID",
+            },
+        },
+        _sum: {
+            quantity: true,
+        },
+        orderBy: {
+            _sum: {
+                quantity: "desc",
+            },
+        },
+        take: limit,
+    });
+
+    if (bestSellers.length === 0) {
+        return [];
+    }
+
+    const productIds = bestSellers.map((item) => item.productId);
+
+    const products = await prisma.product.findMany({
+        where: {
+            id: {
+                in: productIds,
+            },
+        },
+        select: {
+            id: true,
+            name: true,
+            slug: true,
+            price: true,
+            compareAtPrice: true,
+            category: true,
+            isNewArrival: true,
+            images: productImages,
+        },
+    });
+
+    const productMap = new Map(
+        products.map((product) => [product.id, product]),
+    );
+
+    return bestSellers
+        .map((item) => productMap.get(item.productId))
+        .filter(
+            (
+                product,
+            ): product is NonNullable<typeof product> =>
+                Boolean(product),
+        )
+        .map(mapProductImages);
+}
