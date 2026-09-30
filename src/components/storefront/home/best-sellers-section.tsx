@@ -29,7 +29,7 @@ export async function BestSellersSection() {
                     </div>
 
                     <Link
-                        href="/collections"
+                        href="/best-sellers"
                         className="w-fit border-b border-lyra-black pb-1 text-[10px] uppercase tracking-[0.16em] text-lyra-black transition-opacity hover:opacity-60"
                     >
                         View All
