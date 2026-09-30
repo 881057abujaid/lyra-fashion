@@ -309,3 +309,27 @@ export async function getProductCategories() {
 
     return Array.from(categoryMap.values());
 }
+
+export async function getFeaturedProducts(limit = 4) {
+    const products = await prisma.product.findMany({
+        where: {
+            isFeatured: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+        take: limit,
+        select: {
+            id: true,
+            name: true,
+            slug: true,
+            price: true,
+            compareAtPrice: true,
+            category: true,
+            isNewArrival: true,
+            images: productImages,
+        },
+    });
+
+    return products.map(mapProductImages);
+}
