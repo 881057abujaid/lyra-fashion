@@ -1,5 +1,6 @@
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 
 export default function StorefrontLayout({
     children,
@@ -11,6 +12,7 @@ export default function StorefrontLayout({
             <AnnouncementBar />
             <Navbar />
             {children}
+            <Footer />
         </>
     );
 }
