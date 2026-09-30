@@ -166,3 +166,28 @@ export async function getRelatedProducts(
         ...mappedRemainingProducts,
     ];
 }
+
+export async function getNewArrivalProducts(limit = 4) {
+    const products = await prisma.product.findMany({
+        where: {
+            isNewArrival: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+        take: limit,
+        select: {
+            id: true,
+            name: true,
+            slug: true,
+            description: true,
+            price: true,
+            compareAtPrice: true,
+            category: true,
+            images: productImages,
+            isNewArrival: true,
+        },
+    });
+
+    return products.map(mapProductImages);
+}

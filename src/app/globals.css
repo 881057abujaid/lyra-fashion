@@ -35,3 +35,17 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
 }
+
+@keyframes lyraHeroFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.lyra-hero-fade {
+  animation: lyraHeroFade 700ms ease-in-out;
+}

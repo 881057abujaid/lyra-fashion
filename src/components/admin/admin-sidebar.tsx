@@ -8,6 +8,7 @@ import {
     Package,
     Boxes,
     Users,
+    PanelsTopLeft,
     ExternalLink,
     LogOut,
 } from "lucide-react";
@@ -28,6 +29,11 @@ const navigation = [
         label: "Products",
         href: "/admin/products",
         icon: Package,
+    },
+    {
+        label: "Homepage",
+        href: "/admin/homepage",
+        icon: PanelsTopLeft,
     },
     {
         label: "Inventory",

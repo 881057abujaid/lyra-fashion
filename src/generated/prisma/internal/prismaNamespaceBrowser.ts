@@ -61,7 +61,8 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  HeroBanner: 'HeroBanner'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -238,6 +239,28 @@ export const OrderItemScalarFieldEnum = {
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const HeroBannerScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  subtitle: 'subtitle',
+  desktopImageUrl: 'desktopImageUrl',
+  desktopImagePublicId: 'desktopImagePublicId',
+  mobileImageUrl: 'mobileImageUrl',
+  mobileImagePublicId: 'mobileImagePublicId',
+  imageAlt: 'imageAlt',
+  ctaLabel: 'ctaLabel',
+  ctaHref: 'ctaHref',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HeroBannerScalarFieldEnum = (typeof HeroBannerScalarFieldEnum)[keyof typeof HeroBannerScalarFieldEnum]
 
 
 export const SortOrder = {
