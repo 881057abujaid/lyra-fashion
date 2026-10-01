@@ -62,6 +62,16 @@ export default async function AccountPage() {
                     <p className="mt-3 text-sm leading-6 text-lyra-muted">
                         Keep the pieces you love close at hand.
                     </p>
+
+                    <div className="mt-8">
+                        <Link
+                            href="/wishlist"
+                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black hover:text-lyra-primary transition-colors"
+                        >
+                            <span>View Saved Pieces</span>
+                            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="border border-lyra-border bg-lyra-white p-8">
