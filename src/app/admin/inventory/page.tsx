@@ -1,27 +1,6 @@
 import { getAdminInventory } from "@/lib/data/admin-inventory";
 import { InventoryTable } from "@/components/admin/inventory/inventory-table";
 
-function getStockStatus(stock: number) {
-    if (stock === 0) {
-        return {
-            label: "Out of Stock",
-            className: "text-red-600",
-        };
-    }
-
-    if (stock <= 5) {
-        return {
-            label: "Low Stock",
-            className: "text-amber-600",
-        };
-    }
-
-    return {
-        label: "In Stock",
-        className: "text-emerald-600",
-    };
-}
-
 export default async function AdminInventoryPage() {
     const products = await getAdminInventory();
 

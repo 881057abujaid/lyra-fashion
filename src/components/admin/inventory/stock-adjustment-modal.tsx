@@ -58,7 +58,7 @@ export function StockAdjustmentModal({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+            <div className="w-full max-w-md bg-white p-6 shadow-xl">
                 <div className="mb-6">
                     <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
                         Inventory
@@ -109,7 +109,7 @@ export function StockAdjustmentModal({
                             value={stock}
                             onChange={(event) => setStock(event.target.value)}
                             disabled={isPending}
-                            className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-900"
+                            className="w-full border border-neutral-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-900"
                         />
                     </div>
 
@@ -124,7 +124,7 @@ export function StockAdjustmentModal({
                             type="button"
                             onClick={onClose}
                             disabled={isPending}
-                            className="rounded-xl border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             Cancel
                         </button>
@@ -132,7 +132,7 @@ export function StockAdjustmentModal({
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="rounded-xl bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             {isPending ? "Updating..." : "Update Stock"}
                         </button>

@@ -50,7 +50,7 @@ export function InventoryTable({ products }: InventoryTableProps) {
 
     return (
         <>
-            <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+            <div className="overflow-hidden border border-neutral-200 bg-white">
                 <table className="w-full text-left">
                     <thead className="border-b border-neutral-200 bg-neutral-50">
                         <tr>
@@ -141,7 +141,7 @@ export function InventoryTable({ products }: InventoryTableProps) {
                                                         currentStock: variant.stock,
                                                     })
                                                 }
-                                                className="text-sm font-medium text-neutral-900 underline underline-offset-4 transition hover:text-neutral-500"
+                                                className="text-sm px-4 py-2 uppercase tracking-tight border border-lyra-black bg-lyra-black text-lyra-white transition-opacity hover:opacity-80"
                                             >
                                                 Edit Stock
                                             </button>
