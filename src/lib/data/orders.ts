@@ -247,8 +247,10 @@ export async function createRazorpayOrder(
         throw new Error("Order not found");
     }
 
-    if (order.paymentStatus === "PAID") {
-        throw new Error("Order is already paid");
+    if (order.status !== "PENDING" || order.paymentStatus !== "PENDING") {
+        throw new Error(
+            "This order is no longer available for payment. Please place a new order."
+        );
     }
 
     if (order.razorpayOrderId) {
