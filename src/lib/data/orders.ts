@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { prisma } from "../prisma";
 import { razorpay } from "../razorpay";
 import type { CreateOrderInput as CreateOrderInputAction } from "../actions/order.actions";
@@ -153,7 +154,7 @@ export async function createOrderFromCart(userId: string, input: CreateOrderInpu
 
         const order = await tx.order.create({
             data: {
-                orderNumber: `LYRA-${Date.now()}`,
+                orderNumber: `LYRA-${Date.now()}-${crypto.randomBytes(2).toString("hex").toUpperCase()}`,
 
                 userId,
 
