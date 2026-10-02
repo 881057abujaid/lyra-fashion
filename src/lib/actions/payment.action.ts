@@ -50,10 +50,12 @@ export async function verifyRazorpayPaymentAction(input: verifyRazorpayPaymentIn
         .update(`${razorpayOrderId}|${razorpayPaymentId}`)
         .digest("hex");
 
-    const isSignatureValid = crypto.timingSafeEqual(
-        Buffer.from(generateaSignature),
-        Buffer.from(razorpaySignature),
-    );
+    const expectedBuffer = Buffer.from(generateaSignature, "utf-8");
+    const actualBuffer = Buffer.from(razorpaySignature, "utf-8");
+
+    const isSignatureValid =
+        expectedBuffer.length === actualBuffer.length &&
+        crypto.timingSafeEqual(expectedBuffer, actualBuffer);
 
     if (!isSignatureValid) {
         throw new Error("Payment signature verification failed");
