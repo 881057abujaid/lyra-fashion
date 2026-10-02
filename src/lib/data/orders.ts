@@ -584,6 +584,14 @@ export async function confirmRazorpayPaymentFromWebhook(
     });
 
     if (updatedOrder.count === 0) {
+        const freshOrder = await tx.order.findUnique({
+            where: { id: order.id },
+        });
+
+        if (freshOrder?.paymentStatus === "PAID") {
+            return freshOrder;
+        }
+
         throw new Error(
             "Order payment state changed during webhook processing",
         );
