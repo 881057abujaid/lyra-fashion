@@ -527,17 +527,38 @@ export async function expirePendingOrders() {
 export async function confirmRazorpayPaymentFromWebhook(
     tx: Prisma.TransactionClient,
     razorpayOrderId: string,
+    razorpayAmount: number,
+    razorpayCurrency: string,
+    razorpayStatus: string,
 ) {
     const order = await tx.order.findFirst({
-        where: {
-            razorpayOrderId,
-        },
+        where: { razorpayOrderId },
     });
 
     if (!order) {
         throw new Error("Order not found for Razorpay webhook");
     }
 
+    // Validate the signed Razorpay webhook payload
+    // before changing the order payment state.
+    const expectedAmount = Math.round(order.total * 100);
+
+    if (razorpayAmount !== expectedAmount) {
+        throw new Error(
+            "Razorpay payment amount does not match order total",
+        );
+    }
+
+    if (razorpayCurrency !== "INR") {
+        throw new Error("Unsupported Razorpay payment currency");
+    }
+
+    if (razorpayStatus !== "captured") {
+        throw new Error("Razorpay payment is not captured");
+    }
+
+    // Idempotency: if this order is already paid,
+    // don't process it again.
     if (order.paymentStatus === "PAID") {
         return order;
     }
@@ -564,16 +585,12 @@ export async function confirmRazorpayPaymentFromWebhook(
 
     if (updatedOrder.count === 0) {
         throw new Error(
-            "Order payment state changed during webhook processing"
+            "Order payment state changed during webhook processing",
         );
     }
 
     return tx.order.findUnique({
-        where: {
-            id: order.id,
-        },
-        include: {
-            items: true,
-        },
+        where: { id: order.id },
+        include: { items: true },
     });
 }

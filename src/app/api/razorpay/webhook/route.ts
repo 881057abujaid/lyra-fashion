@@ -42,6 +42,9 @@ export async function POST(request: Request) {
                 entity?: {
                     id?: string;
                     order_id?: string;
+                    amount?: number;
+                    currency?: string;
+                    status?: string;
                 };
             };
         };
@@ -67,14 +70,27 @@ export async function POST(request: Request) {
     }
 
     let razorpayOrderId: string | undefined;
+    let razorpayAmount: number | undefined;
+    let razorpayCurrency: string | undefined;
+    let razorpayStatus: string | undefined;
+
 
     if (event === "payment.captured") {
         const payment = payload.payload?.payment?.entity;
 
         razorpayOrderId = payment?.order_id;
         const razorpayPaymentId = payment?.id;
+        razorpayAmount = payment?.amount;
+        razorpayCurrency = payment?.currency;
+        razorpayStatus = payment?.status;
 
-        if (!razorpayOrderId || !razorpayPaymentId) {
+        if (
+            !razorpayOrderId ||
+            !razorpayPaymentId ||
+            typeof razorpayAmount !== "number" ||
+            typeof razorpayCurrency !== "string" ||
+            typeof razorpayStatus !== "string"
+        ) {
             return NextResponse.json(
                 { error: "Invalid payment webhook payload" },
                 { status: 400 }
@@ -101,6 +117,9 @@ export async function POST(request: Request) {
             await confirmRazorpayPaymentFromWebhook(
                 tx,
                 razorpayOrderId,
+                razorpayAmount!,
+                razorpayCurrency!,
+                razorpayStatus!,
             );
         }
 
