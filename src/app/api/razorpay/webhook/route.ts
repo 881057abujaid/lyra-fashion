@@ -98,35 +98,48 @@ export async function POST(request: Request) {
         }
     }
 
-    const result = await prisma.$transaction(async (tx) => {
-        const eventResult = await tx.razorpayWebhookEvent.createMany({
-            data: {
-                eventId,
-                event,
-            },
-            skipDuplicates: true,
-        });
+    let result: {
+        duplicate: boolean;
+    };
 
-        if (eventResult.count === 0) {
+    try {
+        result = await prisma.$transaction(async (tx) => {
+            const eventResult = await tx.razorpayWebhookEvent.createMany({
+                data: {
+                    eventId,
+                    event,
+                },
+                skipDuplicates: true,
+            });
+
+            if (eventResult.count === 0) {
+                return {
+                    duplicate: true,
+                };
+            }
+
+            if (event === "payment.captured" && razorpayOrderId) {
+                await confirmRazorpayPaymentFromWebhook(
+                    tx,
+                    razorpayOrderId,
+                    razorpayAmount!,
+                    razorpayCurrency!,
+                    razorpayStatus!,
+                );
+            }
+
             return {
-                duplicate: true,
+                duplicate: false,
             };
-        }
+        });
+    } catch (error) {
+        console.error("Razorpay webhook processing failed:", error);
 
-        if (event === "payment.captured" && razorpayOrderId) {
-            await confirmRazorpayPaymentFromWebhook(
-                tx,
-                razorpayOrderId,
-                razorpayAmount!,
-                razorpayCurrency!,
-                razorpayStatus!,
-            );
-        }
-
-        return {
-            duplicate: false,
-        };
-    });
+        return NextResponse.json(
+            { error: "Webhook processing failed" },
+            { status: 500 }
+        );
+    }
 
     if (result.duplicate) {
         return NextResponse.json({
