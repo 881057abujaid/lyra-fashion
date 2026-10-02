@@ -39,7 +39,7 @@ export async function createOrder(input: CreateOrderInput) {
 
             userId: input.userId,
 
-            customerName: input.customerEmail,
+            customerName: input.customerName,
             customerEmail: input.customerEmail,
             customerPhone: input.customerPhone,
 
