@@ -51,7 +51,7 @@ export function LoginForm() {
             dispatch(hydrateCart(cartItem));
         }
 
-        window.location.href = "/account";
+        window.location.href = "/shop";
     }
 
     return (
