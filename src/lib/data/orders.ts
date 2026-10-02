@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { prisma } from "../prisma";
+import type { Prisma } from "@/generated/prisma/client";
 import { razorpay } from "../razorpay";
 import type { CreateOrderInput as CreateOrderInputAction } from "../actions/order.actions";
 
@@ -524,10 +525,10 @@ export async function expirePendingOrders() {
 }
 
 export async function confirmRazorpayPaymentFromWebhook(
+    tx: Prisma.TransactionClient,
     razorpayOrderId: string,
-    razorpayPaymentId: string,
 ) {
-    const order = await prisma.order.findFirst({
+    const order = await tx.order.findFirst({
         where: {
             razorpayOrderId,
         },
@@ -548,7 +549,7 @@ export async function confirmRazorpayPaymentFromWebhook(
         throw new Error("Order is no longer pending payment");
     }
 
-    const updatedOrder = await prisma.order.updateMany({
+    const updatedOrder = await tx.order.updateMany({
         where: {
             id: order.id,
             razorpayOrderId,
@@ -562,10 +563,12 @@ export async function confirmRazorpayPaymentFromWebhook(
     });
 
     if (updatedOrder.count === 0) {
-        throw new Error("Order payment state changed during webhook processing");
+        throw new Error(
+            "Order payment state changed during webhook processing"
+        );
     }
 
-    return prisma.order.findUnique({
+    return tx.order.findUnique({
         where: {
             id: order.id,
         },

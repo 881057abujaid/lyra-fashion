@@ -66,30 +66,12 @@ export async function POST(request: Request) {
         );
     }
 
-    const existingEvent = await prisma.razorpayWebhookEvent.findUnique({
-        where: {
-            eventId,
-        },
-    });
-
-    if (existingEvent) {
-        return NextResponse.json({
-            received: true,
-            duplicate: true,
-        });
-    }
-
-    await prisma.razorpayWebhookEvent.create({
-        data: {
-            eventId,
-            event,
-        },
-    });
+    let razorpayOrderId: string | undefined;
 
     if (event === "payment.captured") {
         const payment = payload.payload?.payment?.entity;
 
-        const razorpayOrderId = payment?.order_id;
+        razorpayOrderId = payment?.order_id;
         const razorpayPaymentId = payment?.id;
 
         if (!razorpayOrderId || !razorpayPaymentId) {
@@ -98,11 +80,40 @@ export async function POST(request: Request) {
                 { status: 400 }
             );
         }
+    }
 
-        await confirmRazorpayPaymentFromWebhook(
-            razorpayOrderId,
-            razorpayPaymentId,
-        );
+    const result = await prisma.$transaction(async (tx) => {
+        const eventResult = await tx.razorpayWebhookEvent.createMany({
+            data: {
+                eventId,
+                event,
+            },
+            skipDuplicates: true,
+        });
+
+        if (eventResult.count === 0) {
+            return {
+                duplicate: true,
+            };
+        }
+
+        if (event === "payment.captured" && razorpayOrderId) {
+            await confirmRazorpayPaymentFromWebhook(
+                tx,
+                razorpayOrderId,
+            );
+        }
+
+        return {
+            duplicate: false,
+        };
+    });
+
+    if (result.duplicate) {
+        return NextResponse.json({
+            received: true,
+            duplicate: true,
+        });
     }
 
     return NextResponse.json({
