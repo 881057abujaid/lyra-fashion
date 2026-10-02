@@ -47,7 +47,7 @@ export default async function CheckoutPage() {
                 </section>
 
                 <aside>
-                    <div className="borde-b border-lyra-border pb-8">
+                    <div className="border-b border-lyra-border pb-8">
                         <p className="text-xs uppercase tracking-[0.18em]">
                             Your Order
                         </p>
