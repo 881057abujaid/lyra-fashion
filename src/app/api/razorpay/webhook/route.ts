@@ -1,7 +1,10 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { confirmRazorpayPaymentFromWebhook } from "@/lib/data/orders";
+import {
+    confirmRazorpayPaymentFromWebhook,
+    WebhookValidationError,
+} from "@/lib/data/orders";
 
 export async function POST(request: Request) {
     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
@@ -74,7 +77,6 @@ export async function POST(request: Request) {
     let razorpayCurrency: string | undefined;
     let razorpayStatus: string | undefined;
 
-
     if (event === "payment.captured") {
         const payment = payload.payload?.payment?.entity;
 
@@ -88,6 +90,9 @@ export async function POST(request: Request) {
             !razorpayOrderId ||
             !razorpayPaymentId ||
             typeof razorpayAmount !== "number" ||
+            !Number.isFinite(razorpayAmount) ||
+            !Number.isInteger(razorpayAmount) ||
+            razorpayAmount <= 0 ||
             typeof razorpayCurrency !== "string" ||
             typeof razorpayStatus !== "string"
         ) {
@@ -100,6 +105,7 @@ export async function POST(request: Request) {
 
     let result: {
         duplicate: boolean;
+        validationError?: string;
     };
 
     try {
@@ -113,26 +119,38 @@ export async function POST(request: Request) {
             });
 
             if (eventResult.count === 0) {
-                return {
-                    duplicate: true,
-                };
+                return { duplicate: true };
             }
 
             if (event === "payment.captured" && razorpayOrderId) {
-                await confirmRazorpayPaymentFromWebhook(
-                    tx,
-                    razorpayOrderId,
-                    razorpayAmount!,
-                    razorpayCurrency!,
-                    razorpayStatus!,
-                );
+                try {
+                    await confirmRazorpayPaymentFromWebhook(
+                        tx,
+                        razorpayOrderId,
+                        razorpayAmount!,
+                        razorpayCurrency!,
+                        razorpayStatus!,
+                    );
+                } catch (err) {
+                    if (err instanceof WebhookValidationError) {
+                        // Permanent business condition — event is already persisted.
+                        // Do NOT rethrow; let the transaction commit the event record.
+                        console.error(
+                            "Razorpay webhook validation error (event recorded, payment not processed):",
+                            err.message,
+                        );
+                        return { duplicate: false, validationError: err.message };
+                    }
+                    // Transient/unexpected error — rethrow to roll back the transaction
+                    // so Razorpay can retry.
+                    throw err;
+                }
             }
 
-            return {
-                duplicate: false,
-            };
+            return { duplicate: false };
         });
     } catch (error) {
+        // Transient failure: transaction rolled back, Razorpay will retry.
         console.error("Razorpay webhook processing failed:", error);
 
         return NextResponse.json(
@@ -145,6 +163,13 @@ export async function POST(request: Request) {
         return NextResponse.json({
             received: true,
             duplicate: true,
+        });
+    }
+
+    if (result.validationError) {
+        return NextResponse.json({
+            received: true,
+            ignored: true,
         });
     }
 

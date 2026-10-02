@@ -7,6 +7,13 @@ import type { CreateOrderInput as CreateOrderInputAction } from "../actions/orde
 const FREE_SHIPPING_THRESHOLD = 1499;
 const SHIPPING_FEE = 99;
 
+export class WebhookValidationError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = "WebhookValidationError";
+    }
+}
+
 type CreateOrderInput = {
     userId: string;
 
@@ -536,7 +543,9 @@ export async function confirmRazorpayPaymentFromWebhook(
     });
 
     if (!order) {
-        throw new Error("Order not found for Razorpay webhook");
+        throw new WebhookValidationError(
+            "Order not found for Razorpay webhook",
+        );
     }
 
     // Validate the signed Razorpay webhook payload
@@ -544,17 +553,21 @@ export async function confirmRazorpayPaymentFromWebhook(
     const expectedAmount = Math.round(order.total * 100);
 
     if (razorpayAmount !== expectedAmount) {
-        throw new Error(
+        throw new WebhookValidationError(
             "Razorpay payment amount does not match order total",
         );
     }
 
     if (razorpayCurrency !== "INR") {
-        throw new Error("Unsupported Razorpay payment currency");
+        throw new WebhookValidationError(
+            "Unsupported Razorpay payment currency",
+        );
     }
 
     if (razorpayStatus !== "captured") {
-        throw new Error("Razorpay payment is not captured");
+        throw new WebhookValidationError(
+            "Razorpay payment is not captured",
+        );
     }
 
     // Idempotency: if this order is already paid,
@@ -567,7 +580,12 @@ export async function confirmRazorpayPaymentFromWebhook(
         order.paymentStatus !== "PENDING" ||
         order.status !== "PENDING"
     ) {
-        throw new Error("Order is no longer pending payment");
+        console.error(
+            `[CRITICAL_PAYMENT_MISMATCH] Payment captured (${razorpayAmount} ${razorpayCurrency}) for order ${order.orderNumber} with non-pending status (status: ${order.status}, paymentStatus: ${order.paymentStatus}). Order was NOT updated. Manual reconciliation required.`,
+        );
+        throw new WebhookValidationError(
+            "Order is no longer pending payment",
+        );
     }
 
     const updatedOrder = await tx.order.updateMany({
@@ -599,6 +617,5 @@ export async function confirmRazorpayPaymentFromWebhook(
 
     return tx.order.findUnique({
         where: { id: order.id },
-        include: { items: true },
     });
 }
