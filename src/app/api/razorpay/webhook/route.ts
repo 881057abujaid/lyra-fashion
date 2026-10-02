@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: Request) {
     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
@@ -33,5 +34,51 @@ export async function POST(request: Request) {
         );
     }
 
-    return NextResponse.json({ received: true });
+    let payload: {
+        event?: string;
+        id?: string;
+    };
+
+    try {
+        payload = JSON.parse(rawBody);
+    } catch {
+        return NextResponse.json(
+            { error: "Invalid JSON" },
+            { status: 400 }
+        );
+    }
+
+    const eventId = payload.id;
+    const event = payload.event;
+
+    if (!eventId || !event) {
+        return NextResponse.json(
+            { error: "Invalid webhook payload" },
+            { status: 400 }
+        );
+    }
+
+    const existingEvent = await prisma.razorpayWebhookEvent.findUnique({
+        where: {
+            eventId,
+        },
+    });
+
+    if (existingEvent) {
+        return NextResponse.json({
+            received: true,
+            duplicate: true,
+        });
+    }
+
+    await prisma.razorpayWebhookEvent.create({
+        data: {
+            eventId,
+            event,
+        },
+    });
+
+    return NextResponse.json({
+        received: true,
+    });
 }
