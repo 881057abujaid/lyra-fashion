@@ -250,23 +250,23 @@ export async function updateAdminOrderStatus(orderId: string, nextStatus: OrderS
 
         if (nextStatus === "CANCELLED") {
             if (order.paymentStatus !== "PENDING") {
-                throw new Error("Paid orders cannot be cancelled until refund refund support is available")
+                throw new Error("Paid orders cannot be cancelled until refund refund support is available");
             }
-        }
 
-        for (const item of order.items) {
-            if (!item.variantId) continue;
+            for (const item of order.items) {
+                if (!item.variantId) continue;
 
-            await tx.productVariant.update({
-                where: {
-                    id: item.variantId,
-                },
-                data: {
-                    stock: {
-                        increment: item.quantity,
+                await tx.productVariant.update({
+                    where: {
+                        id: item.variantId,
                     },
-                },
-            });
+                    data: {
+                        stock: {
+                            increment: item.quantity,
+                        },
+                    },
+                });
+            }
         }
 
         return await tx.order.update({
