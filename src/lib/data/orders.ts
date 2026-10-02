@@ -33,44 +33,6 @@ type CreateOrderInput = {
     }[];
 }
 
-export async function createOrder(input: CreateOrderInput) {
-    return prisma.order.create({
-        data: {
-            orderNumber: `LYRA-${Date.now()}`,
-
-            userId: input.userId,
-
-            customerName: input.customerName,
-            customerEmail: input.customerEmail,
-            customerPhone: input.customerPhone,
-
-            shippingAddress: input.shippingAddress,
-            shippingCity: input.shippingCity,
-            shippingState: input.shippingState,
-            shippingPincode: input.shippingPincode,
-
-            subtotal: input.subtotal,
-            shipping: input.shipping,
-            total: input.total,
-
-            items: {
-                create: input.items.map((item) => ({
-                    productId: item.productId,
-                    variantId: item.variantId,
-                    productName: item.productName,
-                    productPrice: item.productPrice,
-                    size: item.size,
-                    quantity: item.quantity,
-                    image: item.image,
-                })),
-            },
-        },
-        include: {
-            items: true,
-        },
-    });
-}
-
 export async function createOrderFromCart(userId: string, input: CreateOrderInputAction) {
     return prisma.$transaction(async (tx) => {
         const cart = await tx.cart.findFirst({
