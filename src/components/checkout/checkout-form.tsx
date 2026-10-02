@@ -6,6 +6,8 @@ import { createOrderAction } from "@/lib/actions/order.actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { RazorpayCheckout } from "../payment/razorpay-checkout";
+import { useAppDispatch } from "@/store/hooks";
+import { clearCart } from "@/store/slices/cart/cartSlice";
 
 const CheckoutSchema = z.object({
     customerName: z
@@ -84,6 +86,7 @@ const inputClassName =
     "w-full border-b border-lyra-border bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black";
 
 export function CheckoutForm() {
+    const dispatch = useAppDispatch();
     const [orderId, setOrderId] =
         useState<string | null>(null);
 
@@ -117,9 +120,9 @@ export function CheckoutForm() {
         setSubmitError(null);
 
         try {
-            const order =
-                await createOrderAction(data);
+            const order = await createOrderAction(data);
 
+            dispatch(clearCart());
             setOrderId(order.id);
         } catch (error) {
             console.error(
