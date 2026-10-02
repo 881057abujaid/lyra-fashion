@@ -21,16 +21,21 @@ export const {
     auth,
     signIn,
     signOut,
+    unstable_update,
 } = NextAuth({
     session: {
         strategy: "jwt",
     },
 
     callbacks: {
-        jwt({ token, user }) {
+        jwt({ token, user, trigger, session }) {
             if (user) {
                 token.id = user.id as string;
                 token.role = user.role;
+            }
+
+            if (trigger === "update" && session?.user?.name) {
+                token.name = session.user.name;
             }
 
             return token;

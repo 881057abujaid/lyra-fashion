@@ -86,6 +86,16 @@ export default async function AccountPage() {
                     <p className="mt-3 text-sm leading-6 text-lyra-muted">
                         Manage your account information and preferences.
                     </p>
+
+                    <div className="mt-8">
+                        <Link
+                            href="/account/details"
+                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black transition-colors hover:text-lyra-primary"
+                        >
+                            <span>View Personal Details</span>
+                            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                    </div>
                 </div>
             </div>
 
