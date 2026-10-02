@@ -59,7 +59,8 @@ export const ModelName = {
   User: 'User',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  HeroBanner: 'HeroBanner'
+  HeroBanner: 'HeroBanner',
+  RazorpayWebhookEvent: 'RazorpayWebhookEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -221,6 +222,16 @@ export const HeroBannerScalarFieldEnum = {
 } as const
 
 export type HeroBannerScalarFieldEnum = (typeof HeroBannerScalarFieldEnum)[keyof typeof HeroBannerScalarFieldEnum]
+
+
+export const RazorpayWebhookEventScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  event: 'event',
+  createdAt: 'createdAt'
+} as const
+
+export type RazorpayWebhookEventScalarFieldEnum = (typeof RazorpayWebhookEventScalarFieldEnum)[keyof typeof RazorpayWebhookEventScalarFieldEnum]
 
 
 export const SortOrder = {

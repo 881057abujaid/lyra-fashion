@@ -405,7 +405,8 @@ export const ModelName = {
   User: 'User',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  HeroBanner: 'HeroBanner'
+  HeroBanner: 'HeroBanner',
+  RazorpayWebhookEvent: 'RazorpayWebhookEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -421,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "product" | "productImages" | "productVariant" | "cart" | "cartItem" | "user" | "order" | "orderItem" | "heroBanner"
+    modelProps: "product" | "productImages" | "productVariant" | "cart" | "cartItem" | "user" | "order" | "orderItem" | "heroBanner" | "razorpayWebhookEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1091,6 +1092,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RazorpayWebhookEvent: {
+      payload: Prisma.$RazorpayWebhookEventPayload<ExtArgs>
+      fields: Prisma.RazorpayWebhookEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RazorpayWebhookEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RazorpayWebhookEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>
+        }
+        findFirst: {
+          args: Prisma.RazorpayWebhookEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RazorpayWebhookEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>
+        }
+        findMany: {
+          args: Prisma.RazorpayWebhookEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>[]
+        }
+        create: {
+          args: Prisma.RazorpayWebhookEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>
+        }
+        createMany: {
+          args: Prisma.RazorpayWebhookEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RazorpayWebhookEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>[]
+        }
+        delete: {
+          args: Prisma.RazorpayWebhookEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>
+        }
+        update: {
+          args: Prisma.RazorpayWebhookEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.RazorpayWebhookEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RazorpayWebhookEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RazorpayWebhookEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.RazorpayWebhookEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookEventPayload>
+        }
+        aggregate: {
+          args: Prisma.RazorpayWebhookEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRazorpayWebhookEvent>
+        }
+        groupBy: {
+          args: Prisma.RazorpayWebhookEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RazorpayWebhookEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RazorpayWebhookEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RazorpayWebhookEventCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1273,6 +1348,16 @@ export const HeroBannerScalarFieldEnum = {
 } as const
 
 export type HeroBannerScalarFieldEnum = (typeof HeroBannerScalarFieldEnum)[keyof typeof HeroBannerScalarFieldEnum]
+
+
+export const RazorpayWebhookEventScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  event: 'event',
+  createdAt: 'createdAt'
+} as const
+
+export type RazorpayWebhookEventScalarFieldEnum = (typeof RazorpayWebhookEventScalarFieldEnum)[keyof typeof RazorpayWebhookEventScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1569,6 +1654,7 @@ export type GlobalOmitConfig = {
   order?: Prisma.OrderOmit
   orderItem?: Prisma.OrderItemOmit
   heroBanner?: Prisma.HeroBannerOmit
+  razorpayWebhookEvent?: Prisma.RazorpayWebhookEventOmit
 }
 
 /* Types for Logging */

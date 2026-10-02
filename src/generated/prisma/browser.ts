@@ -62,3 +62,8 @@ export type OrderItem = Prisma.OrderItemModel
  * 
  */
 export type HeroBanner = Prisma.HeroBannerModel
+/**
+ * Model RazorpayWebhookEvent
+ * 
+ */
+export type RazorpayWebhookEvent = Prisma.RazorpayWebhookEventModel

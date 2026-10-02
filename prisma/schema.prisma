@@ -206,3 +206,10 @@ model HeroBanner {
   @@index([isActive, sortOrder])
   @@index([startAt, endAt])
 }
+
+model RazorpayWebhookEvent {
+  id        String   @id @default(cuid())
+  eventId   String   @unique
+  event     String
+  createdAt DateTime @default(now())
+}
