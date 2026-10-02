@@ -114,7 +114,7 @@ export function RazorpayCheckout({
                                 setError(
                                     failedPayment?.error_description ||
                                     lastFailedPaymentErrorRef.current ||
-                                    "Payment failed. Please try again with a different payment method."
+                                    "Payment failed.Please place a new order to try again."
                                 );
                             } else {
                                 // User simply closed the modal without attempting or failing payment.
@@ -167,16 +167,21 @@ export function RazorpayCheckout({
             <button
                 type="button"
                 onClick={handlePayment}
-                disabled={isLoading || paymentStatus === "processing" || paymentStatus === "success"}
+                disabled={
+                    isLoading ||
+                    paymentStatus === "processing" ||
+                    paymentStatus === "success" ||
+                    paymentStatus === "failed"
+                }
                 className="bg-lyra-black px-6 py-3 text-xs uppercase tracking-[0.16em] text-lyra-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
             >
                 {paymentStatus === "processing"
                     ? "Processing..."
                     : paymentStatus === "success"
-                    ? "Redirecting..."
-                    : paymentStatus === "failed"
-                    ? "Retry Payment"
-                    : "Pay Now"}
+                        ? "Redirecting..."
+                        : paymentStatus === "failed"
+                            ? "Payment Failed"
+                            : "Pay Now"}
             </button>
             {error && (
                 <p className="mt-4 text-center text-xs text-red-600">
