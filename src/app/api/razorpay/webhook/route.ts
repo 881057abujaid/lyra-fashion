@@ -48,7 +48,7 @@ export async function POST(request: Request) {
         );
     }
 
-    const eventId = payload.id;
+    const eventId = request.headers.get("x-razorpay-event-id");
     const event = payload.event;
 
     if (!eventId || !event) {
