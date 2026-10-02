@@ -522,3 +522,55 @@ export async function expirePendingOrders() {
         expiredCount,
     };
 }
+
+export async function confirmRazorpayPaymentFromWebhook(
+    razorpayOrderId: string,
+    razorpayPaymentId: string,
+) {
+    const order = await prisma.order.findFirst({
+        where: {
+            razorpayOrderId,
+        },
+    });
+
+    if (!order) {
+        throw new Error("Order not found for Razorpay webhook");
+    }
+
+    if (order.paymentStatus === "PAID") {
+        return order;
+    }
+
+    if (
+        order.paymentStatus !== "PENDING" ||
+        order.status !== "PENDING"
+    ) {
+        throw new Error("Order is no longer pending payment");
+    }
+
+    const updatedOrder = await prisma.order.updateMany({
+        where: {
+            id: order.id,
+            razorpayOrderId,
+            paymentStatus: "PENDING",
+            status: "PENDING",
+        },
+        data: {
+            paymentStatus: "PAID",
+            status: "CONFIRMED",
+        },
+    });
+
+    if (updatedOrder.count === 0) {
+        throw new Error("Order payment state changed during webhook processing");
+    }
+
+    return prisma.order.findUnique({
+        where: {
+            id: order.id,
+        },
+        include: {
+            items: true,
+        },
+    });
+}

@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { confirmRazorpayPaymentFromWebhook } from "@/lib/data/orders";
 
 export async function POST(request: Request) {
     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
@@ -36,7 +37,14 @@ export async function POST(request: Request) {
 
     let payload: {
         event?: string;
-        id?: string;
+        payload?: {
+            payment?: {
+                entity?: {
+                    id?: string;
+                    order_id?: string;
+                };
+            };
+        };
     };
 
     try {
@@ -77,6 +85,25 @@ export async function POST(request: Request) {
             event,
         },
     });
+
+    if (event === "payment.captured") {
+        const payment = payload.payload?.payment?.entity;
+
+        const razorpayOrderId = payment?.order_id;
+        const razorpayPaymentId = payment?.id;
+
+        if (!razorpayOrderId || !razorpayPaymentId) {
+            return NextResponse.json(
+                { error: "Invalid payment webhook payload" },
+                { status: 400 }
+            );
+        }
+
+        await confirmRazorpayPaymentFromWebhook(
+            razorpayOrderId,
+            razorpayPaymentId,
+        );
+    }
 
     return NextResponse.json({
         received: true,
