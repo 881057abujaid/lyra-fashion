@@ -40,7 +40,7 @@ export function ProductCard({
                 productId: product.id,
                 name: product.name,
                 price: product.price,
-                image: product.images[0].url ?? "",
+                image: product.images[0]?.url ?? "",
                 slug: product.slug,
             })
         );
