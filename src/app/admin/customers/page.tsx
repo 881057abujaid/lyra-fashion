@@ -32,29 +32,29 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
     return (
         <div className="space-y-8 max-w-7xl mx-auto mt-6 px-4 sm:px-6 lg:px-8">
             <div>
-                <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                     Customers
                 </p>
 
-                <h1 className="mt-2 font-serif text-3xl text-neutral-900">
+                <h1 className="mt-2 font-display text-3xl text-lyra-black">
                     Customer Management
                 </h1>
 
-                <p className="mt-2 text-sm text-neutral-500">
+                <p className="mt-2 text-sm text-lyra-muted">
                     View customers, order activity, and spending history.
                 </p>
             </div>
 
             <form
                 method="GET"
-                className="flex items-center gap-3 border border-neutral-200 bg-white p-4"
+                className="flex items-center gap-3 border border-lyra-border bg-lyra-white p-4"
             >
                 <input
                     type="search"
                     name="search"
                     defaultValue={search}
                     placeholder="Search by customer name or email..."
-                    className="min-w-0 flex-1 border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-neutral-400 focus:border-neutral-900"
+                    className="min-w-0 flex-1 border border-lyra-border bg-lyra-white px-4 py-3 text-sm outline-none transition placeholder:text-neutral-400 focus:border-neutral-900"
                 />
 
                 <button
@@ -65,27 +65,27 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                 </button>
             </form>
 
-            <div className="overflow-hidden border border-neutral-200 bg-white">
+            <div className="overflow-hidden border border-lyra-border bg-lyra-white">
                 <table className="w-full text-left">
-                    <thead className="border-b border-neutral-200 bg-neutral-50">
+                    <thead className="border-b border-lyra-border bg-lyra-cream">
                         <tr>
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Customer
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Email
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Orders
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Total Spent
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Joined
                             </th>
                         </tr>
@@ -96,7 +96,7 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                             <tr>
                                 <td
                                     colSpan={5}
-                                    className="px-6 py-12 text-center text-sm text-neutral-500"
+                                    className="px-6 py-12 text-center text-sm text-lyra-muted"
                                 >
                                     No customers found.
                                 </td>
@@ -105,18 +105,18 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                             customers.map((customer) => (
                                 <tr
                                     key={customer.id}
-                                    className="transition hover:bg-neutral-50"
+                                    className="transition hover:bg-lyra-cream"
                                 >
                                     <td className="px-6 py-4">
                                         <Link
                                             href={`/admin/customers/${customer.id}`}
-                                            className="font-medium text-neutral-900 transition hover:text-neutral-500"
+                                            className="font-medium text-lyra-black transition hover:text-lyra-muted"
                                         >
                                             {customer.name || "Unnamed Customer"}
                                         </Link>
                                     </td>
 
-                                    <td className="px-6 py-4 text-sm text-neutral-500">
+                                    <td className="px-6 py-4 text-sm text-lyra-muted">
                                         {customer.email || "—"}
                                     </td>
 
@@ -124,11 +124,11 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                                         {customer.orderCount}
                                     </td>
 
-                                    <td className="px-6 py-4 text-sm font-medium text-neutral-900">
+                                    <td className="px-6 py-4 text-sm font-medium text-lyra-black">
                                         {formatCurrency(customer.totalSpent)}
                                     </td>
 
-                                    <td className="px-6 py-4 text-sm text-neutral-500">
+                                    <td className="px-6 py-4 text-sm text-lyra-muted">
                                         {formatDate(customer.createdAt)}
                                     </td>
                                 </tr>

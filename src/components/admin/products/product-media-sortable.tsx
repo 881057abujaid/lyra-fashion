@@ -98,7 +98,7 @@ function SortableImage({
                 onClick={() => onDelete(image.id)}
                 disabled={isDeleting}
                 aria-label={`Delete ${image.alt ?? "product image"}`}
-                className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center bg-white/90 text-lyra-black shadow-sm transition hover:bg-lyra-black hover:text-lyra-white disabled:cursor-not-allowed disabled:opacity-50"
+                className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center bg-lyra-white/90 text-lyra-black shadow-sm transition hover:bg-lyra-black hover:text-lyra-white disabled:cursor-not-allowed disabled:opacity-50"
             >
                 {isDeleting ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

@@ -137,7 +137,7 @@ export function HeroBannerMetadataEditor({
             {/* ================================
                 Basic Information
             ================================= */}
-            <section className="border border-lyra-border bg-white">
+            <section className="border border-lyra-border bg-lyra-white">
                 <div className="border-b border-lyra-border px-6 py-5">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-subtle">
                         Hero Content
@@ -225,7 +225,7 @@ export function HeroBannerMetadataEditor({
             {/* ================================
                 Call To Action
             ================================= */}
-            <section className="border border-lyra-border bg-white">
+            <section className="border border-lyra-border bg-lyra-white">
                 <div className="border-b border-lyra-border px-6 py-5">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-subtle">
                         Action
@@ -284,7 +284,7 @@ export function HeroBannerMetadataEditor({
             {/* ================================
                 Scheduling
             ================================= */}
-            <section className="border border-lyra-border bg-white">
+            <section className="border border-lyra-border bg-lyra-white">
                 <div className="border-b border-lyra-border px-6 py-5">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-subtle">
                         Visibility
@@ -346,7 +346,7 @@ export function HeroBannerMetadataEditor({
             {/* ================================
                 Status
             ================================= */}
-            <section className="border border-lyra-border bg-white">
+            <section className="border border-lyra-border bg-lyra-white">
                 <div className="border-b border-lyra-border px-6 py-5">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-subtle">
                         Visibility

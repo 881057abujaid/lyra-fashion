@@ -125,7 +125,7 @@ export function HeroBannerSlider({
                         <div className="w-full px-6 sm:px-10 lg:px-16">
                             <div className="max-w-xl">
                                 {banner.title && (
-                                    <h1 className="font-serif text-4xl leading-tight tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
+                                    <h1 className="font-display text-4xl leading-tight tracking-tight text-lyra-black sm:text-5xl lg:text-6xl">
                                         {banner.title}
                                     </h1>
                                 )}
@@ -157,7 +157,7 @@ export function HeroBannerSlider({
                         type="button"
                         onClick={goToPrevious}
                         aria-label="Previous hero banner"
-                        className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center bg-white/80 backdrop-blur-sm transition hover:bg-white sm:left-6"
+                        className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center bg-lyra-white/80 backdrop-blur-sm transition hover:bg-lyra-white sm:left-6"
                     >
                         <ChevronLeft
                             size={18}
@@ -169,7 +169,7 @@ export function HeroBannerSlider({
                         type="button"
                         onClick={goToNext}
                         aria-label="Next hero banner"
-                        className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center bg-white/80 backdrop-blur-sm transition hover:bg-white sm:right-6"
+                        className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center bg-lyra-white/80 backdrop-blur-sm transition hover:bg-lyra-white sm:right-6"
                     >
                         <ChevronRight
                             size={18}

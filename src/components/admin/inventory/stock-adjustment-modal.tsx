@@ -58,35 +58,35 @@ export function StockAdjustmentModal({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-            <div className="w-full max-w-md bg-white p-6 shadow-xl">
+            <div className="w-full max-w-md bg-lyra-white p-6 shadow-xl">
                 <div className="mb-6">
-                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                         Inventory
                     </p>
 
-                    <h2 className="mt-2 font-serif text-2xl text-neutral-900">
+                    <h2 className="mt-2 font-display text-2xl text-lyra-black">
                         Update Stock
                     </h2>
                 </div>
 
-                <div className="mb-6 space-y-2 rounded-xl bg-neutral-50 p-4 text-sm">
+                <div className="mb-6 space-y-2 rounded-xl bg-lyra-cream p-4 text-sm">
                     <div className="flex justify-between gap-4">
-                        <span className="text-neutral-500">Product</span>
-                        <span className="text-right font-medium text-neutral-900">
+                        <span className="text-lyra-muted">Product</span>
+                        <span className="text-right font-medium text-lyra-black">
                             {productName}
                         </span>
                     </div>
 
                     <div className="flex justify-between gap-4">
-                        <span className="text-neutral-500">Size</span>
-                        <span className="font-medium text-neutral-900">
+                        <span className="text-lyra-muted">Size</span>
+                        <span className="font-medium text-lyra-black">
                             {size}
                         </span>
                     </div>
 
                     <div className="flex justify-between gap-4">
-                        <span className="text-neutral-500">Current Stock</span>
-                        <span className="font-medium text-neutral-900">
+                        <span className="text-lyra-muted">Current Stock</span>
+                        <span className="font-medium text-lyra-black">
                             {currentStock}
                         </span>
                     </div>
@@ -96,7 +96,7 @@ export function StockAdjustmentModal({
                     <div>
                         <label
                             htmlFor="stock"
-                            className="mb-2 block text-sm font-medium text-neutral-900"
+                            className="mb-2 block text-sm font-medium text-lyra-black"
                         >
                             New Stock
                         </label>
@@ -109,7 +109,7 @@ export function StockAdjustmentModal({
                             value={stock}
                             onChange={(event) => setStock(event.target.value)}
                             disabled={isPending}
-                            className="w-full border border-neutral-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-900"
+                            className="w-full border border-neutral-300 bg-lyra-white px-4 py-3 text-sm outline-none transition focus:border-neutral-900"
                         />
                     </div>
 
@@ -124,7 +124,7 @@ export function StockAdjustmentModal({
                             type="button"
                             onClick={onClose}
                             disabled={isPending}
-                            className="border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-lyra-cream disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             Cancel
                         </button>

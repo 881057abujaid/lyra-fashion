@@ -50,31 +50,31 @@ export function InventoryTable({ products }: InventoryTableProps) {
 
     return (
         <>
-            <div className="overflow-hidden border border-neutral-200 bg-white">
+            <div className="overflow-hidden border border-lyra-border bg-lyra-white">
                 <table className="w-full text-left">
-                    <thead className="border-b border-neutral-200 bg-neutral-50">
+                    <thead className="border-b border-lyra-border bg-lyra-cream">
                         <tr>
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Product
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 SKU
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Variant
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Stock
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Status
                             </th>
 
-                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-neutral-500">
+                            <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-lyra-muted">
                                 Action
                             </th>
                         </tr>
@@ -85,11 +85,11 @@ export function InventoryTable({ products }: InventoryTableProps) {
                             if (product.variants.length === 0) {
                                 return (
                                     <tr key={product.id}>
-                                        <td className="px-6 py-4 font-medium text-neutral-900">
+                                        <td className="px-6 py-4 font-medium text-lyra-black">
                                             {product.name}
                                         </td>
 
-                                        <td className="px-6 py-4 text-sm text-neutral-500">
+                                        <td className="px-6 py-4 text-sm text-lyra-muted">
                                             {product.sku}
                                         </td>
 
@@ -108,11 +108,11 @@ export function InventoryTable({ products }: InventoryTableProps) {
 
                                 return (
                                     <tr key={variant.id}>
-                                        <td className="px-6 py-4 font-medium text-neutral-900">
+                                        <td className="px-6 py-4 font-medium text-lyra-black">
                                             {index === 0 ? product.name : "—"}
                                         </td>
 
-                                        <td className="px-6 py-4 text-sm text-neutral-500">
+                                        <td className="px-6 py-4 text-sm text-lyra-muted">
                                             {index === 0 ? product.sku : "—"}
                                         </td>
 
@@ -120,7 +120,7 @@ export function InventoryTable({ products }: InventoryTableProps) {
                                             {variant.size}
                                         </td>
 
-                                        <td className="px-6 py-4 text-sm font-medium text-neutral-900">
+                                        <td className="px-6 py-4 text-sm font-medium text-lyra-black">
                                             {variant.stock}
                                         </td>
 

@@ -1,18 +1,18 @@
 export default function PrivacyPage() {
     return (
-        <main className="bg-white">
+        <main className="bg-lyra-white">
             {/* Hero */}
-            <section className="border-b border-neutral-200 px-6 py-20 md:px-10 md:py-28">
+            <section className="border-b border-lyra-border px-6 py-20 md:px-10 md:py-28">
                 <div className="mx-auto max-w-5xl text-center">
-                    <p className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-500">
+                    <p className="text-xs font-medium uppercase tracking-[0.25em] text-lyra-muted">
                         Privacy
                     </p>
 
-                    <h1 className="mt-5 font-serif text-4xl leading-tight text-neutral-900 md:text-6xl">
+                    <h1 className="mt-5 font-display text-4xl leading-tight text-lyra-black md:text-6xl">
                         Your privacy matters.
                     </h1>
 
-                    <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-neutral-600">
+                    <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-lyra-muted">
                         This page explains how LYRA may collect and use
                         information when you use our store.
                     </p>
@@ -25,15 +25,15 @@ export default function PrivacyPage() {
                     <div className="space-y-12">
                         {/* Introduction */}
                         <section>
-                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                                 01
                             </p>
 
-                            <h2 className="mt-3 font-serif text-3xl text-neutral-900">
+                            <h2 className="mt-3 font-display text-3xl text-lyra-black">
                                 Information we collect
                             </h2>
 
-                            <div className="mt-5 space-y-4 text-sm leading-7 text-neutral-600">
+                            <div className="mt-5 space-y-4 text-sm leading-7 text-lyra-muted">
                                 <p>
                                     When you create an account, place an order,
                                     or interact with LYRA, we may collect
@@ -49,16 +49,16 @@ export default function PrivacyPage() {
                         </section>
 
                         {/* Use */}
-                        <section className="border-t border-neutral-200 pt-12">
-                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                        <section className="border-t border-lyra-border pt-12">
+                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                                 02
                             </p>
 
-                            <h2 className="mt-3 font-serif text-3xl text-neutral-900">
+                            <h2 className="mt-3 font-display text-3xl text-lyra-black">
                                 How we use information
                             </h2>
 
-                            <div className="mt-5 space-y-4 text-sm leading-7 text-neutral-600">
+                            <div className="mt-5 space-y-4 text-sm leading-7 text-lyra-muted">
                                 <p>
                                     Information may be used to process orders,
                                     provide customer support, maintain your
@@ -75,16 +75,16 @@ export default function PrivacyPage() {
                         </section>
 
                         {/* Payments */}
-                        <section className="border-t border-neutral-200 pt-12">
-                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                        <section className="border-t border-lyra-border pt-12">
+                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                                 03
                             </p>
 
-                            <h2 className="mt-3 font-serif text-3xl text-neutral-900">
+                            <h2 className="mt-3 font-display text-3xl text-lyra-black">
                                 Payments
                             </h2>
 
-                            <div className="mt-5 text-sm leading-7 text-neutral-600">
+                            <div className="mt-5 text-sm leading-7 text-lyra-muted">
                                 <p>
                                     Payment processing is handled through the
                                     payment services integrated with LYRA.
@@ -96,16 +96,16 @@ export default function PrivacyPage() {
                         </section>
 
                         {/* Security */}
-                        <section className="border-t border-neutral-200 pt-12">
-                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                        <section className="border-t border-lyra-border pt-12">
+                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                                 04
                             </p>
 
-                            <h2 className="mt-3 font-serif text-3xl text-neutral-900">
+                            <h2 className="mt-3 font-display text-3xl text-lyra-black">
                                 Data security
                             </h2>
 
-                            <div className="mt-5 text-sm leading-7 text-neutral-600">
+                            <div className="mt-5 text-sm leading-7 text-lyra-muted">
                                 <p>
                                     We take reasonable measures to protect
                                     information associated with your LYRA
@@ -117,16 +117,16 @@ export default function PrivacyPage() {
                         </section>
 
                         {/* Cookies */}
-                        <section className="border-t border-neutral-200 pt-12">
-                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                        <section className="border-t border-lyra-border pt-12">
+                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                                 05
                             </p>
 
-                            <h2 className="mt-3 font-serif text-3xl text-neutral-900">
+                            <h2 className="mt-3 font-display text-3xl text-lyra-black">
                                 Cookies and similar technologies
                             </h2>
 
-                            <div className="mt-5 text-sm leading-7 text-neutral-600">
+                            <div className="mt-5 text-sm leading-7 text-lyra-muted">
                                 <p>
                                     LYRA may use cookies or similar
                                     technologies where necessary to support
@@ -137,16 +137,16 @@ export default function PrivacyPage() {
                         </section>
 
                         {/* Your choices */}
-                        <section className="border-t border-neutral-200 pt-12">
-                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                        <section className="border-t border-lyra-border pt-12">
+                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                                 06
                             </p>
 
-                            <h2 className="mt-3 font-serif text-3xl text-neutral-900">
+                            <h2 className="mt-3 font-display text-3xl text-lyra-black">
                                 Your information
                             </h2>
 
-                            <div className="mt-5 space-y-4 text-sm leading-7 text-neutral-600">
+                            <div className="mt-5 space-y-4 text-sm leading-7 text-lyra-muted">
                                 <p>
                                     If you have questions about information
                                     associated with your LYRA account or need
@@ -166,17 +166,17 @@ export default function PrivacyPage() {
             </section>
 
             {/* Closing */}
-            <section className="border-t border-neutral-200 bg-neutral-50 px-6 py-16 md:px-10 md:py-24">
+            <section className="border-t border-lyra-border bg-lyra-cream px-6 py-16 md:px-10 md:py-24">
                 <div className="mx-auto max-w-3xl text-center">
-                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                         LYRA
                     </p>
 
-                    <h2 className="mt-4 font-serif text-3xl text-neutral-900 md:text-4xl">
+                    <h2 className="mt-4 font-display text-3xl text-lyra-black md:text-4xl">
                         Transparency, by design.
                     </h2>
 
-                    <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-neutral-600">
+                    <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-lyra-muted">
                         We aim to keep our approach to customer information
                         clear and understandable.
                     </p>

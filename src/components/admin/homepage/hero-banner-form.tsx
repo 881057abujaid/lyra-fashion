@@ -276,7 +276,7 @@ export function HeroBannerForm() {
             {/* ================================
                 Media
             ================================= */}
-            <section className="border border-lyra-border bg-white">
+            <section className="border border-lyra-border bg-lyra-white">
                 <div className="border-b border-lyra-border px-6 py-5">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-subtle">
                         Media
@@ -442,7 +442,7 @@ export function HeroBannerForm() {
             {/* ================================
                 Basic Information
             ================================= */}
-            <section className="border border-lyra-border bg-white">
+            <section className="border border-lyra-border bg-lyra-white">
                 <div className="border-b border-lyra-border px-6 py-5">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-subtle">
                         Content
@@ -521,7 +521,7 @@ export function HeroBannerForm() {
             {/* ================================
                 CTA
             ================================= */}
-            <section className="border border-lyra-border bg-white">
+            <section className="border border-lyra-border bg-lyra-white">
                 <div className="border-b border-lyra-border px-6 py-5">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-subtle">
                         Action
@@ -576,7 +576,7 @@ export function HeroBannerForm() {
             {/* ================================
                 Scheduling
             ================================= */}
-            <section className="border border-lyra-border bg-white">
+            <section className="border border-lyra-border bg-lyra-white">
                 <div className="border-b border-lyra-border px-6 py-5">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-lyra-subtle">
                         Visibility

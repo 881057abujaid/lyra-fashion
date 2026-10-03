@@ -34,17 +34,17 @@ export default async function CustomerDetailPage({
     if (!customer) {
         return (
             <div className="space-y-4">
-                <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                     Customers
                 </p>
 
-                <h1 className="font-serif text-3xl text-neutral-900">
+                <h1 className="font-display text-3xl text-lyra-black">
                     Customer Not Found
                 </h1>
 
                 <Link
                     href="/admin/customers"
-                    className="inline-block text-sm font-medium text-neutral-900 underline underline-offset-4"
+                    className="inline-block text-sm font-medium text-lyra-black underline underline-offset-4"
                 >
                     Back to Customers
                 </Link>
@@ -58,21 +58,21 @@ export default async function CustomerDetailPage({
             <div className="space-y-6">
                 <Link
                     href="/admin/customers"
-                    className="inline-flex items-center text-sm text-neutral-500 transition hover:text-neutral-900"
+                    className="inline-flex items-center text-sm text-lyra-muted transition hover:text-lyra-black"
                 >
                     ← Back to Customers
                 </Link>
 
                 <div>
-                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                         Customer
                     </p>
 
-                    <h1 className="mt-2 font-serif text-4xl text-neutral-900">
+                    <h1 className="mt-2 font-display text-4xl text-lyra-black">
                         {customer.name || "Unnamed Customer"}
                     </h1>
 
-                    <p className="mt-2 text-sm text-neutral-500">
+                    <p className="mt-2 text-sm text-lyra-muted">
                         {customer.email || "No email address"}
                     </p>
                 </div>
@@ -80,32 +80,32 @@ export default async function CustomerDetailPage({
 
             {/* Customer Summary */}
             <div className="grid md:grid-cols-3">
-                <div className="border border-neutral-200 bg-white p-6">
-                    <p className="text-xs uppercase tracking-wider text-neutral-500">
+                <div className="border border-lyra-border bg-lyra-white p-6">
+                    <p className="text-xs uppercase tracking-wider text-lyra-muted">
                         Total Orders
                     </p>
 
-                    <p className="mt-3 font-serif text-3xl text-neutral-900">
+                    <p className="mt-3 font-display text-3xl text-lyra-black">
                         {customer.orderCount}
                     </p>
                 </div>
 
-                <div className="border border-neutral-200 bg-white p-6">
-                    <p className="text-xs uppercase tracking-wider text-neutral-500">
+                <div className="border border-lyra-border bg-lyra-white p-6">
+                    <p className="text-xs uppercase tracking-wider text-lyra-muted">
                         Total Spent
                     </p>
 
-                    <p className="mt-3 font-serif text-3xl text-neutral-900">
+                    <p className="mt-3 font-display text-3xl text-lyra-black">
                         {formatCurrency(customer.totalSpent)}
                     </p>
                 </div>
 
-                <div className="border border-neutral-200 bg-white p-6">
-                    <p className="text-xs uppercase tracking-wider text-neutral-500">
+                <div className="border border-lyra-border bg-lyra-white p-6">
+                    <p className="text-xs uppercase tracking-wider text-lyra-muted">
                         Joined
                     </p>
 
-                    <p className="mt-3 font-serif text-3xl text-neutral-900">
+                    <p className="mt-3 font-display text-3xl text-lyra-black">
                         {formatDate(customer.createdAt)}
                     </p>
                 </div>
@@ -114,18 +114,18 @@ export default async function CustomerDetailPage({
             {/* Order History */}
             <section className="space-y-4">
                 <div>
-                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-lyra-muted">
                         Activity
                     </p>
 
-                    <h2 className="mt-2 font-serif text-2xl text-neutral-900">
+                    <h2 className="mt-2 font-display text-2xl text-lyra-black">
                         Order History
                     </h2>
                 </div>
 
-                <div className="overflow-hidden border border-neutral-200 bg-white">
+                <div className="overflow-hidden border border-lyra-border bg-lyra-white">
                     {customer.orders.length === 0 ? (
-                        <div className="px-6 py-12 text-center text-sm text-neutral-500">
+                        <div className="px-6 py-12 text-center text-sm text-lyra-muted">
                             This customer has no orders yet.
                         </div>
                     ) : (
@@ -136,11 +136,11 @@ export default async function CustomerDetailPage({
                                     className="flex flex-col gap-4 px-6 py-5 md:flex-row md:items-center md:justify-between"
                                 >
                                     <div>
-                                        <p className="font-medium text-neutral-900">
+                                        <p className="font-medium text-lyra-black">
                                             {order.orderNumber}
                                         </p>
 
-                                        <p className="mt-1 text-sm text-neutral-500">
+                                        <p className="mt-1 text-sm text-lyra-muted">
                                             {formatDate(order.createdAt)}
                                         </p>
                                     </div>
@@ -151,7 +151,7 @@ export default async function CustomerDetailPage({
                                                 Status
                                             </p>
 
-                                            <p className="mt-1 text-sm font-medium text-neutral-900">
+                                            <p className="mt-1 text-sm font-medium text-lyra-black">
                                                 {order.status}
                                             </p>
                                         </div>
@@ -161,7 +161,7 @@ export default async function CustomerDetailPage({
                                                 Payment
                                             </p>
 
-                                            <p className="mt-1 text-sm font-medium text-neutral-900">
+                                            <p className="mt-1 text-sm font-medium text-lyra-black">
                                                 {order.paymentStatus}
                                             </p>
                                         </div>
@@ -171,7 +171,7 @@ export default async function CustomerDetailPage({
                                                 Total
                                             </p>
 
-                                            <p className="mt-1 text-sm font-medium text-neutral-900">
+                                            <p className="mt-1 text-sm font-medium text-lyra-black">
                                                 {formatCurrency(order.total)}
                                             </p>
                                         </div>
