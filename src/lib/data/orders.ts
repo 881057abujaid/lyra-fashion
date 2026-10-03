@@ -620,6 +620,7 @@ export async function refundOrder(orderId: string) {
     }
 
     const now = new Date();
+
     const staleThreshold = new Date(
         now.getTime() - 10 * 60 * 1000,
     );
@@ -653,10 +654,58 @@ export async function refundOrder(orderId: string) {
     }
 
     try {
+        const expectedRefundAmount = Math.round(order.total * 100);
+
+        const existingRefunds =
+            await razorpay.payments.fetchMultipleRefund(
+                order.razorpayPaymentId,
+            );
+
+        const processedRefunds = existingRefunds.items.filter(
+            (refund) => refund.status === "processed",
+        );
+
+        const processedRefundAmount = processedRefunds.reduce(
+            (total, refund) => total + (refund.amount ?? 0),
+            0,
+        );
+
+        if (processedRefundAmount > expectedRefundAmount) {
+            throw new Error(
+                "Razorpay refund amount exceeds the order total",
+            );
+        }
+
+        if (processedRefundAmount === expectedRefundAmount) {
+            const existingRefund = processedRefunds
+                .sort(
+                    (a, b) =>
+                        b.created_at - a.created_at,
+                )[0];
+
+            if (!existingRefund) {
+                throw new Error(
+                    "Unable to identify the existing Razorpay refund",
+                );
+            }
+
+            return await prisma.order.update({
+                where: {
+                    id: order.id,
+                },
+                data: {
+                    paymentStatus: "REFUNDED",
+                    razorpayRefundId: existingRefund.id,
+                    refundedAt: new Date(),
+                    refundProcessingAt: null,
+                },
+            });
+        }
+
         const refund = await razorpay.payments.refund(
             order.razorpayPaymentId,
             {
-                amount: Math.round(order.total * 100),
+                amount: expectedRefundAmount,
             },
         );
 
@@ -664,7 +713,7 @@ export async function refundOrder(orderId: string) {
             throw new Error("Razorpay refund was not created");
         }
 
-        const updatedOrder = await prisma.order.update({
+        return await prisma.order.update({
             where: {
                 id: order.id,
             },
@@ -675,8 +724,6 @@ export async function refundOrder(orderId: string) {
                 refundProcessingAt: null,
             },
         });
-
-        return updatedOrder;
     } catch (error) {
         await prisma.order.updateMany({
             where: {
