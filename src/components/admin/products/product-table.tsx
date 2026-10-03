@@ -195,7 +195,7 @@ export function ProductTable({
 
                                     {/* Status */}
                                     <td className="px-5 py-4">
-                                        <span className={`inline-flex border px-2.5 py-1 text-[9px] uppercase tracking-widest ${stockStatus.className}`}>
+                                        <span className={`inline-flex border px-2.5 py-1 text-xs uppercase tracking-widest ${stockStatus.className}`}>
                                             {stockStatus.label}
                                         </span>
                                     </td>
@@ -267,7 +267,7 @@ export function ProductTable({
                                             </p>
                                         </div>
 
-                                        <span className={`shrink-0 border px-2 py-1 text-[8px] uppercase tracking-[0.08em] ${stockStatus.className}`}>
+                                        <span className={`shrink-0 border px-2 py-1 text-xs uppercase tracking-[0.08em] ${stockStatus.className}`}>
                                             {stockStatus.label}
                                         </span>
                                     </div>

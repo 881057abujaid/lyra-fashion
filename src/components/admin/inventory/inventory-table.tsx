@@ -80,7 +80,7 @@ export function InventoryTable({ products }: InventoryTableProps) {
                         </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-neutral-100">
+                    <tbody className="divide-y divide-lyra-border">
                         {products.map((product) => {
                             if (product.variants.length === 0) {
                                 return (
@@ -95,7 +95,7 @@ export function InventoryTable({ products }: InventoryTableProps) {
 
                                         <td
                                             colSpan={4}
-                                            className="px-6 py-4 text-sm text-neutral-400"
+                                            className="px-6 py-4 text-sm text-lyra-muted"
                                         >
                                             No variants
                                         </td>

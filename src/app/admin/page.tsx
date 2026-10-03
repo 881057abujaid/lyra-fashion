@@ -172,7 +172,7 @@ function Status({
     value: string;
 }) {
     return (
-        <span className="inline-flex border border-lyra-border px-2.5 py-1 text-[9px] uppercase tracking-[0.12em] text-lyra-muted">
+        <span className="inline-flex border border-lyra-border px-2.5 py-1 text-xs uppercase tracking-[0.12em] text-lyra-muted">
             {value}
         </span>
     );

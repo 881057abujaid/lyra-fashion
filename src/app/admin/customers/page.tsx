@@ -91,7 +91,7 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                         </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-neutral-100">
+                    <tbody className="divide-y divide-lyra-border">
                         {customers.length === 0 ? (
                             <tr>
                                 <td

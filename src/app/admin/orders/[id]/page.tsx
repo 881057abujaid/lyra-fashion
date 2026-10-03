@@ -290,7 +290,7 @@ function SummaryRow({ label, value }: {
 
 function StatusBadge({ value }: { value: string; }) {
     return (
-        <span className="inline-flex border border-lyra-border px-3 py-1.5 text-[9px] uppercase tracking-[0.13em] text-lyra-muted">
+        <span className="inline-flex border border-lyra-border px-3 py-1.5 text-xs uppercase tracking-[0.13em] text-lyra-muted">
             {value}
         </span>
     );

@@ -7,7 +7,7 @@ export default async function AdminHomePage() {
     const heroBanners = await getAllHeroBanners();
 
     return (
-        <div className="px-6 py-8 lh:px-8">
+        <div className="px-6 py-8 lg:px-8">
             <div className="mx-auto max-w-7xl">
                 {/* Page Header */}
                 <div className="mb-8">
@@ -54,7 +54,7 @@ export default async function AdminHomePage() {
                             No hero banners yet
                         </p>
 
-                        <p className="mx-aut mt-2 max-w-md text-sm text-lyra-muted">
+                        <p className="mx-auto mt-2 max-w-md text-sm text-lyra-muted">
                             Create your first hero banner to start building the LYRA homepage experience.
                         </p>
                     </div>

@@ -164,7 +164,7 @@ export default async function AdminOrdersPage({
                                                     }
                                                 </p>
 
-                                                <p className="mt-1 text-sx text-lyra-muted">
+                                                <p className="mt-1 text-xs text-lyra-muted">
                                                     {
                                                         order.customerEmail
                                                     }
@@ -238,7 +238,7 @@ function StatusBadge({
     value: string
 }) {
     return (
-        <span className="inline-flex border border-lyra-border px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-lyra-muted">
+        <span className="inline-flex border border-lyra-border px-2.5 py-1 text-xs uppercase tracking-[0.12em] text-lyra-muted">
             {value}
         </span>
     );

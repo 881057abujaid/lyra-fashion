@@ -129,7 +129,7 @@ export default async function CustomerDetailPage({
                             This customer has no orders yet.
                         </div>
                     ) : (
-                        <div className="divide-y divide-neutral-100">
+                        <div className="divide-y divide-lyra-border">
                             {customer.orders.map((order) => (
                                 <div
                                     key={order.id}
@@ -147,7 +147,7 @@ export default async function CustomerDetailPage({
 
                                     <div className="flex items-center gap-8">
                                         <div>
-                                            <p className="text-xs uppercase tracking-wider text-neutral-400">
+                                            <p className="text-xs uppercase tracking-wider text-lyra-muted">
                                                 Status
                                             </p>
 
@@ -157,7 +157,7 @@ export default async function CustomerDetailPage({
                                         </div>
 
                                         <div>
-                                            <p className="text-xs uppercase tracking-wider text-neutral-400">
+                                            <p className="text-xs uppercase tracking-wider text-lyra-muted">
                                                 Payment
                                             </p>
 
@@ -167,7 +167,7 @@ export default async function CustomerDetailPage({
                                         </div>
 
                                         <div className="min-w-24 text-right">
-                                            <p className="text-xs uppercase tracking-wider text-neutral-400">
+                                            <p className="text-xs uppercase tracking-wider text-lyra-muted">
                                                 Total
                                             </p>
 

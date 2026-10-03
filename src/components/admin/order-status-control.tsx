@@ -53,7 +53,7 @@ export function OrderStatusControl({
     if (availableStatuses.length === 0 || isRefunded) {
         return (
             <div className="border border-lyra-border bg-lyra-white p-6">
-                <p className="text-[9px] uppercase tracking-[0.14em] text-lyra-subtle">
+                <p className="text-xs uppercase tracking-[0.14em] text-lyra-subtle">
                     Order Status
                 </p>
 
@@ -77,7 +77,7 @@ export function OrderStatusControl({
         <div className="border border-lyra-border bg-lyra-white p-6">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <p className="text-[9px] uppercase tracking-[0.14em] text-lyra-subtle">
+                    <p className="text-xs uppercase tracking-[0.14em] text-lyra-subtle">
                         Order Status
                     </p>
 
@@ -96,7 +96,7 @@ export function OrderStatusControl({
                                 type="button"
                                 disabled={isUpdating}
                                 onClick={() => handleStatusChange(nextStatus)}
-                                className="border border-lyra-black px-4 py-2 text-[9px] uppercase tracking-[0.14em] transition-colors hover:bg-lyra-black hover:text-lyra-white disabled:cursor-not-allowed disabled:opacity-50"
+                                className="border border-lyra-black px-4 py-2 text-xs uppercase tracking-[0.14em] transition-colors hover:bg-lyra-black hover:text-lyra-white disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {isUpdating ? "Updating..." : `Mark ${formatStatus(nextStatus)}`}
                             </button>

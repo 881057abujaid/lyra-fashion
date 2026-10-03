@@ -17,7 +17,7 @@ export function ProductFilters({
     const [search, setSearch] = useState(searchParams.get("search") ?? "");
 
     const currentCategory = searchParams.get("category") ?? "";
-    const currentStock = searchParams.get("Stock") ?? "";
+    const currentStock = searchParams.get("stock") ?? "";
 
     function applyFilters() {
         const params = new URLSearchParams();
