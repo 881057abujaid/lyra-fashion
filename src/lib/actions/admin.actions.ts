@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 
 import { requireAdmin } from "../auth/authorization";
 import { updateAdminOrderStatus } from "../data/admin";
+import { refundOrder } from "../data/orders";
 
 const updateOrderStatusSchema = z.object({
     orderId: z.string().min(1, "Order ID is required"),
@@ -37,6 +38,22 @@ export async function updateAdminOrderStatusAction(
     revalidatePath("/admin");
     revalidatePath("/admin/orders");
     revalidatePath(`/admin/orders/${validatedData.orderId}`);
+
+    return order;
+}
+
+export async function refundOrderAction(orderId: string) {
+    await requireAdmin();
+
+    if (!orderId) {
+        throw new Error("Order ID is required");
+    }
+
+    const order = await refundOrder(orderId);
+
+    revalidatePath("/admin");
+    revalidatePath("/admin/orders");
+    revalidatePath(`/admin/orders/${orderId}`);
 
     return order;
 }
