@@ -14,33 +14,6 @@ export class WebhookValidationError extends Error {
     }
 }
 
-type CreateOrderInput = {
-    userId: string;
-
-    customerName: string;
-    customerEmail: string;
-    customerPhone: string;
-
-    shippingAddress: string;
-    shippingCity: string;
-    shippingState: string;
-    shippingPincode: string;
-
-    subtotal: number;
-    shipping: number;
-    total: number;
-
-    items: {
-        productId: string;
-        variantId: string;
-        productName: string;
-        productPrice: number;
-        size: string;
-        quantity: number;
-        image: string;
-    }[];
-}
-
 export async function createOrderFromCart(userId: string, input: CreateOrderInputAction) {
     return prisma.$transaction(async (tx) => {
         const cart = await tx.cart.findFirst({
@@ -621,4 +594,52 @@ export async function confirmRazorpayPaymentFromWebhook(
     return tx.order.findUnique({
         where: { id: order.id },
     });
+}
+
+export async function refundOrder(orderId: string) {
+    const order = await prisma.order.findUnique({
+        where: {
+            id: orderId,
+        },
+    });
+
+    if (!order) {
+        throw new Error("Order not found");
+    }
+
+    if (order.paymentStatus !== "PAID") {
+        throw new Error("Only paid orders can be refunded");
+    }
+
+    if (!order.razorpayPaymentId) {
+        throw new Error("Razorpay payment ID is missing");
+    }
+
+    if (order.razorpayRefundId) {
+        throw new Error("Order has already been refunded");
+    }
+
+    const refund = await razorpay.payments.refund(
+        order.razorpayPaymentId,
+        {
+            amount: Math.round(order.total * 100),
+        },
+    );
+
+    if (!refund.id) {
+        throw new Error("Razorpay refund was not created");
+    }
+
+    const updatedOrder = await prisma.order.update({
+        where: {
+            id: order.id,
+        },
+        data: {
+            paymentStatus: "REFUNDED",
+            razorpayRefundId: refund.id,
+            refundedAt: new Date(),
+        },
+    });
+
+    return updatedOrder;
 }

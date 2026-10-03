@@ -1292,6 +1292,8 @@ export const OrderScalarFieldEnum = {
   orderNumber: 'orderNumber',
   razorpayOrderId: 'razorpayOrderId',
   razorpayPaymentId: 'razorpayPaymentId',
+  razorpayRefundId: 'razorpayRefundId',
+  refundedAt: 'refundedAt',
   userId: 'userId',
   status: 'status',
   paymentStatus: 'paymentStatus',
