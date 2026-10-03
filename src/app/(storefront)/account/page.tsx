@@ -42,7 +42,7 @@ export default async function AccountPage() {
                     <div className="mt-8">
                         <Link
                             href="/account/orders"
-                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black hover:text-lyra-primary transition-colors"
+                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black transition-colors hover:opacity-60"
                         >
                             <span>View Orders</span>
                             <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
@@ -66,7 +66,7 @@ export default async function AccountPage() {
                     <div className="mt-8">
                         <Link
                             href="/wishlist"
-                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black hover:text-lyra-primary transition-colors"
+                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black transition-colors hover:opacity-60"
                         >
                             <span>View Saved Pieces</span>
                             <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
@@ -90,7 +90,7 @@ export default async function AccountPage() {
                     <div className="mt-8">
                         <Link
                             href="/account/details"
-                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black transition-colors hover:text-lyra-primary"
+                            className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-lyra-black transition-colors hover:opacity-60"
                         >
                             <span>View Personal Details</span>
                             <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />

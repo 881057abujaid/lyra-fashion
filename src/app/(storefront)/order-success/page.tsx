@@ -38,7 +38,7 @@ export default async function OrderSuccessPage({
         <main className="mx-auto max-w-5xl px-6 py-20 lg:px-8">
             {/* Configuration */}
             <section className="text-center">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-lyra-border">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center border border-lyra-border">
                     <Check
                         className="h-5 w-5"
                         strokeWidth={1.5}
@@ -50,7 +50,7 @@ export default async function OrderSuccessPage({
                 </p>
 
                 <h1 className="font-display mt-3 text-4xl tracking-tight sm:text-5xl">
-                    Thank you for shipping with LYRA.
+                    Thank you for shopping with LYRA.
                 </h1>
 
                 <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-lyra-muted">
@@ -138,7 +138,7 @@ export default async function OrderSuccessPage({
                     </div>
 
                     <div className="flex justify-between text-sm">
-                        <span className="tetx-lyra-muted">
+                        <span className="text-lyra-muted">
                             Shipping
                         </span>
 

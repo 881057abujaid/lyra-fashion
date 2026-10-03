@@ -39,7 +39,7 @@ export function OrderSummary() {
                         </div>
 
                         <div className="min-w-0 flex-1">
-                            <p className="text-ms">
+                            <p className="text-sm">
                                 {item.name}
                             </p>
 

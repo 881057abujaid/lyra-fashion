@@ -9,7 +9,7 @@ export default function WishlistPage() {
                 </p>
 
                 <h1 className="font-display mt-3 text-4xl tracking-tight sm:text-5xl">
-                    Piece You Love
+                    Pieces You Love
                 </h1>
             </div>
 

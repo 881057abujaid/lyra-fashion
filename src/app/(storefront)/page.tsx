@@ -6,18 +6,10 @@ import { FeaturedProductsSection } from "@/components/storefront/home/featured-p
 
 export default async function Home() {
   const banners = await getActiveHeroBanners();
-  const banner = banners[0];
-
-  if (!banner) {
-    return null;
-  }
-
-  const desktopImage = banner.desktopImageUrl;
-  const mobileImage = banner.mobileImageUrl ?? banner.desktopImageUrl;
 
   return (
     <main>
-      <HeroBannerSlider banners={banners} />
+      {banners.length > 0 && <HeroBannerSlider banners={banners} />}
 
       <NewArrivalsSection />
 

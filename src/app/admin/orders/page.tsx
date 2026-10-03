@@ -105,7 +105,7 @@ export default async function AdminOrdersPage({
                         </p>
 
                         <p className="mt-2 text-sm text-lyra-muted">
-                            Orders will appear here once customers complete checkoout.
+                            Orders will appear here once customers complete checkout.
                         </p>
                     </div>
                 ) : (
@@ -238,7 +238,7 @@ function StatusBadge({
     value: string
 }) {
     return (
-        <span className="inline-flex border border-lyra-border px-2.5 py-1 uppercase tracking-[0.12em] text-lyra-muted">
+        <span className="inline-flex border border-lyra-border px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-lyra-muted">
             {value}
         </span>
     );

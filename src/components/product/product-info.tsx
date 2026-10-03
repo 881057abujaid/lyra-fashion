@@ -79,8 +79,8 @@ export function ProductInfo({
                     </button>
                 </div>
 
-                <div className="mt-5 flex items-center gap3">
-                    <span className="text-base">
+                <div className="mt-5 flex items-center gap-3">
+                    <span className="font-display text-2xl">
                         ₹{price.toLocaleString("en-IN")}
                     </span>
 
@@ -92,7 +92,7 @@ export function ProductInfo({
                 </div>
 
                 <div className="mt-8 border-t border-lyra-border pt-8">
-                    <p className="text-xs text-lyra-muted">
+                    <p className="text-sm leading-7 text-lyra-muted">
                         {description}
                     </p>
                 </div>
