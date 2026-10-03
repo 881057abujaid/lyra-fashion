@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { updateAdminOrderStatusAction } from "@/lib/actions/admin.actions";
-import { format } from "path";
-
+import { RefundButton } from "./refund-button";
 type OrderStatus = "PENDING" | "CONFIRMED" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED";
 
 type OrderStatusControlProps = {
     orderId: string;
     currentStatus: OrderStatus;
     paymentStatus: string;
+    orderTotal: number;
 };
 
 const transitions: Record<OrderStatus, OrderStatus[]> = {
@@ -25,6 +25,7 @@ export function OrderStatusControl({
     orderId,
     currentStatus,
     paymentStatus,
+    orderTotal,
 }: OrderStatusControlProps) {
     const [status, setStatus] = useState<OrderStatus>(currentStatus);
     const [isUpdating, setIsUpdating] = useState(false);
@@ -105,6 +106,21 @@ export function OrderStatusControl({
                         available.
                     </p>
                 )}
+
+            {paymentStatus === "PAID" && (
+                <div className="mt-5 border-t border-lyra-border pt-5">
+                    <p className="text-[9px] uppercase tracking-[0.14em] text-lyra-subtle">
+                        Payment Actions
+                    </p>
+
+                    <div className="mt-3">
+                        <RefundButton
+                            orderId={orderId}
+                            amount={orderTotal}
+                        />
+                    </div>
+                </div>
+            )}
 
             {error && (
                 <p className="mt-4 border-t border-red-200 pt-4 text-xs text-red-600">

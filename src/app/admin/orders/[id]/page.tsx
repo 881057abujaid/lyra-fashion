@@ -188,6 +188,7 @@ export default async function AdminOrderDetailPage({
                             orderId={order.id}
                             currentStatus={order.status}
                             paymentStatus={order.paymentStatus}
+                            orderTotal={order.total}
                         />
                     </section>
                 </div>
