@@ -63,11 +63,11 @@ export default async function CollectionsPage() {
                                     {/* Overlay */}
                                     <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/45 via-black/10 to-transparent px-6 pb-6 pt-16">
                                         <div className="flex items-end justify-between gap-4">
-                                            <h2 className="font-display text-2xl text-white sm:text-3xl">
+                                            <h2 className="font-display text-2xl text-lyra-white sm:text-3xl">
                                                 {formatCategoryName(category)}
                                             </h2>
 
-                                            <span className="shrink-0 border-b border-white pb-1 text-[10px] uppercase tracking-[0.14em] text-white">
+                                            <span className="shrink-0 border-b border-white pb-1 text-[10px] uppercase tracking-[0.14em] text-lyra-white">
                                                 Explore
                                             </span>
                                         </div>

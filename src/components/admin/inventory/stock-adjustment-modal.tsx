@@ -109,7 +109,7 @@ export function StockAdjustmentModal({
                             value={stock}
                             onChange={(event) => setStock(event.target.value)}
                             disabled={isPending}
-                            className="w-full border border-neutral-300 bg-lyra-white px-4 py-3 text-sm outline-none transition focus:border-neutral-900"
+                            className="w-full border border-neutral-300 bg-lyra-white px-4 py-3 text-sm outline-none transition focus:border-lyra-black"
                         />
                     </div>
 
@@ -132,7 +132,7 @@ export function StockAdjustmentModal({
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="bg-lyra-black px-4 py-2.5 text-sm font-medium text-lyra-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             {isPending ? "Updating..." : "Update Stock"}
                         </button>

@@ -54,12 +54,12 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                     name="search"
                     defaultValue={search}
                     placeholder="Search by customer name or email..."
-                    className="min-w-0 flex-1 border border-lyra-border bg-lyra-white px-4 py-3 text-sm outline-none transition placeholder:text-neutral-400 focus:border-neutral-900"
+                    className="min-w-0 flex-1 border border-lyra-border bg-lyra-white px-4 py-3 text-sm outline-none transition placeholder:text-neutral-400 focus:border-lyra-black"
                 />
 
                 <button
                     type="submit"
-                    className="shrink-0 bg-neutral-900 px-7 py-3 text-xs font-medium uppercase tracking-[0.12em] text-white transition hover:bg-neutral-800"
+                    className="shrink-0 bg-lyra-black px-7 py-3 text-xs font-medium uppercase tracking-[0.12em] text-lyra-white transition hover:opacity-90"
                 >
                     Search
                 </button>

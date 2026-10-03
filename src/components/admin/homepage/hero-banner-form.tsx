@@ -667,7 +667,7 @@ export function HeroBannerForm() {
                 <button
                     type="submit"
                     disabled={isPending}
-                    className="inline-flex h-11 items-center justify-center bg-lyra-black px-7 text-[10px] uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex h-11 items-center justify-center bg-lyra-black px-7 text-[10px] uppercase tracking-[0.16em] text-lyra-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     {isPending
                         ? "Creating Banner..."

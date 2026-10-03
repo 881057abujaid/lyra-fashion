@@ -131,7 +131,7 @@ export function HeroBannerSlider({
                                 )}
 
                                 {banner.subtitle && (
-                                    <p className="mt-4 max-w-md text-sm leading-6 text-neutral-700 sm:text-base">
+                                    <p className="mt-4 max-w-md text-sm leading-6 text-lyra-muted sm:text-base">
                                         {banner.subtitle}
                                     </p>
                                 )}
@@ -140,7 +140,7 @@ export function HeroBannerSlider({
                                     banner.ctaHref && (
                                         <Link
                                             href={banner.ctaHref}
-                                            className="mt-7 inline-flex bg-neutral-900 px-6 py-3 text-sm font-medium tracking-wide text-white transition hover:bg-neutral-800"
+                                            className="mt-7 inline-flex bg-lyra-black px-6 py-3 text-sm font-medium tracking-wide text-lyra-white transition hover:opacity-90"
                                         >
                                             {banner.ctaLabel}
                                         </Link>
@@ -191,8 +191,8 @@ export function HeroBannerSlider({
                                     index === activeIndex
                                 }
                                 className={`h-1.5 transition-all ${index === activeIndex
-                                    ? "w-8 bg-neutral-900"
-                                    : "w-1.5 bg-neutral-900/40"
+                                    ? "w-8 bg-lyra-black"
+                                    : "w-1.5 bg-lyra-black/40"
                                     }`}
                             />
                         ))}
