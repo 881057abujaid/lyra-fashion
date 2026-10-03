@@ -292,6 +292,7 @@ export async function verifyRazorpayPayment(
         data: {
             paymentStatus: "PAID",
             status: "CONFIRMED",
+            razorpayPaymentId,
         },
     });
 
