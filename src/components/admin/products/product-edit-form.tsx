@@ -138,7 +138,7 @@ export function ProductEditForm({
                                 id="name"
                                 {...register("name")}
                                 placeholder="e.g. Luna Linen Dress"
-                                className="w-full border border-lyra-border bg-lyra-cream px-4 py-3 text-sm outline-none transition focus:border-lyra-black"
+                                className="w-full border border-lyra-border bg-lyra-cream px-4 py-3 text-sm transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                             />
 
                             {errors.name && (
@@ -162,7 +162,7 @@ export function ProductEditForm({
                                 {...register("description")}
                                 rows={5}
                                 placeholder="Describe the product..."
-                                className="w-full resize-none border border-lyra-border bg-lyra-cream px-4 py-3 text-sm outline-none transition focus:border-lyra-black"
+                                className="w-full resize-none border border-lyra-border bg-lyra-cream px-4 py-3 text-sm transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                             />
 
                             {errors.description && (
@@ -213,7 +213,7 @@ export function ProductEditForm({
                                     {...register("price", {
                                         valueAsNumber: true,
                                     })}
-                                    className="w-full border border-lyra-border bg-lyra-cream py-3 pl-9 pr-4 text-sm outline-none transition focus:border-lyra-black"
+                                    className="w-full border border-lyra-border bg-lyra-cream py-3 pl-9 pr-4 text-sm transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                                 />
                             </div>
 
@@ -250,7 +250,7 @@ export function ProductEditForm({
                                         setValueAs: (value) =>
                                             value === "" ? null : Number(value),
                                     })}
-                                    className="w-full border border-lyra-border bg-lyra-cream py-3 pl-9 pr-4 text-sm outline-none transition focus:border-lyra-black"
+                                    className="w-full border border-lyra-border bg-lyra-cream py-3 pl-9 pr-4 text-sm transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                                 />
                             </div>
 
@@ -274,7 +274,7 @@ export function ProductEditForm({
                                 id="sku"
                                 {...register("sku")}
                                 placeholder="LYRA-LLD-001"
-                                className="w-full border border-lyra-border bg-lyra-cream px-4 py-3 text-sm uppercase outline-none transition focus:border-lyra-black"
+                                className="w-full border border-lyra-border bg-lyra-cream px-4 py-3 text-sm uppercase transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                             />
 
                             {errors.sku && (

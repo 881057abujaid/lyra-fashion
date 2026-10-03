@@ -83,7 +83,7 @@ function Field({
 }
 
 const inputClassName =
-    "w-full border-b border-lyra-border bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black";
+    "w-full border-b border-lyra-border bg-transparent px-0 py-3 text-sm transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2";
 
 export function CheckoutForm() {
     const dispatch = useAppDispatch();

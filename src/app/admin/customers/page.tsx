@@ -54,7 +54,7 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                     name="search"
                     defaultValue={search}
                     placeholder="Search by customer name or email..."
-                    className="min-w-0 flex-1 border border-lyra-border bg-lyra-white px-4 py-3 text-sm outline-none transition placeholder:text-neutral-400 focus:border-lyra-black"
+                    className="min-w-0 flex-1 border border-lyra-border bg-lyra-white px-4 py-3 text-sm transition placeholder:text-neutral-400 focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                 />
 
                 <button

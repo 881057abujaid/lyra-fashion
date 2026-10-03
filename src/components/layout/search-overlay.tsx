@@ -110,7 +110,7 @@ export function SearchOverlay({
                                 }
                             }}
                             placeholder="what are you looking for?"
-                            className="w-full bg-transparent font-display text-3xl outline-none placeholder:text-lyra-subtle md:text-5xl"
+                            className="w-full bg-transparent font-display text-3xl focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 placeholder:text-lyra-subtle md:text-5xl"
                             aria-label="Search products"
                         />
 

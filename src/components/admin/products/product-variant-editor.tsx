@@ -55,7 +55,7 @@ export function ProductVariantEditor() {
 
                                     <select
                                         {...register(`variants.${index}.size`)}
-                                        className="h-11 w-full border border-lyra-border bg-lyra-cream px-3 text-sm outline-none focus:border-lyra-black"
+                                        className="h-11 w-full border border-lyra-border bg-lyra-cream px-3 text-sm focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                                         defaultValue={field.size}
                                     >
                                         <option value="">Select Size</option>
@@ -87,7 +87,7 @@ export function ProductVariantEditor() {
                                         type="number"
                                         min={0}
                                         {...register(`variants.${index}.stock`)}
-                                        className="h-11 w-full border border-lyra-border bg-lyra-cream px-3 text-sm outline-none focus:border-lyra-black"
+                                        className="h-11 w-full border border-lyra-border bg-lyra-cream px-3 text-sm focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                                         placeholder="0"
                                     />
 

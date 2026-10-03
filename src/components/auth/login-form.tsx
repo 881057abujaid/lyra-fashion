@@ -82,7 +82,7 @@ export function LoginForm() {
                     autoComplete="email"
                     disabled={isSubmitting}
                     {...register("email")}
-                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
+                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
                 />
 
                 {errors.email && (
@@ -107,7 +107,7 @@ export function LoginForm() {
                     autoComplete="current-password"
                     disabled={isSubmitting}
                     {...register("password")}
-                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
+                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
                 />
 
                 {errors.password && (

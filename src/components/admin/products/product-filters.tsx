@@ -81,7 +81,7 @@ export function ProductFilters({
                             }
                         }}
                         placeholder="Search by product name or SKU..."
-                        className="h-11 w-full border border-lyra-border bg-transparent pl-10 pr-4 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black"
+                        className="h-11 w-full border border-lyra-border bg-transparent pl-10 pr-4 text-sm transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                     />
                 </div>
 
@@ -89,7 +89,7 @@ export function ProductFilters({
                 <select
                     value={currentCategory}
                     onChange={(event) => updateFilters("category", event.target.value)}
-                    className="h-11 border border-lyra-border bg-lyra-white px-4 text-xs uppercase tracking-[0.08em] text-lyra-black outline-none focus:border-lyra-black lg:w-48"
+                    className="h-11 border border-lyra-border bg-lyra-white px-4 text-xs uppercase tracking-[0.08em] text-lyra-black focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 lg:w-48"
                 >
                     <option value="">All Categories</option>
 
@@ -107,7 +107,7 @@ export function ProductFilters({
                 <select
                     value={currentStock}
                     onChange={(event) => updateFilters("stock", event.target.value)}
-                    className="h-11 border border-lyra-border bg-lyra-white px-4 text-xs uppercase tracking-[0.08em] text-lyra-black outline-none focus:border-lyra-black lg:w-44"
+                    className="h-11 border border-lyra-border bg-lyra-white px-4 text-xs uppercase tracking-[0.08em] text-lyra-black focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 lg:w-44"
                 >
                     <option value="">All Stock</option>
                     <option value="IN_STOCK">In Stock</option>

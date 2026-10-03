@@ -15,7 +15,8 @@ import {
 import { createAdminProduct } from "@/lib/actions/admin-product.actions";
 import { ProductVariantEditor } from "./product-variant-editor";
 
-const inputClassName = "w-full border-b border-lyra-border bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black";
+const inputClassName =
+    "w-full border-b border-lyra-border bg-transparent px-0 py-3 text-sm transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2";
 
 type FieldProps = {
     label: string;
@@ -152,7 +153,7 @@ export function ProductForm() {
                                     {...register("description")}
                                     rows={5}
                                     placeholder="Describe the product..."
-                                    className="w-full resize-none border border-lyra-border bg-transparent px-4 py-3 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black"
+                                    className="w-full resize-none border border-lyra-border bg-transparent px-4 py-3 text-sm transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                                 />
                             </Field>
                         </div>
@@ -228,7 +229,7 @@ export function ProductForm() {
                                 </span>
 
                                 <span className="mt-1 block text-xs leading-5 text-lyra-muted">
-                                    Show this product in featured product secions.
+                                    Show this product in featured product sections.
                                 </span>
                             </span>
                         </label>

@@ -112,7 +112,7 @@ function SortableImage({
                     htmlFor={`alt-${image.id}`}
                     className="mb-1.5 block text-xs font-medium text-lyra-black"
                 >
-                    ALt Text
+                    Alt Text
                 </label>
 
                 <div className="flex gap-2">
@@ -123,7 +123,7 @@ function SortableImage({
                         onChange={(event) => setAlt(event.target.value)}
                         maxLength={200}
                         placeholder="Describe this image"
-                        className="min-w-0 flex-1 border border-lyra-border bg-lyra-cream px-3 py-2 text-xs text-lyra-black outline-none transition focus:border-lyra-black"
+                        className="min-w-0 flex-1 border border-lyra-border bg-lyra-cream px-3 py-2 text-xs text-lyra-black transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                     />
 
                     <button

@@ -166,7 +166,7 @@ export function HeroBannerMetadataEditor({
                                 setTitleValue(event.target.value)
                             }
                             placeholder="Minimal. Modern. Effortless."
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm text-lyra-black outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm text-lyra-black transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
                     </div>
 
@@ -212,7 +212,7 @@ export function HeroBannerMetadataEditor({
                             }
                             placeholder="Woman wearing the latest LYRA fashion collection"
                             required
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm text-lyra-black outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm text-lyra-black transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
 
                         <p className="mt-2 text-xs text-lyra-muted">
@@ -254,7 +254,7 @@ export function HeroBannerMetadataEditor({
                                 setCtaLabelValue(event.target.value)
                             }
                             placeholder="SHOP NOW"
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm text-lyra-black outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm text-lyra-black transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
                     </div>
 
@@ -275,7 +275,7 @@ export function HeroBannerMetadataEditor({
                                 setCtaHrefValue(event.target.value)
                             }
                             placeholder="/shop"
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm text-lyra-black outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm text-lyra-black transition-colors placeholder:text-lyra-subtle focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
                     </div>
                 </div>

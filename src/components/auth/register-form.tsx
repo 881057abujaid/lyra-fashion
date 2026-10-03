@@ -105,7 +105,7 @@ export function RegisterForm() {
                     autoComplete="name"
                     disabled={isSuccess}
                     {...register("name")}
-                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
+                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
                     placeholder="Your name"
                 />
 
@@ -131,7 +131,7 @@ export function RegisterForm() {
                     autoComplete="email"
                     disabled={isSuccess}
                     {...register("email")}
-                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
+                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
                     placeholder="you@example.com"
                 />
 
@@ -157,7 +157,7 @@ export function RegisterForm() {
                     autoComplete="new-password"
                     disabled={isSuccess}
                     {...register("password")}
-                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
+                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
                     placeholder="Minimum 8 characters"
                 />
 
@@ -183,7 +183,7 @@ export function RegisterForm() {
                     autoComplete="new-password"
                     disabled={isSuccess}
                     {...register("confirmPassword")}
-                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm outline-none transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
+                    className="mt-2 w-full border border-lyra-border bg-lyra-white px-4 py-3.5 text-sm focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 transition-colors placeholder:text-lyra-subtle focus:border-lyra-black disabled:cursor-not-allowed disabled:bg-lyra-beige/40"
                     placeholder="Re-enter your password"
                 />
 

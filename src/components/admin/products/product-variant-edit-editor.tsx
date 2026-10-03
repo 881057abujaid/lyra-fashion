@@ -42,7 +42,7 @@ export function ProductVariantEditEditor() {
                                 <select
                                     id={`variants-${index}-size`}
                                     {...register(`variants.${index}.size`)}
-                                    className="w-full border border-lyra-border bg-lyra-white px-4 py-3 text-sm outline-none transition focus:border-lyra-black"
+                                    className="w-full border border-lyra-border bg-lyra-white px-4 py-3 text-sm transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                                 >
                                     <option value="">Select size</option>
 
@@ -77,7 +77,7 @@ export function ProductVariantEditEditor() {
                                     {...register(`variants.${index}.stock`, {
                                         valueAsNumber: true,
                                     })}
-                                    className="w-full border border-lyra-border bg-lyra-white px-4 py-3 text-sm outline-none transition focus:border-lyra-black"
+                                    className="w-full border border-lyra-border bg-lyra-white px-4 py-3 text-sm transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                                 />
 
                                 {variantError?.stock?.message && (

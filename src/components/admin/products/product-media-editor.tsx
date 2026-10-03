@@ -105,7 +105,7 @@ export function ProductMediaEditor({
     async function handleDelete(imageId: string) {
         if (deletingImageId) return;
 
-        const confirmed = window.confirm("Are you sure you want ot delete this image?",);
+        const confirmed = window.confirm("Are you sure you want to delete this image?",);
 
         if (!confirmed) return;
 
