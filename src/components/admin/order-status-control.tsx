@@ -32,6 +32,7 @@ export function OrderStatusControl({
     const [error, setError] = useState<string | null>(null);
 
     const availableStatuses = transitions[currentStatus];
+    const isRefunded = paymentStatus === "REFUNDED";
 
     async function handleStatusChange(nextStatus: OrderStatus) {
         if (nextStatus === currentStatus) return;
@@ -49,7 +50,7 @@ export function OrderStatusControl({
         }
     }
 
-    if (availableStatuses.length === 0) {
+    if (availableStatuses.length === 0 || isRefunded) {
         return (
             <div className="border border-lyra-border bg-lyra-white p-6">
                 <p className="text-[9px] uppercase tracking-[0.14em] text-lyra-subtle">
@@ -59,6 +60,13 @@ export function OrderStatusControl({
                 <p className="mt-2 text-sm">
                     {status}
                 </p>
+
+                {isRefunded && (
+                    <p className="mt-4 border-t border-lyra-border pt-4 text-[11px] leading-5 text-lyra-muted">
+                        This order has been refunded. No further order
+                        status changes are available.
+                    </p>
+                )}
             </div>
         );
     }
