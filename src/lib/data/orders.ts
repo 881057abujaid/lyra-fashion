@@ -535,6 +535,7 @@ export async function expirePendingOrders() {
 export async function confirmRazorpayPaymentFromWebhook(
     tx: Prisma.TransactionClient,
     razorpayOrderId: string,
+    razorpayPaymentId: string,
     razorpayAmount: number,
     razorpayCurrency: string,
     razorpayStatus: string,
@@ -599,6 +600,7 @@ export async function confirmRazorpayPaymentFromWebhook(
         data: {
             paymentStatus: "PAID",
             status: "CONFIRMED",
+            razorpayPaymentId,
         },
     });
 

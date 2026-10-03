@@ -73,6 +73,7 @@ export async function POST(request: Request) {
     }
 
     let razorpayOrderId: string | undefined;
+    let razorpayPaymentId: string | undefined;
     let razorpayAmount: number | undefined;
     let razorpayCurrency: string | undefined;
     let razorpayStatus: string | undefined;
@@ -81,7 +82,7 @@ export async function POST(request: Request) {
         const payment = payload.payload?.payment?.entity;
 
         razorpayOrderId = payment?.order_id;
-        const razorpayPaymentId = payment?.id;
+        razorpayPaymentId = payment?.id;
         razorpayAmount = payment?.amount;
         razorpayCurrency = payment?.currency;
         razorpayStatus = payment?.status;
@@ -127,6 +128,7 @@ export async function POST(request: Request) {
                     await confirmRazorpayPaymentFromWebhook(
                         tx,
                         razorpayOrderId,
+                        razorpayPaymentId!,
                         razorpayAmount!,
                         razorpayCurrency!,
                         razorpayStatus!,
