@@ -80,7 +80,7 @@ export function ProductInfo({
                 </div>
 
                 <div className="mt-5 flex items-center gap-3">
-                    <span className="font-display text-2xl">
+                    <span className="font-display text-3xl tracking-tight">
                         ₹{price.toLocaleString("en-IN")}
                     </span>
 

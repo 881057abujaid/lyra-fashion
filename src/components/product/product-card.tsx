@@ -95,7 +95,7 @@ export function ProductCard({
                         {product.category}
                     </p>
 
-                    <h2 className="mt-2 font-display text-lg tracking-tight">
+                    <h2 className="mt-2 line-clamp-2 font-display text-lg tracking-tight">
                         {product.name}
                     </h2>
 

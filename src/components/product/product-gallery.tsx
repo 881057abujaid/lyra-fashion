@@ -41,7 +41,7 @@ export function ProductGallery({
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover"
+                    className="object-cover transition-opacity duration-500"
                 />
             </div>
 
@@ -59,8 +59,8 @@ export function ProductGallery({
                                 aria-label={`View image ${index + 1}`}
                                 aria-pressed={isSelected}
                                 className={`relative h-24 w-20 shrink-0 overflow-hidden bg-lyra-beige transition-opacity ${isSelected
-                                        ? "opacity-100"
-                                        : "opacity-55 hover:opacity-85"
+                                    ? "opacity-100"
+                                    : "opacity-55 hover:opacity-85"
                                     }`}
                             >
                                 <Image

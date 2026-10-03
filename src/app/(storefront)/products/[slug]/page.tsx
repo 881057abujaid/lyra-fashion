@@ -66,7 +66,7 @@ export default async function ProductPage({
                                 Curated for you
                             </p>
 
-                            <h2 className="font-display mt-3 text-3xl tracking-tight sm:text-4xl">
+                            <h2 className="mt-3 font-display text-3xl tracking-tight sm:text-4xl">
                                 You may Also Like
                             </h2>
                         </div>
