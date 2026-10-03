@@ -619,27 +619,77 @@ export async function refundOrder(orderId: string) {
         throw new Error("Order has already been refunded");
     }
 
-    const refund = await razorpay.payments.refund(
-        order.razorpayPaymentId,
-        {
-            amount: Math.round(order.total * 100),
-        },
+    const now = new Date();
+    const staleThreshold = new Date(
+        now.getTime() - 10 * 60 * 1000,
     );
 
-    if (!refund.id) {
-        throw new Error("Razorpay refund was not created");
-    }
-
-    const updatedOrder = await prisma.order.update({
+    const claim = await prisma.order.updateMany({
         where: {
             id: order.id,
+            paymentStatus: "PAID",
+            razorpayPaymentId: {
+                not: null,
+            },
+            razorpayRefundId: null,
+            OR: [
+                {
+                    refundProcessingAt: null,
+                },
+                {
+                    refundProcessingAt: {
+                        lt: staleThreshold,
+                    },
+                },
+            ],
         },
         data: {
-            paymentStatus: "REFUNDED",
-            razorpayRefundId: refund.id,
-            refundedAt: new Date(),
+            refundProcessingAt: now,
         },
     });
 
-    return updatedOrder;
+    if (claim.count === 0) {
+        throw new Error("Refund is already being processed");
+    }
+
+    try {
+        const refund = await razorpay.payments.refund(
+            order.razorpayPaymentId,
+            {
+                amount: Math.round(order.total * 100),
+            },
+        );
+
+        if (!refund.id) {
+            throw new Error("Razorpay refund was not created");
+        }
+
+        const updatedOrder = await prisma.order.update({
+            where: {
+                id: order.id,
+            },
+            data: {
+                paymentStatus: "REFUNDED",
+                razorpayRefundId: refund.id,
+                refundedAt: new Date(),
+                refundProcessingAt: null,
+            },
+        });
+
+        return updatedOrder;
+    } catch (error) {
+        await prisma.order.updateMany({
+            where: {
+                id: order.id,
+                paymentStatus: "PAID",
+                razorpayRefundId: null,
+                refundProcessingAt: now,
+            },
+            data: {
+                refundProcessingAt: null,
+            },
+        });
+
+        throw error;
+    }
 }

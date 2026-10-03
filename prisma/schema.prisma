@@ -136,7 +136,8 @@ model Order {
   razorpayPaymentId String? @unique
   razorpayRefundId  String? @unique
 
-  refundedAt DateTime?
+  refundProcessingAt DateTime?
+  refundedAt         DateTime?
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
