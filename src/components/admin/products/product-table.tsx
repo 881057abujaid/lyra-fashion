@@ -257,7 +257,7 @@ export function ProductTable({
 
                                 <div className="min-w-0 flex-1">
                                     <div className="flex items-start justify-between gap-3">
-                                        <div>
+                                        <div className="min-w-0">
                                             <p className="text-sm font-medium text-lyra-black">
                                                 {product.name}
                                             </p>
@@ -287,16 +287,16 @@ export function ProductTable({
                                         <div className="flex gap-2">
                                             <Link
                                                 href={`/admin/products/${product.id}/edit`}
-                                                className="inline-flex h-8 w-8 items-center justify-center border border-lyra-border"
+                                                className="inline-flex h-8 w-8 items-center justify-center border border-lyra-border text-lyra-muted transition-colors hover:border-lyra-black hover:text-lyra-black"
                                                 aria-label={`Edit ${product.name}`}
                                             >
-                                                <Pencil className="h-3.5 w-3.5 text-lyra-muted transition-colors hover:border-lyra-black hover:text-lyra-black" />
+                                                <Pencil className="h-3.5 w-3.5" />
                                             </Link>
 
                                             <Link
                                                 href={`/products/${product.slug}`}
                                                 target="_blank"
-                                                className="inline-flex h-8 w-8 items-center justify-center border border-lyra-border"
+                                                className="inline-flex h-8 w-8 items-center justify-center border border-lyra-border text-lyra-muted transition-colors hover:border-lyra-black hover:text-lyra-black"
                                                 aria-label={`View ${product.name}`}
                                             >
                                                 <ArrowUpRight className="h-3.5 w-3.5" />

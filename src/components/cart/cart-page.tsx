@@ -16,7 +16,7 @@ export function CartPage({ cart }: CartPageProps) {
 
     if (items.length === 0) {
         return (
-            <main className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+            <main className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
                 <div className="mx-auto flex max-w-lg flex-col items-center text-center">
                     <div className="flex h-16 w-16 items-center justify-center border border-lyra-border">
                         <ShoppingBag size={24} strokeWidth={1.4} />

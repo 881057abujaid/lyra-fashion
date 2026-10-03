@@ -297,7 +297,7 @@ export function ProductEditForm({
                                 id="category"
                                 {...register("category")}
                                 placeholder="Dresses"
-                                className="w-full border border-lyra-border bg-lyra-cream px-4 py-3 text-sm outline-none transition focus:border-lyra-black"
+                                className="w-full border border-lyra-border bg-lyra-cream px-4 py-3 text-sm transition focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                             />
 
                             {errors.category && (

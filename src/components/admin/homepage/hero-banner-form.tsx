@@ -469,7 +469,7 @@ export function HeroBannerForm() {
                                 setTitle(event.target.value)
                             }
                             placeholder="A new season begins"
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm transition-colors focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
                     </div>
 
@@ -508,7 +508,7 @@ export function HeroBannerForm() {
                                 setImageAlt(event.target.value)
                             }
                             placeholder="LYRA Fashion new season collection"
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm transition-colors focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
 
                         <p className="mt-2 text-xs text-lyra-muted">
@@ -548,7 +548,7 @@ export function HeroBannerForm() {
                                 setCtaLabel(event.target.value)
                             }
                             placeholder="Shop New Arrivals"
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm transition-colors focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
                     </div>
 
@@ -567,7 +567,7 @@ export function HeroBannerForm() {
                                 setCtaHref(event.target.value)
                             }
                             placeholder="/collections"
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm transition-colors focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
                     </div>
                 </div>
@@ -608,7 +608,7 @@ export function HeroBannerForm() {
                             onChange={(event) =>
                                 setStartAt(event.target.value)
                             }
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm transition-colors focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
                     </div>
 
@@ -627,7 +627,7 @@ export function HeroBannerForm() {
                             onChange={(event) =>
                                 setEndAt(event.target.value)
                             }
-                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-lyra-black"
+                            className="w-full border border-lyra-border bg-transparent px-4 py-3 text-sm transition-colors focus:border-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2"
                         />
                     </div>
                 </div>

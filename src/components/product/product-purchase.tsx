@@ -163,7 +163,7 @@ export function ProductPurchase({ productId, name, price, image, variants }: Pro
             </div>
 
             {/* Add to Bag */}
-            <div className="mt-8">
+            <div className="mt-6">
                 <button
                     type="button"
                     onClick={handleAddToCart}

@@ -197,7 +197,7 @@ export function ProductMediaEditor({
 
                 {/* Selected File */}
                 {selectedFile && !error && (
-                    <div className="mt-4 flex items-center justify-between border border-lyra-border bg-lyra-cream px-4 py-3">
+                    <div className="mt-4 flex flex-col gap-3 border border-lyra-border bg-lyra-cream px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                         <div className="min-w-0">
                             <p className="truncate text-sm font-medium text-lyra-black">
                                 {selectedFile.name}
@@ -212,7 +212,7 @@ export function ProductMediaEditor({
                             type="button"
                             onClick={handleUpload}
                             disabled={isUploading}
-                            className="ml-4 shrink-0 border border-lyra-black bg-lyra-black px-4 py-2 text-xs font-medium text-lyra-white transition hover:bg-transparent hover:text-lyra-black disabled:cursor-not-allowed disabled:opacity-50"
+                            className="shrink-0 self-start border border-lyra-black bg-lyra-black px-4 py-2 text-xs font-medium text-lyra-white transition hover:bg-transparent hover:text-lyra-black disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
                         >
                             {isUploading ? "Uploading..." : "Upload Image"}
                         </button>

@@ -28,15 +28,16 @@ export function HeroBannerSlider({
 
     const autoplayTimerRef = useRef<number | null>(null);
 
-    if (banners.length === 0) {
-        return null;
-    }
-
-    const banner = banners[activeIndex];
-
-    const hasMultipleBanners = banners.length > 1;
-
     useEffect(() => {
+        if (banners.length === 0) {
+            return;
+        }
+
+        if (activeIndex >= banners.length) {
+            setActiveIndex(0);
+            return;
+        }
+
         if (banners.length <= 1 || isPaused) {
             return;
         }
@@ -56,6 +57,14 @@ export function HeroBannerSlider({
         };
     }, [activeIndex, banners.length, isPaused]);
 
+    if (banners.length === 0) {
+        return null;
+    }
+
+    const banner = banners[activeIndex];
+
+    const hasMultipleBanners = banners.length > 1;
+
     function goToPrevious() {
         setActiveIndex((current) =>
             current === 0
@@ -71,6 +80,7 @@ export function HeroBannerSlider({
                 : current + 1,
         );
     }
+
     return (
         <section
             className="relative overflow-hidden"
@@ -191,8 +201,8 @@ export function HeroBannerSlider({
                                     index === activeIndex
                                 }
                                 className={`h-1.5 transition-all ${index === activeIndex
-                                    ? "w-8 bg-lyra-black"
-                                    : "w-1.5 bg-lyra-black/40"
+                                        ? "w-8 bg-lyra-black"
+                                        : "w-1.5 bg-lyra-black/40"
                                     }`}
                             />
                         ))}

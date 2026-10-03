@@ -321,7 +321,7 @@ export function ProductMediaSortable({
                 </p>
             )}
 
-            <div className="flex items-center justify-between border-t border-lyra-border pt-4">
+            <div className="flex flex-col gap-3 border-t border-lyra-border pt-4 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-xs text-lyra-muted">
                     Drag images to change their order. The first image is
                     automatically the primary image.

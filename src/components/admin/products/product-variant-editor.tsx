@@ -103,7 +103,7 @@ export function ProductVariantEditor() {
                                     type="button"
                                     onClick={() => remove(index)}
                                     disabled={fields.length === 1}
-                                    className="mt-6 inline-flex h-11 w-full items-center justify-center border border-lyra-border px-4 text-4xl text-lyra-muted transition-colors hover:border-red-300 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40 sm:w-11 sm:px-0"
+                                    className="mt-3 inline-flex h-11 w-full items-center justify-center border border-lyra-border px-4 text-4xl text-lyra-muted transition-colors hover:border-red-300 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40 sm:mt-6 sm:w-11 sm:px-0"
                                     aria-label={`Remove variant ${index + 1}`}
                                 >
                                     <Trash2 className="h-4 w-4" />

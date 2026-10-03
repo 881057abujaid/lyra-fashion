@@ -7,7 +7,7 @@ export default async function AdminHomePage() {
     const heroBanners = await getAllHeroBanners();
 
     return (
-        <div className="px-6 py-8 lg:px-8">
+        <div className="px-5 py-8 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-7xl">
                 {/* Page Header */}
                 <div className="mb-8">

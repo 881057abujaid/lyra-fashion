@@ -20,7 +20,7 @@ export function CartSummary({ items }: CartSummaryProps) {
     const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
 
     return (
-        <aside className="sticky top-28 border border-lyra-border p-8 sm:p-10">
+        <aside className="sticky top-28 border border-lyra-border p-6 sm:p-10">
             <p className="text-xs uppercase tracking-[0.22em] text-lyra-muted">
                 Order Summary
             </p>

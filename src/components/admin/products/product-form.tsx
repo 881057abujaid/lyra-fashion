@@ -172,7 +172,7 @@ export function ProductForm() {
                         </h2>
                     </div>
 
-                    <div className="grid gap-7 p-5 sm:p-6 sm:grid-cols-1-2">
+                    <div className="grid gap-7 p-5 sm:grid-cols-2 sm:p-6">
                         {/* Price */}
                         <Field
                             label="Selling Price (₹)"

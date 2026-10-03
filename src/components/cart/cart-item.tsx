@@ -70,7 +70,7 @@ export function CartItem({ variantId, name, price, image, quantity, size, stock 
     }
 
     return (
-        <article className="flex gap-5 border-b border-lyra-border py-6">
+        <article className="flex gap-4 border-b border-lyra-border py-6 sm:gap-5">
             {/* Product Image */}
             <div className="relative h-36 w-28 shrink-0 overflow-hidden bg-lyra-beige sm:h-44 sm:w-36">
                 {image ? (

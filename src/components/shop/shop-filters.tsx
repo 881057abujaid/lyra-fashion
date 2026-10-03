@@ -134,7 +134,7 @@ export function ShopFilters() {
                                     category.value
                                 )
                             }
-                            className={`px-4 py-2 text-xs transition-colors ${isActive
+                            className={`px-4 py-2 text-xs transition-colors focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 ${isActive
                                 ? "bg-lyra-black text-lyra-white"
                                 : "border border-lyra-border hover:border-lyra-black"
                                 }`}
@@ -161,7 +161,7 @@ export function ShopFilters() {
                     onClick={() =>
                         setIsSortOpen((current) => !current)
                     }
-                    className="flex min-w-48 items-center justify-between gap-6 border border-lyra-border px-4 py-2.5 text-xs transition-colors hover:border-lyra-black"
+                    className="flex w-full min-w-0 items-center justify-between gap-6 border border-lyra-border px-4 py-2.5 text-xs transition-colors hover:border-lyra-black sm:w-48"
                 >
                     <span>{selectedSort.label}</span>
 
@@ -179,7 +179,8 @@ export function ShopFilters() {
                     <div
                         role="listbox"
                         aria-label="Sort products"
-                        className="absolute right-0 top-full z-30 mt-2 min-w-48 overflow-hidden border border-lyra-border bg-lyra-white py-1 shadow-xl"                    >
+                        className="absolute right-0 top-full z-30 mt-2 w-full min-w-48 overflow-hidden border border-lyra-border bg-lyra-white py-1 shadow-xl"
+                    >
                         {sortOptions.map((option) => {
                             const isSelected =
                                 activeSort === option.value;
@@ -217,6 +218,6 @@ export function ShopFilters() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }

@@ -96,7 +96,7 @@ export function DeleteHeroBannerButton({
                             onClick={() => setIsOpen(false)}
                             disabled={isPending}
                             aria-label="Close"
-                            className="absolute right-5 top-5 text-lyra-muted transition-colors hover:text-lyra-black disabled:opacity-50"
+                            className="absolute right-5 top-5 text-lyra-muted transition-colors hover:text-lyra-black focus-visible:outline-2 focus-visible:outline-lyra-black focus-visible:outline-offset-2 disabled:opacity-50"
                         >
                             <X className="h-4 w-4" />
                         </button>

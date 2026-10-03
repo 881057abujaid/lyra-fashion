@@ -51,7 +51,7 @@ export function ProductInfo({
                     {category}
                 </p>
 
-                <div className="mt-4 flex items-start justify-between gap-6">
+                <div className="mt-4 flex items-start justify-between gap-4 sm:gap-6">
                     <h1 className="font-display text-4xl tracking-tight sm:text-5xl">
                         {name}
                     </h1>

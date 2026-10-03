@@ -53,7 +53,7 @@ export default async function CustomerDetailPage({
     }
 
     return (
-        <div className="space-y-10 px-10 py-10">
+        <div className="space-y-10 px-5 py-8 sm:px-6 sm:py-10 lg:px-10">
             {/* Header */}
             <div className="space-y-6">
                 <Link
@@ -79,7 +79,7 @@ export default async function CustomerDetailPage({
             </div>
 
             {/* Customer Summary */}
-            <div className="grid md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-3">
                 <div className="border border-lyra-border bg-lyra-white p-6">
                     <p className="text-xs uppercase tracking-wider text-lyra-muted">
                         Total Orders

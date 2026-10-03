@@ -90,7 +90,10 @@ export function AdminSidebar() {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`flex items-center gap-3 px-3 py-3 text-xs uppercase tracking-[0.12em] transition-colors ${isActive ? "bg-lyra-black text-lyra-white" : "text-lyra-muted hover:bg-lyra-cream hover:text-lyra-black"
+                                className={`flex items-center gap-3 px-3 py-3 text-xs uppercase tracking-[0.12em] transition-colors ${isActive
+                                    ? "border-l-2 border-lyra-black bg-lyra-cream text-lyra-black"
+                                    : "border-l-2 border-transparent text-lyra-muted hover:bg-lyra-cream hover:text-lyra-black"
+                                    }
                                     }`}
                             >
                                 <Icon size={16} strokeWidth={1.5} />
