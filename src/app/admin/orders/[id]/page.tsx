@@ -179,9 +179,27 @@ export default async function AdminOrderDetailPage({
                             />
 
                             <Info
-                                label="Razorpay Order ID"
-                                value={order.razorpayOrderId ?? "Not created"}
+                                label="Razorpay Payment ID"
+                                value={order.razorpayPaymentId ?? "Not available"}
                             />
+
+                            {order.paymentStatus === "REFUNDED" && (
+                                <>
+                                    <Info
+                                        label="Razorpay Refund ID"
+                                        value={order.razorpayRefundId ?? "Not available"}
+                                    />
+
+                                    <Info
+                                        label="Refunded At"
+                                        value={
+                                            order.refundedAt
+                                                ? formatOrderDateTime(order.refundedAt)
+                                                : "Not available"
+                                        }
+                                    />
+                                </>
+                            )}
                         </div>
 
                         <OrderStatusControl

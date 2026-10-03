@@ -185,6 +185,9 @@ export async function getAdminOrderById(id: string) {
             shippingPincode: true,
 
             razorpayOrderId: true,
+            razorpayPaymentId: true,
+            razorpayRefundId: true,
+            refundedAt: true,
 
             createdAt: true,
             updatedAt: true,
